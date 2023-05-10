@@ -1,0 +1,74 @@
+@startuml cars
+
+hide circle
+skinparam Linetype ortho
+skinparam Ranksep 60
+skinparam Nodesep 100
+
+entity Vehicle {
+* id: <<uuid>>
+---
+*ownerId: <<FK>>
+*brandModelId: <<FK>>
+*licensePlate: string
+*winCode: string
+manufacturedAt: date
+scrappedAt: date
+}
+
+entity Brand {
+* id: <<uuid>>
+---
+*name: string
+}
+
+entity BrandModel {
+* id: <<uuid>>
+---
+*brandId: <<FK>>
+*name: string
+*type: ENUM
+}
+
+entity Repair {
+* id: <<uuid>>
+---
+*technicianId: <<FK>>
+*vehicleId: <<FK>>
+*mileage: double
+*name: string
+*workPrice: double
+*createdAt: datetime
+resolvedAt: datetime
+description: string
+}
+
+entity RepairMaterial {
+* id: <<uuid>>
+---
+*repairId: <<FK>>
+*price: double
+*name: string
+description: string
+}
+
+entity User {
+* id: <<uuid>>
+---
+* email: string
+* firstName: string
+* lastName: string
+* role: ENUM
+* createdAt: datetime
+* hashedPassword: string
+deletedAt: datetime
+}
+
+Repair ||--o{ RepairMaterial
+Vehicle ||--o{ Repair
+Vehicle }o--|| BrandModel
+Brand ||--o{ BrandModel
+User ||--o{ Vehicle
+User ||--o{ Repair
+
+@enduml
