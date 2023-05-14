@@ -37,6 +37,8 @@ model User {
   password       String
   repairs        Repair[]
   vehicles       Vehicle[]
+  isVerified     Boolean
+  phoneNumber    String
 }
 
 model Vehicle {
@@ -49,6 +51,7 @@ model Vehicle {
   winCode        String
   manufacturedAt DateTime
   scrappedAt     DateTime
+  deletedAt      DateTime
   repairs        Repair[]
 
 }
