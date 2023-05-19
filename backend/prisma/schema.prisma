@@ -33,7 +33,7 @@ model User {
   role           Role        @default(CLIENT)
   createdAt      DateTime
   updatedAt      DateTime
-  deletedAt      DateTime
+  deletedAt      DateTime?
   password       String
   repairs        Repair[]
   vehicles       Vehicle[]
@@ -50,8 +50,8 @@ model Vehicle {
   licensePlate   String
   winCode        String
   manufacturedAt DateTime
-  scrappedAt     DateTime
-  deletedAt      DateTime
+  scrappedAt     DateTime?
+  deletedAt      DateTime?
   repairs        Repair[]
 
 }
@@ -68,7 +68,7 @@ model Repair {
   technicianId   String
   vehicle        Vehicle    @relation(fields: [vehicleId], references: [id])
   vehicleId      String
-  resolvedAt     DateTime
+  resolvedAt     DateTime?
   material       RepairMaterial[]
   workPrice      Int
 
