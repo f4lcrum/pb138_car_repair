@@ -14,7 +14,22 @@ const skoda : (Brand & { models: BrandModel[] }) = {
   models: [],//skodaModels,
 };
 
+const bmw : (Brand & { models: BrandModel[] }) = {
+  id: 'c1e8a124-f744-11ed-b67e-0242ac120002',
+  name: 'BMW',
+  models: [],//skodaModels,
+};
+
+const porsche : (Brand & { models: BrandModel[] }) = {
+  id: 'f611b2a6-f744-11ed-b67e-0242ac120002',
+  name: 'porsche',
+  models: [],//skodaModels,
+};
+
+
 export const allBrands: (Brand & { models: BrandModel[] })[] = [
   skoda,
   seat,
+  bmw,
+  porsche,
 ]

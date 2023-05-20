@@ -36,7 +36,33 @@ const skodaModels : BrandModel[] = [{
 },
 ];
 
+const porscheModels: BrandModel[] = [
+  {
+    id: '6f439f5e-f745-11ed-b67e-0242ac120002',
+    brandId: 'f611b2a6-f744-11ed-b67e-0242ac120002',
+    name: '911 Carrera T',
+  },
+  {
+    id: '755a4280-f745-11ed-b67e-0242ac120002',
+    brandId: 'f611b2a6-f744-11ed-b67e-0242ac120002',
+    name: 'Taycan 4S',
+  },
+]
+const bmwModels: BrandModel[] = [
+  {
+    id: '0e791123-f79e-4fee-8ab9-6c9dc6f1f656',
+    brandId: 'c1e8a124-f744-11ed-b67e-0242ac120002',
+    name: 'BMW i7 M70 xDrive',
+  },
+  {
+    id: '40fc1f92-dbc5-4595-ad7e-a61e677d2843',
+    brandId: 'c1e8a124-f744-11ed-b67e-0242ac120002',
+    name: 'BMW X6',
+  },
+]
 export const allBrandModels: BrandModel[] = [
   ...skodaModels,
   ...seatModels,
+  ...porscheModels,
+  ...bmwModels,
 ]
