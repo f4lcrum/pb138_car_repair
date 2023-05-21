@@ -3,6 +3,8 @@ import cors from 'cors';
 import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
+import vehicle from './routes/vehicle';
+import fault from './routes/fault';
 
 configEnvVariables();
 const app = express();
@@ -19,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // DO NOT MODIFY THE PRECEDING code ^^
+app.use('/', vehicle);
+app.use('/', fault);
 
 app.get('/', (_req, res) => {
   res.send('Hello World!');
