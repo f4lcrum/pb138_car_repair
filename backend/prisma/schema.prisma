@@ -65,8 +65,8 @@ model Repair {
   description    String
   mileage        Int
   name           String
-  technician     User       @relation(fields: [technicianId], references: [id])
-  technicianId   String
+  technician     User?       @relation(fields: [technicianId], references: [id])
+  technicianId   String?
   vehicle        Vehicle    @relation(fields: [vehicleId], references: [id])
   vehicleId      String
   resolvedAt     DateTime?

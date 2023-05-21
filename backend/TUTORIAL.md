@@ -24,4 +24,5 @@ Database: db
 ### TROUBLES THAT I RAN TO
 TO-DO (Or add if you want :)
 
-
+### MIGRATION
+npx prisma migrate dev --name "name of migration" --schema .\backend\prisma\schema.prisma
