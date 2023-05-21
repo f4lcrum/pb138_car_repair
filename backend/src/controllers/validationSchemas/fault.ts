@@ -1,4 +1,4 @@
-import { Schema, z } from 'zod';
+import { z } from 'zod';
 
 export const createFaultSchema = z.object({
   userId: z.string().uuid(),

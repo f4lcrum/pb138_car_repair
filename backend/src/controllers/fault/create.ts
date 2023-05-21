@@ -7,6 +7,7 @@ import create from '../../repositories/fault/create';
 const app = express();
 
 const createFault = app.post('/fault/:id', async (req : Request, res : Response) => {
+  //TODO: looks like the await's are unnecessary here:
   const bodyData = await createFaultSchema.safeParse(req.body);
   const paramsData = await uuidSchema.safeParse(req.params);
   if (!bodyData.success) {

@@ -37,6 +37,8 @@ const all = async (
     }
     return Result.ok(result);
   } catch (e) {
+    // TODO: because we catch the thrown errors and return genericError, error messages of thrown errrors are ignored 
+    // change so we keep the message
     return genericError;
   }
 };

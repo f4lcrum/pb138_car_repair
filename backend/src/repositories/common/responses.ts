@@ -1,5 +1,7 @@
 import type { Response } from 'express';
 
+// TODO: internal error response
+
 export const sendBadRequestResponse = (res: Response, messageError: String) => {
   res.status(400).send({ status: 'failure', error: messageError });
 };
