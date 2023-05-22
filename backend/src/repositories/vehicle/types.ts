@@ -6,6 +6,11 @@ export type VehicleReadMultipleData = {
   userId: string
 };
 
+// vehicle's id:
+export type VehicleReadOneData = {
+  id: string,
+}
+
 export type VehicleDeleteData = {
   userId: string;
   vehicleId: string;
@@ -15,6 +20,7 @@ type DbVehicles = DbResult<Vehicle[]>;
 type DbVehicle = DbResult<Vehicle>;
 
 export type VehicleReadMultipleResult = DbVehicles;
+export type VehicleReadOneResult = DbVehicle;
 export type VehicleDeleteResult = DbVehicle;
 export type CheckUVehicleData = {
   ownerId: string;
@@ -22,3 +28,14 @@ export type CheckUVehicleData = {
 };
 
 export type TransactionCheckOperationResult = Promise<Result<{}>>;
+
+export type VehicleCreateData = {
+  ownerId: string,
+  brandId: string,
+  licensePlate: string,
+  winCode: string,
+  manufacturedAt: Date,
+
+};
+
+export type VehicleCreateResult = DbVehicle;
