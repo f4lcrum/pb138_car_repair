@@ -2,7 +2,7 @@ import { Result } from '@badrap/result';
 import client from '../client';
 import type { VehicleDeleteData, VehicleDeleteResult } from './types';
 import { genericError } from '../common/types';
-import checkVehicle from '../common/common';
+import {checkVehicle} from '../common/common';
 
 const deleteVehicle = async (
   data: VehicleDeleteData,

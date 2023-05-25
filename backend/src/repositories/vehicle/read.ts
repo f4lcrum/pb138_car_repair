@@ -6,7 +6,7 @@ import { genericError } from '../common/types';
 import { NonexistentRecordError } from '../common/error';
 
 // *** reads vehicle of given id ***
-const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
+export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
     return Result.ok(
       await client.$transaction(async (tx) => {
@@ -29,7 +29,7 @@ const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
 // TODO: ORDERING in params
 
 // *** reads all vehicles of given user ***
-const all = async (
+export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
@@ -72,4 +72,3 @@ const all = async (
   }
 };
 
-export default {all, read};

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import type { Vehicle } from '@prisma/client';
 import { uuidSchema } from '../validationSchemas/common';
-import all from '../../repositories/vehicle/read';
+import {all} from '../../repositories/vehicle/read';
 import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 
 const app = express();
