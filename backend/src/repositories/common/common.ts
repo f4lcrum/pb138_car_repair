@@ -2,8 +2,9 @@ import { Result } from '@badrap/result';
 import type { CheckUVehicleData, TransactionCheckOperationResult } from '../vehicle/types';
 import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from './error';
 import type { PrismaTransactionHandle } from './types';
+import type { CheckUserData } from '../user/types';
 
-const checkVehicle = async (
+export const checkVehicle = async (
   data: CheckUVehicleData,
   tx: PrismaTransactionHandle,
 ): TransactionCheckOperationResult => {
@@ -25,4 +26,24 @@ const checkVehicle = async (
   return Result.ok({});
 };
 
-export default checkVehicle;
+export const checkUser = async (
+  data: CheckUserData,
+  tx: PrismaTransactionHandle,
+): TransactionCheckOperationResult => {
+  const result = await tx.user.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+
+  if (result === null) {
+    throw new NonexistentRecordError('The user does not exist!');
+  };
+
+  if (result.deletedAt !== null) {
+    throw new DeletedRecordError('User has already been deleted!');
+  };
+
+  return Result.ok({});
+};
+
