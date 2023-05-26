@@ -8,6 +8,7 @@ import { NonexistentRecordError } from '../common/error';
 // *** reads vehicle of given id ***
 export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
+    // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
         const vehicle = await tx.vehicle.findFirst({
@@ -37,6 +38,7 @@ export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
+    // TODO: ADD CHECKVEHICLE
     const user : User | null = await client.user.findUnique({
       where: {
         id: data.userId,
@@ -47,6 +49,8 @@ export const all = async (
       throw new NonexistentRecordError('The user does not exists!');
     }
 
+    // TODO: SORT BY NAME, MANUFACTURED_AT
+    // TODO: FILTER BY BRAND
     const result : Vehicle[] = await client.vehicle.findMany({
       where: {
         ownerId: data.userId,
@@ -73,7 +77,7 @@ export const all = async (
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
     };
-    
+
     return genericError;
   }
 };

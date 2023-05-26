@@ -1,6 +1,5 @@
 import type { Response } from 'express';
 
-// TODO: internal error response
 
 export const sendBadRequestResponse = (res: Response, messageError: String) => {
   res.status(400).send({ status: 'failure', error: messageError });
@@ -17,3 +16,7 @@ export const receivedRequestResponse = (res: Response, inputData: any) => {
 export const createdSuccessRequestResponse = (res: Response, inputData: any) => {
   res.status(201).send({ data: inputData });
 };
+
+export const backendErrorRequestResponse = (res: Response) => {
+  res.status(500).send({ status: 'Internal error' });
+}

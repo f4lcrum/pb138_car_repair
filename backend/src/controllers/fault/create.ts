@@ -1,15 +1,14 @@
 import express, { Request, Response } from 'express';
 import { uuidSchema } from '../validationSchemas/common';
 import { createFaultSchema } from '../validationSchemas/fault';
-import { sendBadRequestResponse } from '../../repositories/common/responses';
+import { backendErrorRequestResponse, createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import create from '../../repositories/fault/create';
 
 const app = express();
 
 const createFault = app.post('/fault/:id', async (req : Request, res : Response) => {
-  //TODO: looks like the await's are unnecessary here:
-  const bodyData = await createFaultSchema.safeParse(req.body);
-  const paramsData = await uuidSchema.safeParse(req.params);
+  const bodyData = createFaultSchema.safeParse(req.body);
+  const paramsData = uuidSchema.safeParse(req.params);
   if (!bodyData.success) {
     return sendBadRequestResponse(res, 'Invalid Body');
   }
@@ -22,10 +21,10 @@ const createFault = app.post('/fault/:id', async (req : Request, res : Response)
     description: bodyData.data.description,
     vehicleId: paramsData.data.id,
   });
-  // TODO: database crash add error
   if (output.isErr) {
-
+    return backendErrorRequestResponse(res);
   }
+  return createdSuccessRequestResponse(res, output.unwrap());
 });
 
 export default createFault;

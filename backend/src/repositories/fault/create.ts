@@ -14,23 +14,22 @@ const create = async (data: FaultCreateData) : FaultCreateResult => {
       if (vehicleCheck.isErr) {
         return Result.err(vehicleCheck.error);
       }
-      // TODO: regarding milage - either we make it nullable (since technician sets this value) or we set it to zero from the start and technician will edit it
-      // TODO: regarding name - nullable or add it to argument data (if nullable - technician is the one who creates the name, user otherwise) 
 
       const createdAt = new Date();
       const result = await tx.repair.create({
         data: {
           vehicleId: data.vehicleId,
           description: data.description,
-          mileage: 0,
+          mileage: null,
           createdAt,
-          name: 'Oprava c.X',
+          name: null,
           workPrice: 0,
         },
       });
       return Result.ok(result);
     });
   } catch (e) {
+    console.log(e);
     return genericError;
   }
 };
