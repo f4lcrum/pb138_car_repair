@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Brand {
+  id             String      @id @default(uuid())
+  name           String      @unique
+  models         BrandModel[]
+}
+
+model BrandModel {
+  id             String      @id @default(uuid())
+  brandId        String
+  name           String
+  brand          Brand       @relation(fields: [brandId], references: [id])
+  vehicles       Vehicle[]
+}
+
+
+model User {
+  id             String      @id @default(uuid())
+  email          String      @unique
+  firstName      String
+  lastName       String
+  role           Role        @default(CLIENT)
+  createdAt      DateTime
+  updatedAt      DateTime?
+  deletedAt      DateTime?
+  password       String
+  repairs        Repair[]
+  vehicles       Vehicle[]
+  isVerified     Boolean
+  phoneNumber    String
+}
+
+model Vehicle {
+  id             String      @id @default(uuid())
+  brand          BrandModel  @relation(fields: [brandId], references: [id])
+  brandId        String
+  ownerId        String
+  owner          User        @relation(fields: [ownerId], references: [id])
+  licensePlate   String
+  winCode        String
+  manufacturedAt DateTime
+  scrappedAt     DateTime?
+  deletedAt      DateTime?
+  repairs        Repair[]
+
+}
+
+
+
+model Repair {
+  id             String     @id @default(uuid())
+  createdAt      DateTime
+  description    String
+  mileage        Int
+  name           String
+  technician     User?       @relation(fields: [technicianId], references: [id])
+  technicianId   String?
+  vehicle        Vehicle    @relation(fields: [vehicleId], references: [id])
+  vehicleId      String
+  resolvedAt     DateTime?
+  material       RepairMaterial[]
+  workPrice      Int
+
+}
+
+model RepairMaterial {
+  id             String     @id @default(uuid())
+  description    String
+  name           String
+  price          Int
+  repairId       String
+  repair         Repair     @relation(fields: [repairId], references: [id])
+
+}
+
+
+enum Role {
+  CLIENT
+  TECHNICIAN
+}
