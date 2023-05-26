@@ -22,10 +22,10 @@ const App = () => {
         </div>
 
         <Routes>
-          <Route exact path="/register" element={<RegisterPage />} />
-          <Route exact path="/login" element={<LoginPage />} />
-          <Route exact path="/" element={<ProtectedRoute />}>
-            <Route exact path="/" element={<BasePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="/" element={<BasePage />} />
           </Route>
         </Routes>
       </Router>
