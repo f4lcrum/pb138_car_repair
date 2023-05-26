@@ -6,7 +6,7 @@ import { updateUserSchema } from '../validationSchemas/user';
 
 const app = express();
 
-// not sure about this path:
+// not sure about this path: Kiko's initial commit change because we can
 const updateUser = app.patch('/user/:id', async (req: Request, res: Response) => {
   const parsedBodyData = updateUserSchema.safeParse(req.body);
   const parsedParamsData = uuidSchema.safeParse(req.params);
