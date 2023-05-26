@@ -20,6 +20,9 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
       })
     )
   } catch (e) {
+    if (e instanceof NonexistentRecordError) {
+      return Result.err(e);
+    };
     return genericError;
   }
 };
