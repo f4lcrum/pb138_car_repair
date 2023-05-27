@@ -4,10 +4,13 @@ import auth from "../middleware/authMiddleware";
 import client from "../client";
 import { userLoginSchema, userRegistrationSchema } from "../controllers/validationSchemas/user";
 import { backendErrorRequestResponse, notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse, unauthorizedRequestResponse } from "../repositories/common/responses";
+import { genericError } from "../repositories/common/types";
 const authRouter = Router();
 
 // info about the current authentication:
 authRouter.get('/', auth(), async(req, res) => {
+
+try { 
   const email = req.session.user!.email;
   const user = await client.user.findUnique({
     where: {
@@ -25,10 +28,15 @@ authRouter.get('/', auth(), async(req, res) => {
     return notFoundRequestResponse(res);
   }
   res.json({ item: user, message: 'User ' + user.firstName.toString() + ' is authorized'});
+} catch(e) {
+  return genericError;
+}
 })
+
 
 // registration:
 authRouter.post('/registration', async (req, res) => {
+  try {
   const result = await userRegistrationSchema.safeParseAsync(req.body);
   if (!result.success) {
     return sendBadRequestResponse(res, result.error.message);
@@ -55,12 +63,16 @@ authRouter.post('/registration', async (req, res) => {
     return backendErrorRequestResponse(res);
   }
   res.json({ item: user, message: 'User ' + user.firstName.toString() + ' is authorized' });
+} catch(e) {
+  return genericError;
+}
 })
 
 
 
 // login:
 authRouter.post('/login', async (req, res) => {
+  try {
   const result = await userLoginSchema.safeParseAsync(req.body);
   if (!result.success) {
     return sendBadRequestResponse(res, result.error.message);
@@ -82,14 +94,21 @@ authRouter.post('/login', async (req, res) => {
   }
   req.session.user = { email: user.email, role: user.role };
   return receivedRequestResponse(res, {message: 'Logged in'});
+} catch (e) {
+  return genericError;
+}
 })
 
 
 // logout:
 
 authRouter.post('/logout', async (req, res) => {
+  try {
   req.session.destroy(() => {});
   return receivedRequestResponse(res, {message: 'Logged out'});
+  } catch (e) {
+    return genericError;
+  }
 });
 
 export default authRouter;
