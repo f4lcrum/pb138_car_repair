@@ -40,6 +40,7 @@ app.use('/auth', authRouter);
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
+app.use('/', brand);
 
 app.get('/', (_req, res) => {
   res.send('Hello World!');
