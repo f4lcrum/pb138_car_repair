@@ -1,8 +1,10 @@
 import { Result } from '@badrap/result';
 import type { CheckUVehicleData, TransactionCheckOperationResult } from '../vehicle/types';
-import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from './error';
+import { DeletedRecordError, NonexistentRecordError, UnauthorizedError, WrongOwnershipError } from './error';
 import type { PrismaTransactionHandle } from './types';
 import type { CheckUserData } from '../user/types';
+import type { FaultUpdateData } from '../fault/types';
+import type { Repair, RepairMaterial } from '@prisma/client';
 
 export const checkVehicle = async (
   data: CheckUVehicleData,
@@ -47,3 +49,25 @@ export const checkUser = async (
   return Result.ok({});
 };
 
+export const checkFaultUpdate = async (
+  data: FaultUpdateData,
+  tx: PrismaTransactionHandle,
+): Promise<Result<Repair & {material: RepairMaterial[]}>> => {
+  const result = await tx.repair.findUnique({
+    where: {
+      id: data.id,
+    },
+    include: {
+      material: true,
+    },
+  });
+  if (result === null) {
+    return Result.err(new NonexistentRecordError('The fault does not exist!'));
+  };
+
+  if (result.resolvedAt !== null) {
+    return  Result.err(new UnauthorizedError('The fault has already been resolved!'));
+  };
+
+  return Result.ok(result);
+}

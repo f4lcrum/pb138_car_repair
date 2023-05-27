@@ -29,7 +29,6 @@ const create = async (data: FaultCreateData) : FaultCreateResult => {
       return Result.ok(result);
     });
   } catch (e) {
-    console.log(e);
     return genericError;
   }
 };
