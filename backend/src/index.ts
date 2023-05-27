@@ -5,7 +5,8 @@ import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
 import vehicle from './routes/vehicle';
 import fault from './routes/fault';
-import user from './routes/user'
+import user from './routes/user';
+import brand from './routes/brand';
 
 
 configEnvVariables();
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
+app.use('/', brand);
 
 app.get('/', (_req, res) => {
   res.send('Hello World!');
