@@ -11,7 +11,7 @@ const technicianJozef : (User ) = {
   createdAt: new Date('2008-02-07T12:45:03.000Z'),
   updatedAt: null,
   deletedAt: null,
-  password: '123456',
+  password: '12345678',
   isVerified: false,
   phoneNumber: '+421123456789',
 //   repairs: [{

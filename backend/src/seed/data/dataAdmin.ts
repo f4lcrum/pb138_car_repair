@@ -6,7 +6,7 @@ const admin : User = {
     email: 'andrej@admin.com',
     firstName: 'Andrej',
     lastName: 'DJ',
-    password: 'admin',
+    password: 'admin123',
     role: Role.ADMIN,
     isVerified: false,
     phoneNumber: '+421999999999',

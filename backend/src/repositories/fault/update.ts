@@ -24,7 +24,7 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           ...(data.resolvedAt !== undefined ? {resolvedAt: data.resolvedAt} : {}),
           ...(data.workPrice !== undefined ? {workPrice: data.workPrice} : {}),
           ...(data.mileage !== undefined ? {mileage: data.mileage} : {}),
-          // TODO: is this what we want? if the fault does not have assigned technician 
+          // TODO: is this what we want? if the fault does not have assigned technician
           // and some technician is updating the fault, it will be automatically assigned.
           ...(fault.technicianId === null ? { technicianId: data.technicianId } : {}),
           material: {
@@ -46,7 +46,7 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           // TODO: probs won't be send, only for testing purposes for now
           technicianId: true,
         },
-        
+
       });
       return Result.ok(updatedFault);
     })
@@ -54,7 +54,7 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
   } catch (e) {
     return genericError;
   }
-  
+
 }
 
 export default update;

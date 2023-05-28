@@ -23,8 +23,7 @@ const login = app.post('/auth/login', async (req : Request, res : Response) => {
         if (user === null) {
             return sendBadRequestResponse(res, 'User does not exist');
         }
-
-        const isVerified = argon2.verify(user.password, password);
+        const isVerified = await argon2.verify(user.password, password);
         if (!isVerified) {
             return unauthorizedRequestResponse(res, 'Wrong password');
         }

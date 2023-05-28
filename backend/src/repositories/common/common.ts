@@ -61,13 +61,18 @@ export const checkFaultUpdate = async (
       material: true,
     },
   });
+
   if (result === null) {
     return Result.err(new NonexistentRecordError('The fault does not exist!'));
   };
 
   if (result.resolvedAt !== null) {
-    return  Result.err(new UnauthorizedError('The fault has already been resolved!'));
+    return Result.err(new UnauthorizedError('The fault has already been resolved!'));
   };
+
+  if (result.technicianId !== data.technicianId && result.technicianId !== null) {
+    return Result.err(new WrongOwnershipError('The fault has already been assigned to different technician!'));
+  }
 
   return Result.ok(result);
 }

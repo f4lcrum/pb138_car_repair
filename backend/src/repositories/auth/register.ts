@@ -25,8 +25,10 @@ const registerUser = async(data: RegisterData) : RegisterResult => {
             }
         });
         return Result.ok(user);
-    } catch(e) {
-        console.log(e);
+    } catch(err) {
+        if (err instanceof Error) {
+            return Result.err(err);
+        }
         return genericError;
     }
 }

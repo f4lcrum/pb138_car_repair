@@ -45,4 +45,4 @@ export type FaultUpdateResult = {
   name: string | null | undefined,
   workPrice: number,
   material: RepairMaterialWithoutSensitiveInfo[] | undefined,
-}; 
+};

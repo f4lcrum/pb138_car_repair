@@ -6,7 +6,7 @@ import type { ApiResponse } from './controllers/types';
 import vehicle from './routes/vehicle';
 import fault from './routes/fault';
 import user from './routes/user';
-
+import admin from './routes/admin';
 import cookieParser from 'cookie-parser';
 import type { Role } from '@prisma/client';
 import session from './middleware/sessionMiddleware';
@@ -40,6 +40,7 @@ app.use('/', authRouter);
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
+app.use('/', admin)
 // FIXME: commented out for a while
 // app.use('/', brand);
 

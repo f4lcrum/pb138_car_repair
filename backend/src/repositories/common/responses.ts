@@ -21,7 +21,7 @@ export const createdSuccessRequestResponse = (res: Response, inputData: any) => 
 };
 
 export const backendErrorRequestResponse = (res: Response) => {
-  res.status(500).send({ status: 'Internal error' });
+  res.status(500).send({ status: 'Internal error'});
 }
 
 export const forbiddenRequestResponse = (res: Response, messageError: string) => {
