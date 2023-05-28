@@ -89,4 +89,5 @@ model RepairMaterial {
 enum Role {
   CLIENT
   TECHNICIAN
+  ADMIN
 }

@@ -5,5 +5,6 @@ import { allTechnicians } from './dataTechnicians';
 import { allVehicles } from './dataVehicles';
 import { allRepairs } from './dataRepairs';
 import { allMaterials } from './dataRepairMaterial';
+import { allAdmins } from './dataAdmin';
 
-export {allBrandModels, allBrands, allUsers, allTechnicians, allVehicles, allRepairs, allMaterials};
+export {allBrandModels, allBrands, allUsers, allTechnicians, allAdmins, allVehicles, allRepairs, allMaterials};

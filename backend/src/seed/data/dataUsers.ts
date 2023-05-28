@@ -3,7 +3,6 @@ import {
 } from '@prisma/client';
 
 
-
 const user1 : (User & {
   vehicles: (Vehicle &{ repairs:(Repair & { material: RepairMaterial[] })[] })[]
 }) = {
@@ -11,7 +10,7 @@ const user1 : (User & {
   email: 'alino@gmail.com',
   firstName: 'Alino',
   lastName: 'Krasnansky',
-  password: 'ali123',
+  password: 'alinko123',
   role: Role.CLIENT,
   isVerified: false,
   phoneNumber: '0923342134',
