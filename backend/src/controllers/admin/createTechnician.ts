@@ -9,7 +9,7 @@ import registerUser from '../../repositories/auth/register';
 const app = express();
 
 
-const createTechnician = app.post('/admin', auth(Role.ADMIN), async (req: Request, res : Response) => {
+const createTechnician = app.post('/auth/admin', auth(Role.ADMIN), async (req: Request, res : Response) => {
     const bodyData = userRegistrationSchema.safeParse(req.body);
     if (!bodyData.success) {
         return sendBadRequestResponse(res, 'Invalid Body');

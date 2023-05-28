@@ -8,7 +8,7 @@ import { Role } from '@prisma/client';
 import auth from '../../middleware/authMiddleware';
 const app = express();
 
-const updateFault = app.patch('/fault/:id', auth(Role.TECHNICIAN, Role.ADMIN), async (req: Request, res: Response) => {
+const updateFault = app.patch('/auth/fault/:id', auth(Role.TECHNICIAN, Role.ADMIN), async (req: Request, res: Response) => {
 
   const bodyData = updateFaultSchema.safeParse(req.body);
   const paramsData = uuidSchema.safeParse(req.params);

@@ -1,17 +1,13 @@
 import express, { Request, Response } from 'express';
-import { uuidSchema } from '../validationSchemas/common';
-import { notFoundRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import { notFoundRequestResponse } from '../../repositories/common/responses';
+import { Role } from '@prisma/client';
+import auth from '../../middleware/authMiddleware';
 
 
 const app = express();
 
-
-const readBrands = app.post('brand/:id', async (req: Request, res: Response) => {
-    const parsedData = uuidSchema.safeParse(req.params);
-    if (!parsedData.success) {
-        return sendBadRequestResponse(res, 'Invalid input data');
-    }
-    const output = await all({ userId: parsedData.data.id });
+const readBrands = app.get('/auth/brand', auth(Role.CLIENT, Role.ADMIN, Role.TECHNICIAN), async (req: Request, res: Response) => {
+    const output = await all();
     if (output.isErr) {
         return notFoundRequestResponse(res);
     }

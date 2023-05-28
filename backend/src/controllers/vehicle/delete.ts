@@ -7,7 +7,7 @@ import auth from '../../middleware/authMiddleware';
 
 const app = express();
 
-const deleteSpecificVehicle = app.delete('/vehicle/:id', auth(Role.CLIENT, Role.ADMIN), async (req: Request, res: Response) => {
+const deleteSpecificVehicle = app.delete('/auth/vehicle/:id', auth(Role.CLIENT, Role.ADMIN), async (req: Request, res: Response) => {
   // a ID of vehicle
   const params = uuidSchema.safeParse(req.params);
   // contains a UUID of user (in future a cookie of user, basically a UUID again :))

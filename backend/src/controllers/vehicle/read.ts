@@ -10,7 +10,7 @@ import { vehicleReadManySchema } from '../validationSchemas/vehicle';
 const app = express();
 
 
-const readVehicles = app.get('/vehicle', auth(Role.CLIENT, Role.ADMIN), async (req: Request, res: Response) => {
+const readVehicles = app.get('/auth/vehicle', auth(Role.CLIENT, Role.ADMIN), async (req: Request, res: Response) => {
 
   const parsedBodyParams = vehicleReadManySchema.safeParse(req.body);
   if (!parsedBodyParams.success) {

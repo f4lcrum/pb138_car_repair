@@ -2,7 +2,7 @@ import { Router } from "express";
 import authController from '../controllers/auth/index';
 
 const authRouter = Router();
-const authRoute = '/auth';
+export const authRoute = '/auth';
 const authRouteRegister = `${authRoute}/registration`;
 const authRouteLogin = `${authRoute}/login`;
 const authRouteLogout = `${authRoute}/logout`;

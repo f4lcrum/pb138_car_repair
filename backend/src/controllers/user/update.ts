@@ -3,11 +3,13 @@ import { uuidSchema } from '../validationSchemas/common';
 import { backendErrorRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import update from '../../repositories/user/update';
 import { updateUserSchema } from '../validationSchemas/user';
+import auth from '../../middleware/authMiddleware';
+import { Role } from '@prisma/client';
 
 const app = express();
 
 // not sure about this path: Kiko's initial commit change because we can
-const updateUser = app.patch('/user/:id', async (req: Request, res: Response) => {
+const updateUser = app.patch('/user/:id', auth(Role.CLIENT, Role.ADMIN ), async (req: Request, res: Response) => {
   const parsedBodyData = updateUserSchema.safeParse(req.body);
   const parsedParamsData = uuidSchema.safeParse(req.params);
 

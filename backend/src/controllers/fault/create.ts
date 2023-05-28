@@ -9,7 +9,7 @@ import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from 
 
 const app = express();
 
-const createFault = app.post('/fault/:id', auth(Role.CLIENT, Role.ADMIN), async (req : Request, res : Response) => {
+const createFault = app.post('/auth/fault/:id', auth(Role.CLIENT, Role.ADMIN), async (req : Request, res : Response) => {
   const bodyData = createFaultSchema.safeParse(req.body);
   const paramsData = uuidSchema.safeParse(req.params);
   if (!bodyData.success) {
