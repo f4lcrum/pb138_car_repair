@@ -30,6 +30,10 @@ const seed = async () => {
     }),
 
     client.user.createMany({
+      data: allAdmins.map((admin) => ({...admin})),
+    }),
+
+    client.user.createMany({
       data: allUsers.map((user) => ({...user})),
     }),
 

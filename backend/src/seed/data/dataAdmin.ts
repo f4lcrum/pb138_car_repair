@@ -10,7 +10,7 @@ const admin : User = {
     role: Role.ADMIN,
     isVerified: false,
     phoneNumber: '+421999999999',
-    createdAt: new Date('2004-03-04T11:00:00:000Z'),
+    createdAt: new Date('2003-04-22T12:45:03.000Z'),
     updatedAt: null,
     deletedAt: null,
 }
