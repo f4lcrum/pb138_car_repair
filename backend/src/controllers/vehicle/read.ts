@@ -2,22 +2,26 @@ import express, { Request, Response } from 'express';
 import { Role, Vehicle } from '@prisma/client';
  // import { uuidSchema } from '../validationSchemas/common';
 import {all} from '../../repositories/vehicle/read';
-import { notFoundRequestResponse, receivedRequestResponse } from '../../repositories/common/responses';
+import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import auth from '../../middleware/authMiddleware';
+import { vehicleReadManySchema } from '../validationSchemas/vehicle';
 
 
 const app = express();
 
+
 const readVehicles = app.get('/vehicle', auth(Role.CLIENT, Role.ADMIN), async (req: Request, res: Response) => {
-  //const parsedData = uuidSchema.safeParse(req.body);
-  //if (!parsedData.success) {
-  //  return sendBadRequestResponse(res, 'Invalid input data');
-  //}
-  const output = await all({ userId: req.session.user!.id});
+
+  const parsedBodyParams = vehicleReadManySchema.safeParse(req.body);
+  if (!parsedBodyParams.success) {
+    return sendBadRequestResponse(res, 'Invalid Body');
+  };
+  const output = await all({ userId: req.session.user!.id, ...req.body});
   if (output.isErr) {
     return notFoundRequestResponse(res);
   }
   const result : Vehicle[] = output.unwrap();
+  console.log(result);
   return receivedRequestResponse(res, result);
 });
 

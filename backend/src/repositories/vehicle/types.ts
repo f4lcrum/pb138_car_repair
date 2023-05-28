@@ -1,9 +1,14 @@
-import type { Vehicle } from '@prisma/client';
+import type { Prisma, Vehicle } from '@prisma/client';
 import type { Result } from '@badrap/result';
 import type DbResult from '../common/types';
 
 export type VehicleReadMultipleData = {
-  userId: string
+  userId: string,
+  brandName?: string,
+  createdAt? : boolean,
+  manufacturedAt?: boolean,
+  // asc or desc: 
+  sortOrder?: Prisma.SortOrder,
 };
 
 // vehicle's id:

@@ -32,7 +32,7 @@ model User {
   firstName      String
   lastName       String
   role           Role        @default(CLIENT)
-  createdAt      DateTime
+  createdAt      DateTime    @default(now())
   updatedAt      DateTime?
   deletedAt      DateTime?
   password       String
@@ -51,6 +51,7 @@ model Vehicle {
   licensePlate   String
   winCode        String
   manufacturedAt DateTime
+  createdAt      DateTime    @default(now())
   scrappedAt     DateTime?
   deletedAt      DateTime?
   repairs        Repair[]
@@ -61,7 +62,7 @@ model Vehicle {
 
 model Repair {
   id             String     @id @default(uuid())
-  createdAt      DateTime
+  createdAt      DateTime   @default(now())
   description    String
   mileage        Int?
   name           String?

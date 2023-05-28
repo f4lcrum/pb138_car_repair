@@ -14,6 +14,7 @@ const seatIbiza: (Vehicle
   winCode: '123456',
   manufacturedAt: new Date('2010-03-05T16:00:00.000Z'),
   scrappedAt: null,
+  createdAt: new Date('2013-03-05T16:00:00.000Z'),
   deletedAt: null,
   // repairs: [
   // ],
@@ -31,6 +32,7 @@ const porscheTaycan: (Vehicle
   winCode: '123765',
   manufacturedAt: new Date('2013-03-05T16:00:00.000Z'),
   scrappedAt: null,
+  createdAt: new Date(),
   deletedAt: null,
   // repairs: [
   // ],
@@ -48,6 +50,7 @@ const porscheCarrera: (Vehicle
   winCode: '555765',
   manufacturedAt: new Date('2016-03-05T16:00:00.000Z'),
   scrappedAt: null,
+  createdAt: new Date('2014-03-05T16:00:00.000Z'),
   deletedAt: null,
   // repairs: [
   // ],
@@ -65,11 +68,24 @@ const bmwX6: (Vehicle
   winCode: '885765',
   manufacturedAt: new Date('2018-03-05T16:00:00.000Z'),
   scrappedAt: null,
+  createdAt: new Date('2015-03-05T16:00:00.000Z'),
   deletedAt: null,
   // repairs: [
   // ],
 
 };
+
+const porscheCarrera2 : (Vehicle) = {
+  id: 'ef0aff69-2657-403f-96e7-4dbb8d5ebb00',
+  ownerId: '38b610c6-f744-11ed-b67e-0242ac120002',
+  brandId: '6f439f5e-f745-11ed-b67e-0242ac120002',
+  licensePlate: 'KE-333-KE',
+  winCode: '111765',
+  createdAt: new Date('2016-03-05T16:00:00.000Z'),
+  manufacturedAt: new Date('2019-03-05T16:00:00.000Z'),
+  scrappedAt: null,
+  deletedAt: null,
+}
 
 export const allVehicles: (Vehicle
    //& {repairs: (Repair & {material: RepairMaterial[],})
@@ -78,5 +94,6 @@ export const allVehicles: (Vehicle
   porscheTaycan,
   porscheCarrera,
   bmwX6,
+  porscheCarrera2,
 
 ]
