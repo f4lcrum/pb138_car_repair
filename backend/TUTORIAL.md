@@ -25,4 +25,21 @@ Database: db
 TO-DO (Or add if you want :)
 
 ### MIGRATION
-npx prisma migrate dev --name "name of migration" --schema .\backend\prisma\schema.prisma
+npx prisma migrate dev --name "name of new migration" --schema .\backend\prisma\schema.prisma
+
+### SEED DATABASE
+npm run seed
+
+### START APP
+npm run watch
+
+
+### STEPS
+- create .env file and copy content of .envexample to it
+- install docker desktop
+- docker-compose -f docker-compose.yml up -d
+- npx prisma migrate dev --name last-migration-name --schema .\backend\prisma\schema.prisma
+  (example: npx prisma migrate dev --name addUniqueToWinAndLicensePlate --schema .\prisma\schema.prisma)
+- npm run seed
+- npm run watch
+- enjoy !

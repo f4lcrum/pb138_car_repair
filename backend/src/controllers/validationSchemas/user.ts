@@ -4,7 +4,7 @@ export const updateUserSchema = z.object({
   firstName: z.string().min(2).optional(),
   lastName: z.string().min(2).optional(),
   phoneNumber: z.string().refine(validator.isMobilePhone).optional(),
-}).strict().refine(({firstName, lastName, phoneNumber}) => firstName !== undefined || lastName !== undefined  || phoneNumber !== undefined, { message: "One of the fields must be defined!"});
+}).strict().refine(({firstName, lastName, phoneNumber}) => firstName !== undefined || lastName !== undefined  || phoneNumber !== undefined, { message: "One of the fields must be defined!" });
 
 export const userRegistrationSchema = z.object({
   firstName: z.string(),

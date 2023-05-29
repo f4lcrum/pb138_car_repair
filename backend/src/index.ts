@@ -10,7 +10,8 @@ import admin from './routes/admin';
 import cookieParser from 'cookie-parser';
 import type { Role } from '@prisma/client';
 import session from './middleware/sessionMiddleware';
-import authRouter from './routes/auth';
+import auth from './routes/auth';
+import brand from './routes/brand';
 declare module 'express-session' {
   interface SessionData {user: {id: string, role: Role}}
 };
@@ -36,13 +37,12 @@ app.use(session());
 app.use(express.urlencoded({ extended: true }));
 
 // DO NOT MODIFY THE PRECEDING code ^^
-app.use('/', authRouter);
+app.use('/', auth);
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
 app.use('/', admin)
-// FIXME: commented out for a while
-// app.use('/', brand);
+app.use('/', brand);
 
 app.get('/', (_req, res) => {
   res.send('Hello World!');

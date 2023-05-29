@@ -13,9 +13,10 @@ export type FaultCreateResult = DbRepair;
 
 export type FaultReadOneData = {
   id: string,
+  vehicleId: string,
 };
 
-export type FaultReadOneResult = DbRepair;
+export type FaultReadOneResult = DbRepairs;
 
 export type FaultReadManyData = {
   userId: string,

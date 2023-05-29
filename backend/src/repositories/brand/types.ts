@@ -1,11 +1,11 @@
 import type DbResult from "../common/types";
 
 export type BrandReadData = {
-    userId: String,
+    userId: string,
 };
 
-
-
 export type BrandReadResult = DbResult<{
-    name: String,
-}[]>;
+    id: string,
+    name: string,
+    brand: string,
+}[]>

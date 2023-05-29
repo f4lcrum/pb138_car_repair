@@ -1,16 +1,15 @@
 import type { Request, Response } from 'express';
 import type { Vehicle } from '@prisma/client';
-import {all} from '../../repositories/vehicle/read';
+import { all } from '../../repositories/vehicle/read';
 import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import { vehicleReadManySchema } from '../validationSchemas/vehicle';
 
 
 
 const readVehicles = async (req: Request, res: Response) => {
-
-  const parsedBodyParams = vehicleReadManySchema.safeParse(req.body);
-  if (!parsedBodyParams.success) {
-    return sendBadRequestResponse(res, 'Invalid Body');
+  const parsedQueryParams = vehicleReadManySchema.safeParse(req.query);
+  if (!parsedQueryParams.success) {
+    return sendBadRequestResponse(res, 'Invalid Query');
   };
   const output = await all({ userId: req.session.user!.id, ...req.body});
   if (output.isErr) {

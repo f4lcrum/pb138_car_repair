@@ -11,10 +11,9 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
     // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
+
         const vehicle = await tx.vehicle.findFirst({
-          where: {
-            id: data.id,
-          },
+          where: data
         });
         if (vehicle === null) {
           throw new NonexistentRecordError('The specified vehicle does not exist!');
@@ -65,7 +64,7 @@ export const all = async (
     // {
     //   createdAt: data.sortOrder ? data.sortOrder :  'asc',
     // },
-  
+
 
     // TODO: SORT BY NAME, MANUFACTURED_AT
     // TODO: FILTER BY BRAND

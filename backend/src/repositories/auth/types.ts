@@ -11,7 +11,12 @@ export type UserResult = DbResult<{
     role: Role,
 } | null>
 
-export type AuthReadResult = UserResult;
+export type AuthReadResult = DbResult<{
+    firstName: string,
+    lastName: string,
+    email: string,
+    role: Role,
+} | null>;
 export type RegisterResult = UserResult;
 export type LoginResult = DbResult<User | null>
 
