@@ -6,6 +6,7 @@ import type { CheckUserData } from '../user/types';
 import type { FaultUpdateData } from '../fault/types';
 import type { Repair, RepairMaterial } from '@prisma/client';
 
+
 export const checkVehicle = async (
   data: CheckUVehicleData,
   tx: PrismaTransactionHandle,

@@ -1,14 +1,12 @@
-import express, { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { uuidSchema } from '../validationSchemas/common';
 import { updateFaultSchema } from '../validationSchemas/fault';
 import { backendErrorRequestResponse, receivedRequestResponse, sendBadRequestResponse, unauthorizedRequestResponse } from '../../repositories/common/responses';
 import update from '../../repositories/fault/update';
 import { NonexistentRecordError, UnauthorizedError, WrongOwnershipError } from '../../repositories/common/error';
-import { Role } from '@prisma/client';
-import auth from '../../middleware/authMiddleware';
-const app = express();
 
-const updateFault = app.patch('/auth/fault/:id', auth(Role.TECHNICIAN, Role.ADMIN), async (req: Request, res: Response) => {
+
+const updateFault =  async (req: Request, res: Response) => {
 
   const bodyData = updateFaultSchema.safeParse(req.body);
   const paramsData = uuidSchema.safeParse(req.params);
@@ -40,6 +38,6 @@ const updateFault = app.patch('/auth/fault/:id', auth(Role.TECHNICIAN, Role.ADMI
 
   const result = output.unwrap();
   return receivedRequestResponse(res, result);
-});
+};
 
 export default updateFault;

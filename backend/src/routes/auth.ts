@@ -1,5 +1,6 @@
 import { Router } from "express";
 import authController from '../controllers/auth/index';
+import auth from "../middleware/authMiddleware";
 
 const authRouter = Router();
 export const authRoute = '/auth';
@@ -12,7 +13,7 @@ const authRouteInfo = `${authRoute}/info`;
 authRouter.post(authRouteLogin, authController.login);
 authRouter.post(authRouteLogout, authController.logout);
 authRouter.post(authRouteRegister, authController.register);
-authRouter.get(authRouteInfo, authController.readAuth);
+authRouter.get(authRouteInfo, auth(), authController.readAuth);
 
 
 export default authRouter;
