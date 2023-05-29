@@ -1,11 +1,11 @@
-import { Vehicle } from "@prisma/client";
-import { type } from "os";
-
+import type DbResult from "../common/types";
 
 export type BrandReadData = {
-    userId: String,
+    userId: string,
 };
 
-export type BrandReadResult = {
-    brands: String[],
-};
+export type BrandReadResult = DbResult<{
+    id: string,
+    name: string,
+    brand: string,
+}[]>

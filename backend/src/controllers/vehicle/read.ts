@@ -1,22 +1,22 @@
-import express, { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import type { Vehicle } from '@prisma/client';
-import { uuidSchema } from '../validationSchemas/common';
-import {all} from '../../repositories/vehicle/read';
+import { all } from '../../repositories/vehicle/read';
 import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import { vehicleReadManySchema } from '../validationSchemas/vehicle';
 
-const app = express();
 
-const readVehicles = app.get('/vehicle', async (req: Request, res: Response) => {
-  const parsedData = uuidSchema.safeParse(req.body);
-  if (!parsedData.success) {
-    return sendBadRequestResponse(res, 'Invalid input data');
-  }
-  const output = await all({ userId: parsedData.data.id });
+
+const readVehicles = async (req: Request, res: Response) => {
+  const parsedQueryParams = vehicleReadManySchema.safeParse(req.query);
+  if (!parsedQueryParams.success) {
+    return sendBadRequestResponse(res, 'Invalid Query');
+  };
+  const output = await all({ userId: req.session.user!.id, ...req.body});
   if (output.isErr) {
     return notFoundRequestResponse(res);
   }
   const result : Vehicle[] = output.unwrap();
   return receivedRequestResponse(res, result);
-});
+};
 
 export default readVehicles;

@@ -1,4 +1,4 @@
-import type { User, Vehicle } from '@prisma/client';
+import type { Vehicle } from '@prisma/client';
 import { Result } from '@badrap/result';
 import client from '../client';
 import type { VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult } from './types';
@@ -11,10 +11,9 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
     // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
+
         const vehicle = await tx.vehicle.findFirst({
-          where: {
-            id: data.id,
-          },
+          where: data
         });
         if (vehicle === null) {
           throw new NonexistentRecordError('The specified vehicle does not exist!');
@@ -38,24 +37,39 @@ export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
-    // TODO: ADD CHECKVEHICLE
-    const user : User | null = await client.user.findUnique({
-      where: {
-        id: data.userId,
-      },
-    });
 
-    if (user === null) {
-      throw new NonexistentRecordError('The user does not exists!');
+    const vehicleFilter = data.brandName ? {
+      ownerId: data.userId,
+      deletedAt: null,
+      brand: {
+        brand: {
+          name: data.brandName,
+        }
+      }
+    } : {
+      ownerId: data.userId,
+      deletedAt: null,
+    };
+
+    let sortOrder: [] | {} = [];
+
+    if (data.createdAt !== undefined) {
+      sortOrder = [{ createdAt: data.sortOrder ? data.sortOrder : 'asc'}];
+    };
+    if (data.manufacturedAt !== undefined) {
+      sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc'}];
     }
+
+    // const sortOrder: Prisma.SortOrder = data.createdAt ? [
+    // {
+    //   createdAt: data.sortOrder ? data.sortOrder :  'asc',
+    // },
+
 
     // TODO: SORT BY NAME, MANUFACTURED_AT
     // TODO: FILTER BY BRAND
     const result : Vehicle[] = await client.vehicle.findMany({
-      where: {
-        ownerId: data.userId,
-        deletedAt: null,
-      },
+      where: vehicleFilter,
       include: {
         repairs: {
           include: {
@@ -63,11 +77,7 @@ export const all = async (
           },
         },
       },
-      orderBy: {
-        brand: {
-          name: 'asc',
-        },
-      },
+      orderBy: sortOrder,
     });
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');

@@ -1,22 +1,17 @@
-import express, { Request, Response } from 'express';
-import { uuidSchema } from '../validationSchemas/common';
-import { notFoundRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import type { Request, Response } from 'express';
+import { notFoundRequestResponse, receivedRequestResponse } from '../../repositories/common/responses';
+import { read } from '../../repositories/brand/read';
 
 
-const app = express();
-
-
-const readBrands = app.post('brand/:id', async (req: Request, res: Response) => {
-    const parsedData = uuidSchema.safeParse(req.params);
-    if (!parsedData.success) {
-        return sendBadRequestResponse(res, 'Invalid input data');
-    }
-    const output = await all({ userId: parsedData.data.id });
+const readBrands = async (_req: Request, res: Response) => {
+    const output = await read();
     if (output.isErr) {
         return notFoundRequestResponse(res);
     }
+    const result = output.unwrap();
 
-})
+    return receivedRequestResponse(res, result);
+}
 
 
 export default readBrands;

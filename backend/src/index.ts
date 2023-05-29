@@ -6,13 +6,14 @@ import type { ApiResponse } from './controllers/types';
 import vehicle from './routes/vehicle';
 import fault from './routes/fault';
 import user from './routes/user';
-
+import admin from './routes/admin';
 import cookieParser from 'cookie-parser';
 import type { Role } from '@prisma/client';
 import session from './middleware/sessionMiddleware';
-import authRouter from './routes/auth';
+import auth from './routes/auth';
+import brand from './routes/brand';
 declare module 'express-session' {
-  interface SessionData {user: {email: string, role: Role}}
+  interface SessionData {user: {id: string, role: Role}}
 };
 
 
@@ -36,10 +37,11 @@ app.use(session());
 app.use(express.urlencoded({ extended: true }));
 
 // DO NOT MODIFY THE PRECEDING code ^^
-app.use('/auth', authRouter);
+app.use('/', auth);
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
+app.use('/', admin)
 app.use('/', brand);
 
 app.get('/', (_req, res) => {
@@ -64,5 +66,6 @@ if (env.NODE_ENV !== 'test') {
     );
   });
 }
+
 
 export default app;

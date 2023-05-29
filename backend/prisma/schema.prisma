@@ -32,7 +32,7 @@ model User {
   firstName      String
   lastName       String
   role           Role        @default(CLIENT)
-  createdAt      DateTime
+  createdAt      DateTime    @default(now())
   updatedAt      DateTime?
   deletedAt      DateTime?
   password       String
@@ -48,9 +48,10 @@ model Vehicle {
   brandId        String
   ownerId        String
   owner          User        @relation(fields: [ownerId], references: [id])
-  licensePlate   String
-  winCode        String
+  licensePlate   String      @unique
+  winCode        String      @unique
   manufacturedAt DateTime
+  createdAt      DateTime    @default(now())
   scrappedAt     DateTime?
   deletedAt      DateTime?
   repairs        Repair[]
@@ -61,7 +62,7 @@ model Vehicle {
 
 model Repair {
   id             String     @id @default(uuid())
-  createdAt      DateTime
+  createdAt      DateTime   @default(now())
   description    String
   mileage        Int?
   name           String?
@@ -89,4 +90,5 @@ model RepairMaterial {
 enum Role {
   CLIENT
   TECHNICIAN
+  ADMIN
 }

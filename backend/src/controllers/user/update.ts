@@ -1,25 +1,18 @@
-import express, { Request, Response } from 'express';
-import { uuidSchema } from '../validationSchemas/common';
+import type { Request, Response } from 'express';
 import { backendErrorRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import update from '../../repositories/user/update';
 import { updateUserSchema } from '../validationSchemas/user';
 
-const app = express();
-
-// not sure about this path: Kiko's initial commit change because we can
-const updateUser = app.patch('/user/:id', async (req: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response) => {
   const parsedBodyData = updateUserSchema.safeParse(req.body);
-  const parsedParamsData = uuidSchema.safeParse(req.params);
 
   if (!parsedBodyData.success) {
     return sendBadRequestResponse(res, "Invalid body");
   };
-  if (!parsedParamsData.success) {
-    return sendBadRequestResponse(res, 'Invalid Params');
-  };
+
   const output = await update({
     ...parsedBodyData.data,
-    ...parsedParamsData.data,
+    id: req.session.user!.id,
   });
   if (output.isErr) {
     return backendErrorRequestResponse(res);
@@ -28,6 +21,6 @@ const updateUser = app.patch('/user/:id', async (req: Request, res: Response) =>
   const result = output.unwrap();
   return receivedRequestResponse(res, result);
 
-});
+};
 
 export default updateUser;

@@ -1,5 +1,5 @@
 import { Result } from '@badrap/result';
-import {checkVehicle} from '../common/common';
+import { checkVehicle } from '../common/common';
 import { genericError } from '../common/types';
 import type { FaultCreateData, FaultCreateResult } from './types';
 import client from '../client';
@@ -28,8 +28,10 @@ const create = async (data: FaultCreateData) : FaultCreateResult => {
       });
       return Result.ok(result);
     });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    if (err instanceof Error) {
+      return Result.err(err);
+    }
     return genericError;
   }
 };

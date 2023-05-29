@@ -1,100 +1,53 @@
 import client from '../client';
-import { allBrandModels, allBrands, allUsers, allTechnicians, allVehicles, allRepairs, allMaterials} from './data/data';
+import { allBrandModels, allBrands, allUsers, allTechnicians, allVehicles, allRepairs, allMaterials, allAdmins} from './data/data';
+import argon2 from 'argon2';
 
 
 const seed = async () => {
+  // password hashing process
+  for (let user of allUsers) {
+    user.password = await argon2.hash(user.password);
+  }
+  for (let technician of allTechnicians) {
+    technician.password = await argon2.hash(technician.password);
+  }
+  for (let admin of allAdmins) {
+    admin.password = await argon2.hash(admin.password);
+  }
+
   await client.$transaction([
     // create all brands
-    ...allBrands.map((brand) => client.brand.create({ data: { id: brand.id, name: brand.name } })),
+    client.brand.createMany({
+      data: allBrands.map((brand) => ({id: brand.id, name: brand.name})),
+    }),
 
-    // create all brand models
-    ...allBrandModels.map((model) => client.brandModel.create({ data: { ...model } })),
+    client.brandModel.createMany({
+      data: allBrandModels.map((model) => ({...model})),
+    }),
 
-    // create all technicians
-    ...allTechnicians.map((user) =>
-      client.user.create({
-        data: {
-          id: user.id,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          role: user.role,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-          deletedAt: user.deletedAt,
-          password: user.password,
-          isVerified: user.isVerified,
-        },
-      })
-    ),
+    client.user.createMany({
+      data: allTechnicians.map((technician) => ({...technician})),
+    }),
 
-    // create all users
-    ...allUsers.map((user) =>
-      client.user.create({
-        data: {
-          id: user.id,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          role: user.role,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-          deletedAt: user.deletedAt,
-          password: user.password,
-          isVerified: user.isVerified,
-        },
-      })
-    ),
+    client.user.createMany({
+      data: allAdmins.map((admin) => ({...admin})),
+    }),
 
-    // create all vehicles
-    ...allVehicles.map((vehicle) =>
-      client.vehicle.create({
-        data: {
-          id: vehicle.id,
-          brandId: vehicle.brandId,
-          ownerId: vehicle.ownerId,
-          licensePlate: vehicle.licensePlate,
-          winCode: vehicle.winCode,
-          manufacturedAt: vehicle.manufacturedAt,
-          scrappedAt: vehicle.scrappedAt,
-          deletedAt: vehicle.deletedAt,
-        },
-      })
-    ),
+    client.user.createMany({
+      data: allUsers.map((user) => ({...user})),
+    }),
 
-    // create all repairs:
-    ...allRepairs.map((repair) => 
-    client.repair.create({
-      data: {
-        id: repair.id,
-        createdAt: repair.createdAt,
-        description: repair.description,
-        mileage: repair.mileage,
-        name: repair.name,
-        technicianId: repair.technicianId,
-        vehicleId: repair.vehicleId,
-        resolvedAt: repair.resolvedAt,
-        workPrice: repair.workPrice,
-        
-        }    
-        }
-    ),
-    ),
+    client.vehicle.createMany({
+      data: allVehicles.map((vehicle) => ({...vehicle})),
+    }),
 
-    // create all repairmaterial:
-    ...allMaterials.map((material) => 
-    client.repairMaterial.create({
-      data: {
-        id: material.id,
-        description: material.description,
-        name: material.name,
-        price: material.price,
-        repairId: material.repairId,
-      }
-    })
-    )
+    client.repair.createMany({
+      data: allRepairs.map((repair) => ({...repair})),
+    }),
+
+    client.repairMaterial.createMany({
+      data: allMaterials.map((material) => ({...material})),
+    }),
   ]);
 
 };
