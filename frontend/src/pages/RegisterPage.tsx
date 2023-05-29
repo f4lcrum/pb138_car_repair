@@ -29,6 +29,7 @@ const RegisterPage: FC = () => {
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="firstName"
               name="firstName"
               control={control}
               label="First Name"
@@ -36,6 +37,7 @@ const RegisterPage: FC = () => {
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="lastName"
               name="lastName"
               control={control}
               label="Last Name"
@@ -43,6 +45,7 @@ const RegisterPage: FC = () => {
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="password"
               name="password"
               control={control}
               label="Password"
@@ -51,6 +54,7 @@ const RegisterPage: FC = () => {
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="repeatPassword"
               name="repeatPassword"
               control={control}
               label="Repeat password"

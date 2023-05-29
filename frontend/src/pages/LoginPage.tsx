@@ -19,10 +19,16 @@ const LoginPage: FC = () => {
             <Typography variant="subtitle1">Login</Typography>
           </Grid>
           <Grid item>
-            <ControlledTextField name="email" control={control} label="Email" />
+            <ControlledTextField
+              id="email"
+              name="email"
+              control={control}
+              label="Email"
+            />
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="password"
               name="password"
               control={control}
               label="Password"
