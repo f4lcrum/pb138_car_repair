@@ -1,7 +1,13 @@
 import type { Request, Response } from 'express';
-import { backendErrorRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import {
+  backendErrorRequestResponse,
+  createdSuccessRequestResponse,
+  notFoundRequestResponse,
+  sendBadRequestResponse,
+} from '../../repositories/common/responses';
 import verifyTechnicianSchema from '../validationSchemas/admin';
 import verifyTechnician from '../../repositories/admin/verify';
+import { AlreadyVerified, NonexistentRecordError, RoleError } from '../../repositories/common/error';
 
 const verify = async (req: Request, res : Response) => {
   const bodyData = verifyTechnicianSchema.safeParse(req.query);
@@ -10,14 +16,16 @@ const verify = async (req: Request, res : Response) => {
   }
   const output = await verifyTechnician({ email: bodyData.data.email });
   if (output.isErr) {
-    console.log(output.error.message);
+    if (output.error instanceof NonexistentRecordError) {
+      return notFoundRequestResponse(res);
+    }
+    if (output.error instanceof AlreadyVerified || output.error instanceof RoleError) {
+      return sendBadRequestResponse(res, output.error.message);
+    }
     return backendErrorRequestResponse(res);
   }
   const user = output.unwrap();
-  if (user === null) {
-    return backendErrorRequestResponse(res);
-  }
-  return receivedRequestResponse(res, { item: user, message: `User ${user.email.toString()} is verified` });
+  return createdSuccessRequestResponse(res, { item: user, message: `User ${user.email.toString()} is verified` });
 };
 
 export default verify;

@@ -7,7 +7,7 @@ import registerUser from '../../repositories/auth/register';
 const register = async (req : Request, res : Response) => {
   const result = await userRegistrationSchema.safeParseAsync(req.body);
   if (!result.success) {
-    return sendBadRequestResponse(res, result.error.message);
+    return sendBadRequestResponse(res, 'Invalid body data');
   }
 
   const output = await registerUser({ ...result.data, role: result.data.role ? result.data.role : 'CLIENT' });
@@ -22,7 +22,10 @@ const register = async (req : Request, res : Response) => {
     return backendErrorRequestResponse(res);
   }
   req.session.user = { id: user.id, role: user.role };
-  return createdSuccessRequestResponse(res, { item: user, message: `User ${user.firstName.toString()} is authorized` });
+  const userInfo = {
+    firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role,
+  };
+  return createdSuccessRequestResponse(res, { item: userInfo, message: `User ${userInfo.email.toString()} is authorized` });
 };
 
 export default register;

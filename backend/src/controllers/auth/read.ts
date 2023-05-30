@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { backendErrorRequestResponse, notFoundRequestResponse, receivedRequestResponse } from '../../repositories/common/responses';
+import { backendErrorRequestResponse, receivedRequestResponse } from '../../repositories/common/responses';
 import read from '../../repositories/auth/read';
 
 // info about current authentication
@@ -10,7 +10,7 @@ const readAuth = async (req : Request, res : Response) => {
   }
   const user = output.unwrap();
   if (user === null) {
-    return notFoundRequestResponse(res);
+    return backendErrorRequestResponse(res);
   }
 
   return receivedRequestResponse(res, { item: user, message: `User ${user.firstName.toString()} is authorized` });

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "seed": "prisma migrate reset --force && ts-node src/seed/seed.ts",
-    "watch": "nodemon src/index.ts"
+    "watch": "nodemon src/index.ts",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "keywords": [],
   "author": "",

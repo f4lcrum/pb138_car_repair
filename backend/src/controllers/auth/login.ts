@@ -5,7 +5,6 @@ import {
   backendErrorRequestResponse,
   receivedRequestResponse,
   sendBadRequestResponse,
-  unauthorizedRequestResponse,
 } from '../../repositories/common/responses';
 import userInfo from '../../repositories/auth/login';
 import { genericError } from '../../repositories/common/types';
@@ -24,11 +23,11 @@ const login = async (req : Request, res : Response) => {
     }
     const user = output.unwrap();
     if (user === null) {
-      return sendBadRequestResponse(res, 'User does not exist');
+      return sendBadRequestResponse(res, 'Wrong mail or password');
     }
     const isVerified = await argon2.verify(user.password, password);
     if (!isVerified) {
-      return unauthorizedRequestResponse(res, 'Wrong password');
+      return sendBadRequestResponse(res, 'Wrong mail or password');
     }
     req.session.user = { id: user.id, role: user.role };
     return receivedRequestResponse(res, { message: 'Logged in' });
