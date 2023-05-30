@@ -1,4 +1,4 @@
-import type { Vehicle } from '@prisma/client';
+import type { Prisma, Vehicle } from '@prisma/client';
 import { Result } from '@badrap/result';
 import client from '../client';
 import type {
@@ -8,6 +8,8 @@ import { genericError } from '../common/types';
 import { NonexistentRecordError } from '../common/error';
 // intial commit
 // *** reads vehicle of given id ***
+// TODO: CHANGE INPUT DATA
+// TODO: CHECK IF WE CHECK THE PARAMS AND BODY
 export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
     return Result.ok(
@@ -47,18 +49,20 @@ export const all = async (
       ownerId: data.userId,
       deletedAt: null,
     };
-
-    let sortOrder: [] | {} = [];
+    const sortOrder: Prisma.SortOrder = data.sortOrder !== undefined ? data.sortOrder : 'asc';
+    // FIXME: if you really want to suffer, try to change this bullshit:
+    let orderBy: [] | {} = [];
 
     if (data.createdAt !== undefined) {
-      sortOrder = [{ createdAt: data.sortOrder ? data.sortOrder : 'asc' }];
+      orderBy = [{ createdAt: sortOrder }];
     }
     if (data.manufacturedAt !== undefined) {
-      sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc' }];
+      orderBy = [{ manufacturedAt: sortOrder }];
     }
 
     const result : Vehicle[] = await client.vehicle.findMany({
       where: vehicleFilter,
+      // TODO: PROBS REMOVE THE REPAIRS AND MATERIAL:
       include: {
         repairs: {
           include: {
@@ -66,7 +70,7 @@ export const all = async (
           },
         },
       },
-      orderBy: sortOrder,
+      orderBy,
     });
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');
