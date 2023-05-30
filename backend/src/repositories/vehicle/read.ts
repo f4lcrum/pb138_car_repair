@@ -4,7 +4,7 @@ import client from '../client';
 import type { VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult } from './types';
 import { genericError } from '../common/types';
 import { NonexistentRecordError } from '../common/error';
-
+// intial commit
 // *** reads vehicle of given id ***
 export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
