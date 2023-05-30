@@ -5,8 +5,6 @@ import type { FaultUpdateData, FaultUpdateResult } from './types';
 import DbResult, { genericError } from '../common/types';
 import { checkFaultUpdate } from '../common/common';
 
-// TODO: RESOLVED AT SHOULD BE SEND BY FE (FOR INSTANCE CLICK ON RESOLVE SENDS CURRENT TIME TO BE)
-// TODO: this should be authorized:
 const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
   try {
     return await client.$transaction(async (tx) => {

@@ -10,7 +10,6 @@ import { NonexistentRecordError } from '../common/error';
 // *** reads vehicle of given id ***
 export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
-    // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
         const vehicle = await tx.vehicle.findFirst({
@@ -30,8 +29,6 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
     return genericError;
   }
 };
-
-// TODO: ORDERING in params
 
 // *** reads all vehicles of given user ***
 export const all = async (
@@ -60,13 +57,6 @@ export const all = async (
       sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc' }];
     }
 
-    // const sortOrder: Prisma.SortOrder = data.createdAt ? [
-    // {
-    //   createdAt: data.sortOrder ? data.sortOrder :  'asc',
-    // },
-
-    // TODO: SORT BY NAME, MANUFACTURED_AT
-    // TODO: FILTER BY BRAND
     const result : Vehicle[] = await client.vehicle.findMany({
       where: vehicleFilter,
       include: {

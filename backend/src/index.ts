@@ -25,7 +25,6 @@ const port = env.PORT ?? 3000;
 app.use(express.json());
 app.use(cookieParser());
 // CORS middlware
-// TODO: what is ORIGIN in our case - PORT 8080?
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,

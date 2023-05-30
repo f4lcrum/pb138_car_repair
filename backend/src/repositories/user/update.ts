@@ -1,6 +1,3 @@
-// TODO: update user's info based on provided data
-// TODO: change updatedAt to current date
-
 import { Result } from '@badrap/result';
 import DbResult, { genericError } from '../common/types';
 import type { UserUpdateData, UserUpdateResult } from './types';
@@ -10,7 +7,6 @@ import { checkUser } from '../common/common';
 const update = async (data: UserUpdateData): DbResult<UserUpdateResult> => {
   try {
     return await client.$transaction(async (tx) => {
-      //  TODO: PARSE SCHEMA ZOD
       const userCheck = await checkUser(data, tx);
       if (userCheck.isErr) {
         return Result.err(userCheck.error);
