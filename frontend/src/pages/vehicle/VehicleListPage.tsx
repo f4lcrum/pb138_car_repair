@@ -8,19 +8,14 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
-import CarListPageRow from "./CarListPageRow";
+import VehicleListPageRow from "./VehicleListPageRow";
+import { Vehicle } from "../../types/types";
 
-const sampleData = [
-  createData(1, "BMW", "M3", "8888-8888", new Date(), "Gringo", 531, 500),
-  createData(2, "Mercedes", "C", "MRC-DES1", new Date(), "Pavel", 9350, 600),
-  createData(3, "Peugeot", "107", "1235-4653", new Date(), "Petr", 161080, 10),
-  createData(4, "Škoda", "Fabia", "C1B-ULE", new Date(), "Bartoň", 423521, 50),
-];
-
-function createData(
+const createData = (
   id: number,
   brand: string,
   model: string,
@@ -29,7 +24,7 @@ function createData(
   mechanic: string,
   mileage: number,
   price: number
-) {
+) => {
   return {
     id,
     brand,
@@ -57,9 +52,16 @@ function createData(
       },
     ],
   };
-}
+};
 
-const CarListPage: FC = () => {
+const sampleData: Vehicle[] = [
+  createData(1, "BMW", "M3", "8888-8888", new Date(), "Gringo", 531, 500),
+  createData(2, "Mercedes", "C", "MRC-DES1", new Date(), "Pavel", 9350, 600),
+  createData(3, "Peugeot", "107", "1235-4653", new Date(), "Petr", 161080, 10),
+  createData(4, "Škoda", "Fabia", "C1B-ULE", new Date(), "Bartoň", 423521, 50),
+];
+
+const VehicleListPage: FC = () => {
   return (
     <>
       <Typography variant={"h3"} color={"primary"}>
@@ -78,7 +80,10 @@ const CarListPage: FC = () => {
           <Button variant={"contained"}>Filter</Button>
         </Grid>
         <Grid item xs={12}>
-          <TableContainer component={Paper}>
+          <TableContainer
+            sx={{ width: "100%", display: "table", tableLayout: "fixed" }}
+            component={Paper}
+          >
             <Table aria-label="collapsible table">
               <TableHead>
                 <TableRow>
@@ -93,10 +98,18 @@ const CarListPage: FC = () => {
               <TableBody>
                 {sampleData.map((row) => (
                   <>
-                    <CarListPageRow key={row.id} row={row} />
+                    <VehicleListPageRow key={row.id} vehicle={row} />
                   </>
                 ))}
               </TableBody>
+              <TablePagination
+                count={sampleData.length}
+                page={0}
+                onPageChange={() => {
+                  return null;
+                }}
+                rowsPerPage={10}
+              />
             </Table>
           </TableContainer>
         </Grid>
@@ -105,4 +118,4 @@ const CarListPage: FC = () => {
   );
 };
 
-export default CarListPage;
+export default VehicleListPage;

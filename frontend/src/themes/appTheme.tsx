@@ -21,4 +21,15 @@ export const appTheme = createTheme({
       main: "#FEB417",
     },
   },
+  components: {
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "#fdf7f0",
+          },
+        },
+      },
+    },
+  },
 });

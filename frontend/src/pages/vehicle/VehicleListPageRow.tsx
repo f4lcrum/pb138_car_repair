@@ -14,9 +14,10 @@ import {
 } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Vehicle } from "../../types/types";
 
-const CarListPageRow = (props: { row: ReturnType<typeof createData> }) => {
-  const { row } = props;
+const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
+  const { vehicle } = props;
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,10 +32,10 @@ const CarListPageRow = (props: { row: ReturnType<typeof createData> }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.brand}</TableCell>
-        <TableCell>{row.model}</TableCell>
-        <TableCell>{row.licensePlate}</TableCell>
-        <TableCell>{format(row.manufacturedAt, "yyyy")}</TableCell>
+        <TableCell>{vehicle.brand}</TableCell>
+        <TableCell>{vehicle.model}</TableCell>
+        <TableCell>{vehicle.licensePlate}</TableCell>
+        <TableCell>{format(vehicle.manufacturedAt, "yyyy")}</TableCell>
         <TableCell align={"right"}>
           <Button variant={"contained"}>Add fault</Button>
         </TableCell>
@@ -57,7 +58,7 @@ const CarListPageRow = (props: { row: ReturnType<typeof createData> }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.repairs.map((repair) => (
+                  {vehicle.repairs.map((repair) => (
                     <TableRow key={repair.price}>
                       <TableCell>
                         {format(repair.repairedAt, "MMMM do, yyyy H:mma")}
@@ -80,4 +81,4 @@ const CarListPageRow = (props: { row: ReturnType<typeof createData> }) => {
   );
 };
 
-export default CarListPageRow;
+export default VehicleListPageRow;

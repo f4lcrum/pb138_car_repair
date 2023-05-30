@@ -1,47 +1,47 @@
 import { AppBar, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
 import "@mui/material/Menu/Menu";
 import { useNavigate } from "react-router-dom";
-
-enum TodoUserRole {
-  Admin = "admin",
-  Mechanic = "mechanic",
-  Customer = "customer",
-}
+import { UserRole } from "../../types/types";
 
 interface BarItem {
   label: string;
   route: string;
-  roles: Set<TodoUserRole>;
+  roles: Set<UserRole>;
 }
 
 const BasePageBar = () => {
   const barItems: BarItem[] = [
     {
-      label: "Cars",
-      route: "/car",
-      roles: new Set<TodoUserRole>([
-        TodoUserRole.Admin,
-        TodoUserRole.Mechanic,
-        TodoUserRole.Customer,
+      label: "Vehicles",
+      route: "/vehicle",
+      roles: new Set<UserRole>([
+        UserRole.Admin,
+        UserRole.Technician,
+        UserRole.Customer,
       ]),
     },
     {
       label: "Repairs",
       route: "/repair",
-      roles: new Set<TodoUserRole>([TodoUserRole.Admin, TodoUserRole.Mechanic]),
+      roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
     },
     {
       label: "Brands",
       route: "/brand",
-      roles: new Set<TodoUserRole>([TodoUserRole.Admin, TodoUserRole.Mechanic]),
+      roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
+    },
+    {
+      label: "Mechanics",
+      route: "/mechanics",
+      roles: new Set<UserRole>([UserRole.Admin]),
     },
     {
       label: "Profile",
       route: "/profile",
-      roles: new Set<TodoUserRole>([
-        TodoUserRole.Admin,
-        TodoUserRole.Mechanic,
-        TodoUserRole.Customer,
+      roles: new Set<UserRole>([
+        UserRole.Admin,
+        UserRole.Technician,
+        UserRole.Customer,
       ]),
     },
   ];
