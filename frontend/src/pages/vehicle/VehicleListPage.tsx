@@ -15,6 +15,26 @@ import {
 import VehicleListPageRow from "./VehicleListPageRow";
 import { Vehicle } from "../../types/types";
 
+const sampleMaterial = () => {
+  return [
+    {
+      id: 1,
+      name: "Pneumatika Michelin 4x",
+      price: "150",
+    },
+    {
+      id: 2,
+      name: "Hřebíky 100 ks",
+      price: "10",
+    },
+    {
+      id: 3,
+      name: "Žlutý lak 1 litr",
+      price: "25",
+    },
+  ];
+};
+
 const createData = (
   id: number,
   brand: string,
@@ -31,24 +51,32 @@ const createData = (
     model,
     licensePlate,
     manufacturedAt,
-    repairs: [
+    faults: [
       {
+        name: "Blatník",
         mechanic: mechanic,
         mileage: mileage,
-        price: price,
+        workPrice: price,
         repairedAt: manufacturedAt,
+        description: "Pepo mám nějaké popraskané blatník, koukni na to",
+        materials: sampleMaterial(),
       },
       {
+        name: "Převodovka",
         mechanic: mechanic,
         mileage: mileage + 3 * (mileage % 7),
-        price: price + 5 * (price % 13),
+        workPrice: 3 * price + 5 * (price % 13),
         repairedAt: manufacturedAt,
+        materials: sampleMaterial(),
       },
       {
+        name: "Brzdy",
         mechanic: mechanic,
         mileage: mileage + 7 * (mileage % 6),
-        price: price + 16 * (price % 7),
-        repairedAt: manufacturedAt,
+        workPrice: price + 16 * (price % 7),
+        repairedAt: undefined,
+        description: "mačkám na pedál a vono nic",
+        materials: sampleMaterial(),
       },
     ],
   };
@@ -79,7 +107,7 @@ const VehicleListPage: FC = () => {
         <Grid item>
           <Button variant={"contained"}>Filter</Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ m: 2 }}>
           <TableContainer
             sx={{ width: "100%", display: "table", tableLayout: "fixed" }}
             component={Paper}

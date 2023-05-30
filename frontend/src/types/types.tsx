@@ -27,7 +27,7 @@ export type Vehicle = {
   winCode?: string;
   manufacturedAt?: Date;
   scrappedAt?: Date;
-  repairs?: Repair[];
+  faults?: Fault[];
 };
 
 export type Brand = {
@@ -46,9 +46,10 @@ export enum VehicleType {
   Car = "car",
   Motorbike = "motorbike",
   Van = "van",
+  Other = "other",
 }
 
-export type Repair = {
+export type Fault = {
   id?: string;
   technician?: User;
   mileage?: number;
@@ -57,4 +58,11 @@ export type Repair = {
   createdAt?: Date;
   resolvedAt?: Date;
   description?: string;
+  materials?: Material[];
+};
+
+export type Material = {
+  id?: string;
+  name?: string;
+  price?: number;
 };

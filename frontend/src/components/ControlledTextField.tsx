@@ -11,7 +11,17 @@ type ControlledTextFieldPropsUnited = ControlledTextFieldProps &
   Omit<TextFieldProps, "name">;
 
 const ControlledTextField: FC<ControlledTextFieldPropsUnited> = (props) => {
-  const { name, control, label, type, error, helperText } = props;
+  const {
+    name,
+    control,
+    label,
+    type,
+    error,
+    helperText,
+    disabled,
+    defaultValue,
+    variant,
+  } = props;
 
   return (
     <Controller
@@ -19,6 +29,7 @@ const ControlledTextField: FC<ControlledTextFieldPropsUnited> = (props) => {
       control={control}
       render={({ field: { onChange, value } }) => (
         <TextField
+          defaultValue={defaultValue}
           fullWidth={true}
           onChange={onChange}
           value={value}
@@ -26,6 +37,8 @@ const ControlledTextField: FC<ControlledTextFieldPropsUnited> = (props) => {
           helperText={helperText}
           label={label}
           type={type}
+          disabled={disabled}
+          variant={variant}
         />
       )}
     />
