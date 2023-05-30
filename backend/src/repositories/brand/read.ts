@@ -48,9 +48,8 @@ const read = async (): BrandReadResult => {
           },
         });
         const result = brandModels.map((model) => ({
-          id: model.id,
-          name: model.name,
           brand: model.brand.name,
+          models: { id: model.id, name: model.name },
         }));
         if (result === null) {
           throw new NonexistentRecordError('No brand was found!');
