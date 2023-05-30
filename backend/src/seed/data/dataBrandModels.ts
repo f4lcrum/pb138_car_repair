@@ -47,7 +47,7 @@ const porscheModels: BrandModel[] = [
     brandId: 'f611b2a6-f744-11ed-b67e-0242ac120002',
     name: 'Taycan 4S',
   },
-]
+];
 const bmwModels: BrandModel[] = [
   {
     id: '0e791123-f79e-4fee-8ab9-6c9dc6f1f656',
@@ -59,10 +59,12 @@ const bmwModels: BrandModel[] = [
     brandId: 'c1e8a124-f744-11ed-b67e-0242ac120002',
     name: 'BMW X6',
   },
-]
-export const allBrandModels: BrandModel[] = [
+];
+const allBrandModels: BrandModel[] = [
   ...skodaModels,
   ...seatModels,
   ...porscheModels,
   ...bmwModels,
-]
+];
+
+export default allBrandModels;

@@ -1,7 +1,9 @@
 import type { Vehicle } from '@prisma/client';
 import { Result } from '@badrap/result';
 import client from '../client';
-import type { VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult } from './types';
+import type {
+  VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult,
+} from './types';
 import { genericError } from '../common/types';
 import { NonexistentRecordError } from '../common/error';
 // intial commit
@@ -11,24 +13,23 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
     // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
-
         const vehicle = await tx.vehicle.findFirst({
-          where: data
+          where: data,
         });
         if (vehicle === null) {
           throw new NonexistentRecordError('The specified vehicle does not exist!');
         }
         return vehicle;
-      })
-    )
+      }),
+    );
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
-    };
+    }
 
     return genericError;
   }
-}
+};
 
 // TODO: ORDERING in params
 
@@ -37,15 +38,14 @@ export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
-
     const vehicleFilter = data.brandName ? {
       ownerId: data.userId,
       deletedAt: null,
       brand: {
         brand: {
           name: data.brandName,
-        }
-      }
+        },
+      },
     } : {
       ownerId: data.userId,
       deletedAt: null,
@@ -54,17 +54,16 @@ export const all = async (
     let sortOrder: [] | {} = [];
 
     if (data.createdAt !== undefined) {
-      sortOrder = [{ createdAt: data.sortOrder ? data.sortOrder : 'asc'}];
-    };
+      sortOrder = [{ createdAt: data.sortOrder ? data.sortOrder : 'asc' }];
+    }
     if (data.manufacturedAt !== undefined) {
-      sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc'}];
+      sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc' }];
     }
 
     // const sortOrder: Prisma.SortOrder = data.createdAt ? [
     // {
     //   createdAt: data.sortOrder ? data.sortOrder :  'asc',
     // },
-
 
     // TODO: SORT BY NAME, MANUFACTURED_AT
     // TODO: FILTER BY BRAND
@@ -86,9 +85,8 @@ export const all = async (
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
-    };
+    }
 
     return genericError;
   }
 };
-

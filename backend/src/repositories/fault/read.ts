@@ -1,8 +1,8 @@
-import { Result } from "@badrap/result";
-import { genericError } from "../common/types";
-import type { FaultReadOneData, FaultReadOneResult } from "./types";
+import { Result } from '@badrap/result';
+import { genericError } from '../common/types';
+import type { FaultReadOneData, FaultReadOneResult } from './types';
 import client from '../client';
-import { NonexistentRecordError } from "../common/error";
+import { NonexistentRecordError } from '../common/error';
 
 const read = async (data: FaultReadOneData): FaultReadOneResult => {
   try {
@@ -12,19 +12,17 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
           where: {
             vehicleId: data.vehicleId,
           },
-        })
+        });
         return fault;
-      })
-    )
+      }),
+    );
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
-    };
+    }
     return genericError;
   }
 };
-
-
 
 // TODO: readMany repairs:
 // --filter:
@@ -34,9 +32,6 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
 // --sorting:
 // --- default by createdAt in desc order - DONE
 // --- can be specified in params
-
-
-
 
 // const all = async (data: FaultReadManyData): FaultReadManyResult => {
 //   try {

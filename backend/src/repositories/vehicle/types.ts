@@ -15,7 +15,7 @@ export type VehicleReadMultipleData = {
 export type VehicleReadOneData = {
   licensePlate?: string,
   winCode?: string
-}
+};
 
 export type VehicleDeleteData = {
   userId: string,

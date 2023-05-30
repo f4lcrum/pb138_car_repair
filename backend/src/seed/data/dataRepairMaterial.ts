@@ -2,7 +2,7 @@ import type {
   RepairMaterial,
 } from '@prisma/client';
 
-export const allMaterials: (RepairMaterial[]) = [
+const allMaterials: (RepairMaterial[]) = [
   {
     id: '41221bf6-d3d6-407b-bba7-ffe50f0275be',
     name: '5V20 by Bosch',
@@ -32,3 +32,5 @@ export const allMaterials: (RepairMaterial[]) = [
     repairId: '89a81c0c-dd05-413e-ae86-b7053f9af85d',
   },
 ];
+
+export default allMaterials;

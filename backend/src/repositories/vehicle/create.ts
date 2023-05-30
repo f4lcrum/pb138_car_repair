@@ -11,16 +11,16 @@ const create = async (data: VehicleCreateData): VehicleCreateResult => {
         data: {
           ...data,
           createdAt,
-        }
+        },
       });
       return Result.ok(result);
-    })
+    });
   } catch (err) {
     if (err instanceof Error) {
       return Result.err(err);
-    };
+    }
     return genericError;
   }
-}
+};
 
 export default create;

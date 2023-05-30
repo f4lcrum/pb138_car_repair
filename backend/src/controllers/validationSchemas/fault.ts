@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const createFaultSchema = z.object({
   description: z.string().nonempty({ message: "Can't be empty" }),
 }).strict();
@@ -14,4 +15,6 @@ export const updateFaultSchema = z.object({
   workPrice: z.coerce.number().min(1).optional(),
   material: z.array(RepairMaterialZod).optional(),
   mileage: z.coerce.number().min(1).optional(),
-}).strict().refine(({workPrice, material, name, resolvedAt, mileage}) => workPrice !== undefined || material !== undefined  || name !== undefined || resolvedAt !== undefined || mileage !== undefined, { message: "One of the fields must be defined!"});
+}).strict().refine(({
+  workPrice, material, name, resolvedAt, mileage,
+}) => workPrice !== undefined || material !== undefined || name !== undefined || resolvedAt !== undefined || mileage !== undefined, { message: 'One of the fields must be defined!' });

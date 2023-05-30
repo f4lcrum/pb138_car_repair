@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
-export const uuidSchema = z.object({
+const uuidSchema = z.object({
   id: z.string().uuid(),
 }).strict();
+
+export default uuidSchema;

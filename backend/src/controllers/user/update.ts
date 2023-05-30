@@ -7,8 +7,8 @@ const updateUser = async (req: Request, res: Response) => {
   const parsedBodyData = updateUserSchema.safeParse(req.body);
 
   if (!parsedBodyData.success) {
-    return sendBadRequestResponse(res, "Invalid body");
-  };
+    return sendBadRequestResponse(res, 'Invalid body');
+  }
 
   const output = await update({
     ...parsedBodyData.data,
@@ -16,11 +16,10 @@ const updateUser = async (req: Request, res: Response) => {
   });
   if (output.isErr) {
     return backendErrorRequestResponse(res);
-  };
+  }
 
   const result = output.unwrap();
   return receivedRequestResponse(res, result);
-
 };
 
 export default updateUser;

@@ -2,20 +2,20 @@ import express from 'express';
 import cors from 'cors';
 import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
+import cookieParser from 'cookie-parser';
+import type { Role } from '@prisma/client';
 import type { ApiResponse } from './controllers/types';
 import vehicle from './routes/vehicle';
 import fault from './routes/fault';
 import user from './routes/user';
 import admin from './routes/admin';
-import cookieParser from 'cookie-parser';
-import type { Role } from '@prisma/client';
 import session from './middleware/sessionMiddleware';
 import auth from './routes/auth';
 import brand from './routes/brand';
-declare module 'express-session' {
-  interface SessionData {user: {id: string, role: Role}}
-};
 
+declare module 'express-session' {
+  interface SessionData {user: { id: string, role: Role }}
+}
 
 configEnvVariables();
 const app = express();
@@ -32,7 +32,6 @@ app.use(cors({
 }));
 app.use(session());
 
-
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
@@ -41,7 +40,7 @@ app.use('/', auth);
 app.use('/', vehicle);
 app.use('/', fault);
 app.use('/', user);
-app.use('/', admin)
+app.use('/', admin);
 app.use('/', brand);
 
 app.get('/', (_req, res) => {
@@ -66,6 +65,5 @@ if (env.NODE_ENV !== 'test') {
     );
   });
 }
-
 
 export default app;

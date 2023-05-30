@@ -39,7 +39,7 @@ type RepairMaterialWithoutSensitiveInfo = {
   description: string,
   name: string,
   price: number,
-}
+};
 export type FaultUpdateResult = {
   technicianId: string | null,
   resolvedAt: Date | null,

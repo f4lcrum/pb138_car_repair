@@ -1,3 +1,3 @@
-import updateUser from "./update";
+import updateUser from './update';
 
-export default {updateUser};
+export default { updateUser };
