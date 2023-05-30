@@ -10,4 +10,4 @@ export const createBrandSchema = z.object({
 
 export const createBrandModelSchema = z.object({
   name: z.string().nonempty(),
-});
+}).strict();
