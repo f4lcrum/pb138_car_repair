@@ -10,7 +10,7 @@ export type BrandReadResult = DbResult<{
   models: {
     id: string,
     name: string,
-  }
+  }[]
 }[]>;
 
 export type BrandCreateData = {
