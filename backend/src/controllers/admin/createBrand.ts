@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 import { Prisma } from '@prisma/client';
 import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
-import create from '../../repositories/brand/create';
-import createBrandSchema from '../validationSchemas/brand';
+import create from '../../repositories/admin/createBrand';
+import { createBrandSchema } from '../validationSchemas/admin';
 
 const createBrand = async (req: Request, res: Response) => {
   const bodyData = createBrandSchema.safeParse(req.body);

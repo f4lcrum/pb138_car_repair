@@ -5,7 +5,7 @@ import {
   notFoundRequestResponse,
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
-import verifyTechnicianSchema from '../validationSchemas/admin';
+import { verifyTechnicianSchema } from '../validationSchemas/admin';
 import verifyTechnician from '../../repositories/admin/verify';
 import { AlreadyVerified, NonexistentRecordError, RoleError } from '../../repositories/common/error';
 

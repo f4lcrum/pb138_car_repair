@@ -1,7 +1,13 @@
 import { z } from 'zod';
 
-const verifyTechnicianSchema = z.object({
+export const verifyTechnicianSchema = z.object({
   email: z.string().email(),
 });
 
-export default verifyTechnicianSchema;
+export const createBrandSchema = z.object({
+  name: z.string().nonempty(),
+}).strict();
+
+export const createBrandModelSchema = z.object({
+  name: z.string().nonempty(),
+});

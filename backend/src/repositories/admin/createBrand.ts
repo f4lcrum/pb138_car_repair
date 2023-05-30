@@ -1,7 +1,7 @@
 import { Result } from '@badrap/result';
 import { genericError } from '../common/types';
 import client from '../client';
-import type { BrandCreateData, BrandCreateResult } from './types';
+import type { BrandCreateData, BrandCreateResult } from '../brand/types';
 
 const create = async (data: BrandCreateData): BrandCreateResult => {
   try {

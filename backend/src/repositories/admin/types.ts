@@ -17,3 +17,14 @@ export type VerifyDataResult = DbResult<{
   email: string,
   isVerified: boolean,
 }>;
+
+export type BrandModelCreatedata = {
+  brandId: string,
+  name: string,
+};
+
+export type BrandModelCreateResult = DbResult<{
+  id: string,
+  brandId: string,
+  name: string,
+}>;
