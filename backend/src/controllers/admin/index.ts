@@ -1,5 +1,7 @@
-import createTechnician from "./createTechnician";
+import verify from './verifyTechnician';
+import readUnverified from './readUnverifiedTechnicians';
 
 export default {
-    createTechnician
-}
+  verify,
+  readUnverified,
+};

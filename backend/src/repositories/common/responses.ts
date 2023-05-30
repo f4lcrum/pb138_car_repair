@@ -1,7 +1,7 @@
 import type { Response } from 'express';
 
 export const unauthorizedRequestResponse = (res: Response, messageError: string) => {
-  res.status(401).send({ status: 'Unauthorized', error: messageError});
+  res.status(401).send({ status: 'Unauthorized', error: messageError });
 };
 
 export const sendBadRequestResponse = (res: Response, messageError: String) => {
@@ -21,9 +21,9 @@ export const createdSuccessRequestResponse = (res: Response, inputData: any) => 
 };
 
 export const backendErrorRequestResponse = (res: Response) => {
-  res.status(500).send({ status: 'Internal error'});
-}
+  res.status(500).send({ status: 'Internal error' });
+};
 
 export const forbiddenRequestResponse = (res: Response, messageError: string) => {
   res.status(403).send({ status: 'Forbidden', error: messageError });
-}
+};

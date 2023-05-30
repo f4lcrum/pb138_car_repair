@@ -1,9 +1,9 @@
 import { Result } from '@badrap/result';
+import type { Repair, RepairMaterial } from '@prisma/client';
 import client from '../client';
 import type { FaultUpdateData, FaultUpdateResult } from './types';
 import DbResult, { genericError } from '../common/types';
 import { checkFaultUpdate } from '../common/common';
-import type { Repair, RepairMaterial } from '@prisma/client';
 
 // TODO: RESOLVED AT SHOULD BE SEND BY FE (FOR INSTANCE CLICK ON RESOLVE SENDS CURRENT TIME TO BE)
 // TODO: this should be authorized:
@@ -14,22 +14,22 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
       if (faultCheck.isErr) {
         return Result.err(faultCheck.error);
       }
-      const fault: Repair & { material: RepairMaterial[]} = faultCheck.unwrap();
+      const fault: Repair & { material: RepairMaterial[] } = faultCheck.unwrap();
       const updatedFault = await tx.repair.update({
         where: {
           id: data.id,
         },
         data: {
-          ...(data.name !== undefined ? {name: data.name} : {}),
-          ...(data.resolvedAt !== undefined ? {resolvedAt: data.resolvedAt} : {}),
-          ...(data.workPrice !== undefined ? {workPrice: data.workPrice} : {}),
-          ...(data.mileage !== undefined ? {mileage: data.mileage} : {}),
+          ...(data.name !== undefined ? { name: data.name } : {}),
+          ...(data.resolvedAt !== undefined ? { resolvedAt: data.resolvedAt } : {}),
+          ...(data.workPrice !== undefined ? { workPrice: data.workPrice } : {}),
+          ...(data.mileage !== undefined ? { mileage: data.mileage } : {}),
           // TODO: is this what we want? if the fault does not have assigned technician
           // and some technician is updating the fault, it will be automatically assigned.
           ...(fault.technicianId === null ? { technicianId: data.technicianId } : {}),
           material: {
             create: data.material || [],
-          }
+          },
         },
         select: {
           resolvedAt: true,
@@ -49,12 +49,10 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
 
       });
       return Result.ok(updatedFault);
-    })
-
+    });
   } catch (e) {
     return genericError;
   }
-
-}
+};
 
 export default update;
