@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { uuidSchema } from '../validationSchemas/common';
+import uuidSchema from '../validationSchemas/common';
 import { createFaultSchema } from '../validationSchemas/fault';
 import { backendErrorRequestResponse, createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import create from '../../repositories/fault/create';
@@ -21,9 +21,9 @@ const createFault = async (req : Request, res : Response) => {
     vehicleId: paramsData.data.id,
   });
   if (output.isErr) {
-    if (output.error instanceof WrongOwnershipError ||
-      output.error instanceof NonexistentRecordError ||
-      output.error instanceof DeletedRecordError) {
+    if (output.error instanceof WrongOwnershipError
+      || output.error instanceof NonexistentRecordError
+      || output.error instanceof DeletedRecordError) {
       return sendBadRequestResponse(res, output.error.message);
     }
     return backendErrorRequestResponse(res);
