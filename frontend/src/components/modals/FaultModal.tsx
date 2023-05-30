@@ -74,66 +74,73 @@ const FaultModal: FC<FaultModalProps> = (props) => {
 
           {/* Only Technician can modify this fields */}
 
-          <Grid item xs={12}>
-            <ControlledTextField
-              defaultValue={fault?.workPrice ?? 0}
-              label={"Work price (€)"}
-              name={"workPrice"}
-              control={control}
-              type={"number"}
-              disabled={!!fault?.repairedAt}
-            />
-          </Grid>
+          {!!fault && (
+            <>
+              <Grid item xs={12}>
+                <ControlledTextField
+                  defaultValue={fault?.workPrice ?? 0}
+                  label={"Work price (€)"}
+                  name={"workPrice"}
+                  control={control}
+                  type={"number"}
+                  disabled={!!fault?.repairedAt}
+                />
+              </Grid>
 
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Material</TableCell>
-                  <TableCell>Price (€)</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {fault?.materials?.map((material) => (
-                  <TableRow key={material.id}>
-                    <TableCell>{material?.name}</TableCell>
-                    <TableCell>{material?.price}</TableCell>
-                    <TableCell>
-                      <IconButton size="small">
-                        <CloseIcon color={"primary"} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                <TableRow>
-                  <TableCell>
-                    <ControlledTextField
-                      label={"New Material Name"}
-                      name={"newMaterialName"}
-                      control={control}
-                      variant={"standard"}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <ControlledTextField
-                      label={"New Material Price"}
-                      name={"newMaterialPrice"}
-                      control={control}
-                      variant={"standard"}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button variant={"outlined"}>Add</Button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+              <TableContainer sx={{ paddingLeft: 2 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Material</TableCell>
+                      <TableCell>Price (€)</TableCell>
+                      <TableCell />
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {fault?.materials?.map((material) => (
+                      <TableRow key={material.id}>
+                        <TableCell>{material?.name}</TableCell>
+                        <TableCell>{material?.price}</TableCell>
+                        <TableCell>
+                          <IconButton size="small">
+                            <CloseIcon color={"primary"} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    <TableRow>
+                      <TableCell>
+                        <ControlledTextField
+                          label={"New Material Name"}
+                          name={"newMaterialName"}
+                          control={control}
+                          variant={"standard"}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <ControlledTextField
+                          label={"New Material Price"}
+                          name={"newMaterialPrice"}
+                          control={control}
+                          variant={"standard"}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button variant={"outlined"}>Add</Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
 
-          <Grid item>
-            <FormControlLabel label="Mark as resolved" control={<Checkbox />} />
-          </Grid>
+              <Grid item>
+                <FormControlLabel
+                  label="Mark as resolved"
+                  control={<Checkbox />}
+                />
+              </Grid>
+            </>
+          )}
         </Grid>
       </DialogContent>
       <DialogActions>

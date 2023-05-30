@@ -5,10 +5,7 @@ import {
   Button,
   Collapse,
   IconButton,
-  Table,
-  TableBody,
   TableCell,
-  TableHead,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -16,6 +13,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Fault, Vehicle } from "../../types/types";
 import FaultModal from "../../components/modals/FaultModal";
+import FaultTable from "../../components/tables/FaultTable";
 
 const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
   const { vehicle } = props;
@@ -25,13 +23,13 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
 
   return (
     <>
-      <TableRow
-        onClick={() => setOpen(!open)}
-        key={Math.random()}
-        sx={{ "& > *": { borderBottom: "unset" } }}
-      >
+      <TableRow key={Math.random()} sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          <IconButton aria-label="expand row" size="small">
+          <IconButton
+            onClick={() => setOpen(!open)}
+            aria-label="expand row"
+            size="small"
+          >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -40,7 +38,15 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
         <TableCell>{vehicle.licensePlate}</TableCell>
         <TableCell>{format(vehicle.manufacturedAt, "yyyy")}</TableCell>
         <TableCell align={"right"}>
-          <Button variant={"contained"}>Add fault</Button>
+          <Button
+            variant={"contained"}
+            onClick={() => {
+              setFault(undefined);
+              setFaultModalOpen(true);
+            }}
+          >
+            Add fault
+          </Button>
         </TableCell>
       </TableRow>
       <TableRow key={Math.random()}>
@@ -50,44 +56,12 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
               <Typography variant="h6" gutterBottom component="div">
                 Faults
               </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Repair Date</TableCell>
-                    <TableCell>Technician</TableCell>
-                    <TableCell>Total Price (€)</TableCell>
-                    <TableCell>Mileage (km)</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {vehicle.faults.map((fault) => (
-                    <TableRow key={fault.price}>
-                      <TableCell>{fault.name}</TableCell>
-                      <TableCell>
-                        {fault.repairedAt
-                          ? format(fault.repairedAt, "MMMM do, yyyy H:mma")
-                          : ""}
-                      </TableCell>
-                      <TableCell>{fault.mechanic}</TableCell>
-                      <TableCell>{fault.workPrice}</TableCell>
-                      <TableCell>{fault.mileage}</TableCell>
-                      <TableCell align={"right"}>
-                        <Button
-                          variant={"outlined"}
-                          onClick={() => {
-                            setFault(fault);
-                            setFaultModalOpen(true);
-                          }}
-                        >
-                          Detail
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <FaultTable
+                faults={vehicle.faults}
+                setFault={setFault}
+                setModalOpen={setFaultModalOpen}
+                size={"small"}
+              />
             </Box>
           </Collapse>
         </TableCell>

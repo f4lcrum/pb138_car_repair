@@ -7,6 +7,9 @@ import { appTheme } from "./themes/appTheme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import VehicleListPage from "./pages/vehicle/VehicleListPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import TechnicianListPage from "./pages/technic/TechnicianListPage";
+import FaultListPage from "./pages/fault/FaultListPage";
+import BrandListPage from "./pages/brand/BrandListPage";
 
 const App = () => {
   return (
@@ -20,9 +23,9 @@ const App = () => {
             <Route path="/" element={<ProtectedRoute />}>
               <Route path="/" element={<BasePage />}>
                 <Route path="vehicle" element={<VehicleListPage />} />
-                <Route path="repair" element={<NotFoundPage />} />
-                <Route path="brand" element={<NotFoundPage />} />
-                <Route path="mechanics" element={<NotFoundPage />} />
+                <Route path="fault" element={<FaultListPage />} />
+                <Route path="brand" element={<BrandListPage />} />
+                <Route path="technicians" element={<TechnicianListPage />} />
                 <Route path="profile" element={<NotFoundPage />} />
               </Route>
             </Route>

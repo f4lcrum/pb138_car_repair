@@ -12,7 +12,7 @@ export const appTheme = createTheme({
       default: "#FAF2E9",
     },
     error: {
-      main: "#ff0000",
+      main: "#FF0000",
     },
     info: {
       main: "#C2DDDD",
@@ -26,7 +26,7 @@ export const appTheme = createTheme({
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: "#fdf7f0",
+            backgroundColor: "#fdfbf8",
           },
         },
       },

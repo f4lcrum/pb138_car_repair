@@ -21,8 +21,8 @@ const BasePageBar = () => {
       ]),
     },
     {
-      label: "Repairs",
-      route: "/repair",
+      label: "Faults",
+      route: "/fault",
       roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
     },
     {
@@ -31,8 +31,8 @@ const BasePageBar = () => {
       roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
     },
     {
-      label: "Mechanics",
-      route: "/mechanics",
+      label: "Technicians",
+      route: "/technicians",
       roles: new Set<UserRole>([UserRole.Admin]),
     },
     {
