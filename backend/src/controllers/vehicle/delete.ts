@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import type { Vehicle } from '@prisma/client';
-import { uuidSchema } from '../validationSchemas/common';
+import uuidSchema from '../validationSchemas/common';
 import { receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import deleteVehicle from '../../repositories/vehicle/delete';
 

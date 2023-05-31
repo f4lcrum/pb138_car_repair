@@ -1,5 +1,11 @@
-import createTechnician from "./createTechnician";
+import verify from './verifyTechnician';
+import readUnverified from './readUnverifiedTechnicians';
+import createBrandModel from './createBrandModel';
+import createBrand from './createBrand';
 
 export default {
-    createTechnician
-}
+  verify,
+  readUnverified,
+  createBrandModel,
+  createBrand,
+};

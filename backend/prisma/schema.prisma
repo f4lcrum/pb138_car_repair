@@ -20,7 +20,7 @@ model Brand {
 model BrandModel {
   id             String      @id @default(uuid())
   brandId        String
-  name           String
+  name           String      @unique
   brand          Brand       @relation(fields: [brandId], references: [id])
   vehicles       Vehicle[]
 }

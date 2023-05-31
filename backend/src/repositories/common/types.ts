@@ -17,3 +17,5 @@ export const genericError = Result.err(
 );
 
 export default DbResult;
+
+export type genericResult<T> = Result<T>;

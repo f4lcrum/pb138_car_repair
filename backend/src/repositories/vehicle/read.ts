@@ -1,75 +1,68 @@
-import type { Vehicle } from '@prisma/client';
+import type { Prisma, Vehicle } from '@prisma/client';
 import { Result } from '@badrap/result';
 import client from '../client';
-import type { VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult } from './types';
+import type {
+  VehicleReadMultipleData, VehicleReadMultipleResult, VehicleReadOneData, VehicleReadOneResult,
+} from './types';
 import { genericError } from '../common/types';
 import { NonexistentRecordError } from '../common/error';
-
+// intial commit
 // *** reads vehicle of given id ***
+// TODO: CHANGE INPUT DATA
+// TODO: CHECK IF WE CHECK THE PARAMS AND BODY
 export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   try {
-    // TODO: ADD CHECKVEHICLE
     return Result.ok(
       await client.$transaction(async (tx) => {
-
         const vehicle = await tx.vehicle.findFirst({
-          where: data
+          where: data,
         });
         if (vehicle === null) {
           throw new NonexistentRecordError('The specified vehicle does not exist!');
         }
         return vehicle;
-      })
-    )
+      }),
+    );
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
-    };
+    }
 
     return genericError;
   }
-}
-
-// TODO: ORDERING in params
+};
 
 // *** reads all vehicles of given user ***
 export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
-
     const vehicleFilter = data.brandName ? {
       ownerId: data.userId,
       deletedAt: null,
       brand: {
         brand: {
           name: data.brandName,
-        }
-      }
+        },
+      },
     } : {
       ownerId: data.userId,
       deletedAt: null,
     };
-
-    let sortOrder: [] | {} = [];
+    const sortOrder: Prisma.SortOrder = data.sortOrder !== undefined ? data.sortOrder : 'asc';
+    // FIXME: if you really want to suffer, try to change this bullshit:
+    let orderBy: [] | {} = [];
 
     if (data.createdAt !== undefined) {
-      sortOrder = [{ createdAt: data.sortOrder ? data.sortOrder : 'asc'}];
-    };
+      orderBy = [{ createdAt: sortOrder }];
+    }
     if (data.manufacturedAt !== undefined) {
-      sortOrder = [{ manufacturedAt: data.sortOrder ? data.sortOrder : 'asc'}];
+      orderBy = [{ manufacturedAt: sortOrder }];
     }
 
-    // const sortOrder: Prisma.SortOrder = data.createdAt ? [
-    // {
-    //   createdAt: data.sortOrder ? data.sortOrder :  'asc',
-    // },
-
-
-    // TODO: SORT BY NAME, MANUFACTURED_AT
-    // TODO: FILTER BY BRAND
     const result : Vehicle[] = await client.vehicle.findMany({
       where: vehicleFilter,
+      // TODO: PROBS REMOVE THE REPAIRS AND MATERIAL:
       include: {
         repairs: {
           include: {
@@ -77,7 +70,7 @@ export const all = async (
           },
         },
       },
-      orderBy: sortOrder,
+      orderBy,
     });
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');
@@ -86,9 +79,8 @@ export const all = async (
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
-    };
+    }
 
     return genericError;
   }
 };
-

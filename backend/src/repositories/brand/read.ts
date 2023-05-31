@@ -2,7 +2,7 @@ import { Result } from '@badrap/result';
 import client from '../client';
 import type { BrandReadResult } from './types';
 import { NonexistentRecordError } from '../common/error';
-import  { genericError } from '../common/types';
+import { genericError } from '../common/types';
 
 // export const readSpecific = async (data: BrandReadData): BrandReadSpecificResult => {
 // try {
@@ -32,35 +32,37 @@ import  { genericError } from '../common/types';
 //     }
 // }
 
-
-
-export const read = async (): BrandReadResult =>
-{
-    try {
-       return Result.ok(
-        await client.$transaction(async (tx) => {
-        const brandModels = await tx.brandModel.findMany({
-        select: {
-            id: true,
+const read = async (): BrandReadResult => {
+  try {
+    return Result.ok(
+      await client.$transaction(async (tx) => {
+        const brandsWithBrandModels = await tx.brand.findMany({
+          select: {
             name: true,
-            brand: {
-                select: {
-                    name: true
-                }
-            }
-        }
+            models: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
         });
-        const result = brandModels.map(model => ({id: model.id, name: model.name, brand: model.brand.name}))
-        if (result === null) {
-            throw new NonexistentRecordError('No brand was found!');
+        if (brandsWithBrandModels === null) {
+          throw new NonexistentRecordError('No brand was found!');
         }
+        const result = brandsWithBrandModels.map((brandWithModel) => ({
+          brand: brandWithModel.name,
+          models: brandWithModel.models,
+        }));
         return result;
-    })
-    )
-} catch (err) {
+      }),
+    );
+  } catch (err) {
     if (err instanceof NonexistentRecordError) {
-        return Result.err(err);
+      return Result.err(err);
     }
     return genericError;
-}
-}
+  }
+};
+
+export default read;

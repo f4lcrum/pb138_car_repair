@@ -1,7 +1,13 @@
 import type { Request, Response } from 'express';
-import { uuidSchema } from '../validationSchemas/common';
+import uuidSchema from '../validationSchemas/common';
 import { createFaultSchema } from '../validationSchemas/fault';
-import { backendErrorRequestResponse, createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import {
+  backendErrorRequestResponse,
+  createdSuccessRequestResponse,
+  forbiddenRequestResponse,
+  notFoundRequestResponse,
+  sendBadRequestResponse,
+} from '../../repositories/common/responses';
 import create from '../../repositories/fault/create';
 import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from '../../repositories/common/error';
 
@@ -21,10 +27,12 @@ const createFault = async (req : Request, res : Response) => {
     vehicleId: paramsData.data.id,
   });
   if (output.isErr) {
-    if (output.error instanceof WrongOwnershipError ||
-      output.error instanceof NonexistentRecordError ||
-      output.error instanceof DeletedRecordError) {
-      return sendBadRequestResponse(res, output.error.message);
+    if (output.error instanceof NonexistentRecordError
+      || output.error instanceof DeletedRecordError) {
+      return notFoundRequestResponse(res);
+    }
+    if (output.error instanceof WrongOwnershipError) {
+      return forbiddenRequestResponse(res, 'Forbidden');
     }
     return backendErrorRequestResponse(res);
   }

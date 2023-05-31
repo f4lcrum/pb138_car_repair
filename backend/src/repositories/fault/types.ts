@@ -24,6 +24,12 @@ export type FaultReadManyData = {
 
 export type FaultReadManyResult = DbRepairs;
 
+export type IsVerifiedTechnicianData = {
+  technicianId: string,
+};
+
+export type IsVerifiedTechnicianResult = DbResult<Boolean>;
+
 export type FaultUpdateData = {
   // TODO: WHAT ABOUT THE ID
   id: string,
@@ -39,7 +45,7 @@ type RepairMaterialWithoutSensitiveInfo = {
   description: string,
   name: string,
   price: number,
-}
+};
 export type FaultUpdateResult = {
   technicianId: string | null,
   resolvedAt: Date | null,
