@@ -14,7 +14,7 @@ export type VehicleReadMultipleData = {
 // vehicle's id:
 export type VehicleReadOneData = {
   licensePlate?: string,
-  winCode?: string
+  vinCode?: string
 };
 
 export type VehicleDeleteData = {
@@ -39,7 +39,7 @@ export type VehicleCreateData = {
   ownerId: string,
   brandId: string,
   licensePlate: string,
-  winCode: string,
+  vinCode: string,
   manufacturedAt: Date,
 
 };
