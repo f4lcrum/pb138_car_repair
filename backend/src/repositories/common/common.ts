@@ -10,7 +10,9 @@ import {
 import type { GenericResult, PrismaTransactionHandle } from './types';
 import type { CheckUserData } from '../user/types';
 import type { FaultUpdateData } from '../fault/types';
-import { backendErrorRequestResponse, notFoundRequestResponse, sendBadRequestResponse } from './responses';
+import {
+  backendErrorRequestResponse, forbiddenRequestResponse, notFoundRequestResponse, sendBadRequestResponse, unauthorizedRequestResponse,
+} from './responses';
 
 export const checkVehicle = async (
   data: CheckUVehicleData,
@@ -86,7 +88,6 @@ export const checkFaultUpdate = async (
 export const errorResponsesHandle = async (
   res : Response,
   error: Error,
-  message?: string,
 ) : Promise<void> => {
   if (error instanceof DeletedRecordError || error instanceof NonexistentRecordError) {
     return notFoundRequestResponse(res);
@@ -96,5 +97,10 @@ export const errorResponsesHandle = async (
   }
 
   if (error instanceof TechnicianNotVerifiedError || error instanceof AlreadyAssigned
-    || WrongOwnershipError) { return backendErrorRequestResponse(res); }
+    || WrongOwnershipError) { return forbiddenRequestResponse(res, 'Forbidden'); }
+
+  if (error instanceof UnauthorizedError) {
+    return unauthorizedRequestResponse(res, 'Unauthorized');
+  }
+  return backendErrorRequestResponse(res);
 };
