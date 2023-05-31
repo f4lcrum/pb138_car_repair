@@ -100,7 +100,7 @@ export const errorResponsesHandle = async (
     || WrongOwnershipError) { return forbiddenRequestResponse(res, 'Forbidden'); }
 
   if (error instanceof UnauthorizedError) {
-    return unauthorizedRequestResponse(res, error.message);
+    return unauthorizedRequestResponse(res, 'Unauthorized');
   }
   return backendErrorRequestResponse(res);
 };
