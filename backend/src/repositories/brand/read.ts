@@ -31,9 +31,9 @@ const read = async (): BrandReadResult => {
         return result;
       }),
     );
-  } catch (err) {
-    if (err instanceof NonexistentRecordError) {
-      return Result.err(err);
+  } catch (e) {
+    if (e instanceof NonexistentRecordError) {
+      return Result.err(e);
     }
     return genericError;
   }
