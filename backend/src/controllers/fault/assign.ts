@@ -1,15 +1,6 @@
 import type { Request, Response } from 'express';
 import uuidSchema from '../validationSchemas/common';
 import {
-  AlreadyAssigned,
-  DeletedRecordError,
-  NonexistentRecordError,
-  TechnicianNotVerifiedError,
-} from '../../repositories/common/error';
-import {
-  backendErrorRequestResponse,
-  forbiddenRequestResponse,
-  notFoundRequestResponse,
   receivedRequestResponse,
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
@@ -20,6 +11,7 @@ const assignFault = async (req: Request, res: Response) => {
   if (!parsedParams.success) {
     return sendBadRequestResponse(res, 'Invalid params');
   }
+  // TODO:
   const output = await assign(
     { technicianId: req.session.user!.id, faultId: parsedParams.data.id },
   );
