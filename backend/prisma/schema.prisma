@@ -49,7 +49,7 @@ model Vehicle {
   ownerId        String
   owner          User        @relation(fields: [ownerId], references: [id])
   licensePlate   String      @unique
-  winCode        String      @unique
+  vinCode        String      @unique
   manufacturedAt DateTime
   createdAt      DateTime    @default(now())
   scrappedAt     DateTime?

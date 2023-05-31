@@ -14,8 +14,8 @@ const readSpecificVehicle = async (req: Request, res: Response) => {
   if (parsedQueryParams.data.licensePlate !== undefined) {
     inputData.licensePlate = parsedQueryParams.data.licensePlate;
   }
-  if (parsedQueryParams.data.winCode !== undefined) {
-    inputData.winCode = parsedQueryParams.data.winCode;
+  if (parsedQueryParams.data.vinCode !== undefined) {
+    inputData.vinCode = parsedQueryParams.data.vinCode;
   }
   const output = await read(inputData);
   if (output.isErr) {
