@@ -6,7 +6,6 @@ import {
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
 import create from '../../repositories/fault/create';
-import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from '../../repositories/common/error';
 import { errorResponsesHandle } from '../../repositories/common/common';
 
 const createFault = async (req : Request, res : Response) => {

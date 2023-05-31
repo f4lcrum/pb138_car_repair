@@ -10,7 +10,6 @@ const auth = (...role: Role[]) => (req: Request, res: Response, next: NextFuncti
   if (role.length > 0 && !role.includes(req.session.user.role)) {
     return forbiddenRequestResponse(res, 'Forbidden');
   }
-  // TODO: test if the return statement is correct here:
   return next();
 };
 

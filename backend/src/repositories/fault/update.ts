@@ -52,8 +52,7 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           ...(data.resolvedAt !== undefined ? { resolvedAt: data.resolvedAt } : {}),
           ...(data.workPrice !== undefined ? { workPrice: data.workPrice } : {}),
           ...(data.mileage !== undefined ? { mileage: data.mileage } : {}),
-          // TODO: is this what we want? if the fault does not have assigned technician
-          // and some technician is updating the fault, it will be automatically assigned.
+          // TODO: REMOVE ONCE THE ASSIGN/UNASSIGN IS DONE
           ...(fault.technicianId === null ? { technicianId: data.technicianId } : {}),
           material: {
             create: data.material || [],

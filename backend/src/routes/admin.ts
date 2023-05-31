@@ -7,6 +7,7 @@ import auth from '../middleware/authMiddleware';
 const adminRouter = Router();
 const adminRoute = `${authRoute}/admin/technician`;
 const adminRouteVerify = `${adminRoute}/verification`;
+// TODO: API DOCS
 const adminRouteCreateBrand = `${authRoute}/admin/brand`;
 const adminRouteBrandModel = `${authRoute}/admin/brand/:id/brand-model`;
 

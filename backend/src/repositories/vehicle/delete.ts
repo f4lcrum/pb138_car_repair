@@ -7,7 +7,6 @@ import { checkVehicle } from '../common/common';
 const deleteVehicle = async (
   data: VehicleDeleteData,
 ): VehicleDeleteResult => {
-  // TODO: DESELECT SOME SENSITIVE FIELDS FROM VEHICLEDELETERESULT (OWNERID, VEHICLEID???)
   try {
     return await client.$transaction(async (tx) => {
       const vehicleCheck = await checkVehicle(

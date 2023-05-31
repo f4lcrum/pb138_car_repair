@@ -5,13 +5,17 @@ import type { CheckUVehicleData, TransactionCheckOperationResult } from '../vehi
 import {
   AlreadyAssigned,
   AlreadyVerified,
-  DeletedRecordError, NonexistentRecordError, RoleError, TechnicianNotVerifiedError, UnauthorizedError, WrongOwnershipError,
+  DeletedRecordError, NonexistentRecordError,
+  RoleError, TechnicianNotVerifiedError,
+  UnauthorizedError, WrongOwnershipError,
 } from './error';
-import type { GenericResult, PrismaTransactionHandle } from './types';
+import type { PrismaTransactionHandle } from './types';
 import type { CheckUserData } from '../user/types';
 import type { FaultUpdateData } from '../fault/types';
 import {
-  backendErrorRequestResponse, forbiddenRequestResponse, notFoundRequestResponse, sendBadRequestResponse, unauthorizedRequestResponse,
+  backendErrorRequestResponse, forbiddenRequestResponse,
+  notFoundRequestResponse, sendBadRequestResponse,
+  unauthorizedRequestResponse,
 } from './responses';
 
 export const checkVehicle = async (

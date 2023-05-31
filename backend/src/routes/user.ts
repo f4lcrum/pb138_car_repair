@@ -6,7 +6,6 @@ import auth from '../middleware/authMiddleware';
 
 const userRouter = Router();
 const userRouteGeneric = `${authRoute}/user`;
-// const userRouteSpecific = `${userRouteGeneric}/:id`;
 
 userRouter.patch(
   userRouteGeneric,

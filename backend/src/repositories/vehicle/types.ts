@@ -45,3 +45,7 @@ export type VehicleCreateData = {
 };
 
 export type VehicleCreateResult = DbVehicle;
+
+export type OrderBy =
+  ({ createdAt?: Prisma.SortOrder } &
+  { manufacturedAt?: Prisma.SortOrder })[];
