@@ -9,7 +9,9 @@ Auth endpoints:
 
 Admin endpoints:
 
-* [verification](verification.md) : `POST /auth/admin/technician/verification`
-* [technician](technician.md) : `GET /auth/admin/technician`
+* [verification](admin/verification.md) : `POST /auth/admin/technician/verification`
+* [technician](admin/technician.md) : `GET /auth/admin/technician`
+* [createBrand](admin/createBrand.md) : `POST /auth/admin/brand/:id/brand-model`
+* [createBrandModel](admin/createBrandModel.md) : ``
 
 Fault endpoints:

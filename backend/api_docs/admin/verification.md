@@ -8,17 +8,33 @@ Verify given technician user and gives him authorization to resolve faults.
 
 **Auth required** : YES (ADMIN)
 
-## Success Response
+**Query requirements**
 
-**Code** : `201 CREATED`
+email: a valid email of existing unverified
 
 **Query example**
 
 localhost:3000/auth/admin/technician/verification/?email=jozino@azet.sk
 
-**Query requirements**
+## Success Response
 
-email: a valid email of existing unverified
+**Code** : `201 CREATED`
+
+**Content Example**
+
+```json
+{
+	"error": null,
+	"data": {
+		"item": {
+			"id": "72e4eda6-5bd0-466c-8c56-b5405cd12e2f",
+			"isVerified": true
+		},
+		"message": "User 72e4eda6-5bd0-466c-8c56-b5405cd12e2f is verified"
+	}
+}
+```
+
 
 ## Error Response
 

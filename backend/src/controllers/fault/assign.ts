@@ -5,6 +5,7 @@ import {
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
 import { errorResponsesHandle } from '../../repositories/common/common';
+import assign from '../../repositories/fault/assign';
 
 const assignFault = async (req: Request, res: Response) => {
   const parsedParams = uuidSchema.safeParse(req.params);

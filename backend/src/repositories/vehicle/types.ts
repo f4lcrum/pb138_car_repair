@@ -13,6 +13,7 @@ export type VehicleReadMultipleData = {
 
 // vehicle's id:
 export type VehicleReadOneData = {
+  ownerId: string,
   licensePlate?: string,
   vinCode?: string
 };

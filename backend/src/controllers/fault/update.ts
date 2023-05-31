@@ -26,7 +26,7 @@ const updateFault = async (req: Request, res: Response) => {
     ...bodyData.data,
   });
   if (output.isErr) {
-    errorResponsesHandle(res, output.error);
+    return errorResponsesHandle(res, output.error);
   }
 
   const result = output.unwrap();
