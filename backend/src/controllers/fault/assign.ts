@@ -13,6 +13,7 @@ import {
   receivedRequestResponse,
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
+import { errorResponsesHandle } from '../../repositories/common/common';
 
 const assignFault = async (req: Request, res: Response) => {
   const parsedParams = uuidSchema.safeParse(req.params);
@@ -23,14 +24,7 @@ const assignFault = async (req: Request, res: Response) => {
     { technicianId: req.session.user!.id, faultId: parsedParams.data.id },
   );
   if (output.isErr) {
-    if (output.error instanceof DeletedRecordError
-        || output.error instanceof NonexistentRecordError) {
-      return notFoundRequestResponse(res);
-    }
-    if (output.error instanceof AlreadyAssigned || TechnicianNotVerifiedError) {
-      return forbiddenRequestResponse(res, 'Forbidden');
-    }
-    return backendErrorRequestResponse(res);
+    return errorResponsesHandle(res, output.error);
   }
   const result = output.unwrap();
   return receivedRequestResponse(res, result);
