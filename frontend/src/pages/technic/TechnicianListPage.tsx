@@ -24,10 +24,11 @@ const TechnicianListPage: FC = () => {
         justifyContent={"flex-end"}
         alignItems={"center"}
         spacing={2}
+        sx={{ marginTop: 2 }}
       >
         <Grid item xs={12}>
           <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>First Name</TableCell>

@@ -15,36 +15,31 @@ import {
   Select,
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
+import { ModalProps } from "../../types/interfaces";
 
-interface VehicleModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => {};
-}
+export const getBrands = () => {
+  return [
+    {
+      name: "BMW",
+      models: [
+        { id: 1, name: "M1" },
+        { id: 2, name: "M2" },
+        { id: 3, name: "M3" },
+      ],
+    },
+    {
+      name: "Hummer",
+      models: [
+        { id: 4, name: "H1" },
+        { id: 5, name: "H2" },
+        { id: 6, name: "H3" },
+      ],
+    },
+  ];
+};
 
-const VehicleModal: FC<VehicleModalProps> = (props) => {
-  const { open, setOpen } = props;
+const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control } = useForm<Vehicle>({});
-
-  const getBrands = () => {
-    return [
-      {
-        name: "BMW",
-        models: [
-          { id: 1, name: "M1" },
-          { id: 2, name: "M2" },
-          { id: 3, name: "M3" },
-        ],
-      },
-      {
-        name: "Hummer",
-        models: [
-          { id: 4, name: "H1" },
-          { id: 5, name: "H2" },
-          { id: 6, name: "H3" },
-        ],
-      },
-    ];
-  };
 
   const getModelMenuItems = (brand) => {
     return brand.models.map((model) => (

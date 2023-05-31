@@ -20,15 +20,13 @@ import { Fault } from "../../types/types";
 import ControlledTextField from "../ControlledTextField";
 import { useForm } from "react-hook-form";
 import CloseIcon from "@mui/icons-material/Close";
+import { ModalProps } from "../../types/interfaces";
 
-interface FaultModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => {};
-  fault?: Fault;
-}
-
-const FaultModal: FC<FaultModalProps> = (props) => {
-  const { open, setOpen, fault } = props;
+const FaultModal: FC<ModalProps & { fault?: Fault }> = ({
+  open,
+  setOpen,
+  fault,
+}) => {
   const { control } = useForm<Fault>(fault);
 
   const handleClose = (event, reason) => {
@@ -67,7 +65,8 @@ const FaultModal: FC<FaultModalProps> = (props) => {
               label={"Description"}
               name={"description"}
               control={control}
-              multiline={true}
+              multiline
+              rows={4}
               disabled={!!fault?.repairedAt}
             />
           </Grid>

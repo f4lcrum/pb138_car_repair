@@ -115,6 +115,7 @@ const VehicleListPage: FC = () => {
           justifyContent={"flex-end"}
           alignItems={"center"}
           spacing={2}
+          sx={{ marginTop: 2 }}
         >
           <Grid item>
             <Button
@@ -128,10 +129,7 @@ const VehicleListPage: FC = () => {
             <Button variant={"contained"}>Filter</Button>
           </Grid>
           <Grid item xs={12}>
-            <TableContainer
-              sx={{ width: "100%", display: "table", tableLayout: "fixed" }}
-              component={Paper}
-            >
+            <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
                 <TableHead>
                   <TableRow>

@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Box, Paper, TableContainer, Typography } from "@mui/material";
+import { Box, Paper, Switch, TableContainer, Typography } from "@mui/material";
 import FaultTable from "../../components/tables/FaultTable";
 import { Fault } from "../../types/types";
 import FaultModal from "../../components/modals/FaultModal";
@@ -17,7 +17,8 @@ const FaultListPage: FC = () => {
         <Typography variant={"h3"} color={"primary"}>
           Faults
         </Typography>
-        <TableContainer component={Paper}>
+        <Switch /> Show only my tasks
+        <TableContainer sx={{ marginTop: 4 }} component={Paper}>
           <FaultTable
             faults={sampleData}
             setFault={setFault}

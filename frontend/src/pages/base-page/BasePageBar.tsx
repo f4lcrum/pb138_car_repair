@@ -2,6 +2,8 @@ import { AppBar, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
 import "@mui/material/Menu/Menu";
 import { useNavigate } from "react-router-dom";
 import { UserRole } from "../../types/types";
+import { useState } from "react";
+import UserModal from "../../components/modals/UserModal";
 
 interface BarItem {
   label: string;
@@ -9,73 +11,75 @@ interface BarItem {
   roles: Set<UserRole>;
 }
 
-const BasePageBar = () => {
-  const barItems: BarItem[] = [
-    {
-      label: "Vehicles",
-      route: "/vehicle",
-      roles: new Set<UserRole>([
-        UserRole.Admin,
-        UserRole.Technician,
-        UserRole.Customer,
-      ]),
-    },
-    {
-      label: "Faults",
-      route: "/fault",
-      roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
-    },
-    {
-      label: "Brands",
-      route: "/brand",
-      roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
-    },
-    {
-      label: "Technicians",
-      route: "/technicians",
-      roles: new Set<UserRole>([UserRole.Admin]),
-    },
-    {
-      label: "Profile",
-      route: "/profile",
-      roles: new Set<UserRole>([
-        UserRole.Admin,
-        UserRole.Technician,
-        UserRole.Customer,
-      ]),
-    },
-  ];
+const barItems: BarItem[] = [
+  {
+    label: "Vehicles",
+    route: "/vehicle",
+    roles: new Set<UserRole>([
+      UserRole.Admin,
+      UserRole.Technician,
+      UserRole.Customer,
+    ]),
+  },
+  {
+    label: "Faults",
+    route: "/fault",
+    roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
+  },
+  {
+    label: "Brands",
+    route: "/brand",
+    roles: new Set<UserRole>([UserRole.Admin, UserRole.Technician]),
+  },
+  {
+    label: "Technicians",
+    route: "/technicians",
+    roles: new Set<UserRole>([UserRole.Admin]),
+  },
+];
 
+const BasePageBar = () => {
   const navigate = useNavigate();
+  const [userModalOpen, setUserModalOpen] = useState(false);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Car Service
-          </Typography>
-          <Stack direction={"row"} spacing={2}>
-            {barItems.map((item) => (
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Car Service
+            </Typography>
+            <Stack direction={"row"} spacing={2}>
+              {barItems.map((item) => (
+                <Button
+                  key={item.label}
+                  onClick={() => navigate(item.route)}
+                  color="inherit"
+                >
+                  {item.label}
+                </Button>
+              ))}
               <Button
-                key={item.label}
-                onClick={() => navigate(item.route)}
+                key={"profile"}
+                onClick={() => setUserModalOpen(true)}
                 color="inherit"
               >
-                {item.label}
+                Profile
               </Button>
-            ))}
-            <Button
-              onClick={() => navigate("/login")}
-              color="inherit"
-              variant={"outlined"}
-            >
-              Logout
-            </Button>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-    </Box>
+              <Button
+                onClick={() => navigate("/login")}
+                color="inherit"
+                variant={"outlined"}
+              >
+                Logout
+              </Button>
+            </Stack>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <UserModal open={userModalOpen} setOpen={setUserModalOpen} />
+    </>
   );
 };
 

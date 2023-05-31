@@ -5,6 +5,7 @@ export type User = {
   email?: string;
   firstName?: string;
   lastName?: string;
+  phoneNumber?: string;
   role?: UserRole;
   createdAt?: Date;
   password?: string;
@@ -33,6 +34,7 @@ export type Vehicle = {
 export type Brand = {
   id?: string;
   name?: string;
+  models?: Model[];
 };
 
 export type Model = {
