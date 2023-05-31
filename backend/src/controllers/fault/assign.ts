@@ -1,27 +1,33 @@
 import type { Request, Response } from 'express';
 import uuidSchema from '../validationSchemas/common';
 import {
+  AlreadyAssigned,
+  DeletedRecordError,
+  NonexistentRecordError,
+  TechnicianNotVerifiedError,
+} from '../../repositories/common/error';
+import {
   backendErrorRequestResponse,
   forbiddenRequestResponse,
   notFoundRequestResponse,
   receivedRequestResponse,
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
-import read from '../../repositories/fault/read';
-import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from '../../repositories/common/error';
 
-const readFault = async (req: Request, res: Response) => {
+const assignFault = async (req: Request, res: Response) => {
   const parsedParams = uuidSchema.safeParse(req.params);
   if (!parsedParams.success) {
     return sendBadRequestResponse(res, 'Invalid params');
   }
-  const output = await read({ id: req.session.user!.id, vehicleId: parsedParams.data.id });
+  const output = await assign(
+    { technicianId: req.session.user!.id, faultId: parsedParams.data.id },
+  );
   if (output.isErr) {
     if (output.error instanceof DeletedRecordError
-      || output.error instanceof NonexistentRecordError) {
+        || output.error instanceof NonexistentRecordError) {
       return notFoundRequestResponse(res);
     }
-    if (output.error instanceof WrongOwnershipError) {
+    if (output.error instanceof AlreadyAssigned || TechnicianNotVerifiedError) {
       return forbiddenRequestResponse(res, 'Forbidden');
     }
     return backendErrorRequestResponse(res);
@@ -30,4 +36,4 @@ const readFault = async (req: Request, res: Response) => {
   return receivedRequestResponse(res, result);
 };
 
-export default readFault;
+export default assignFault;

@@ -11,3 +11,5 @@ Admin endpoints:
 
 * [verification](verification.md) : `POST /auth/admin/technician/verification`
 * [technician](technician.md) : `GET /auth/admin/technician`
+
+Fault endpoints:

@@ -1,12 +1,16 @@
 import { Result } from '@badrap/result';
 import type { Repair, RepairMaterial } from '@prisma/client';
+import type { Response } from 'express';
 import type { CheckUVehicleData, TransactionCheckOperationResult } from '../vehicle/types';
 import {
-  DeletedRecordError, NonexistentRecordError, UnauthorizedError, WrongOwnershipError,
+  AlreadyAssigned,
+  AlreadyVerified,
+  DeletedRecordError, NonexistentRecordError, RoleError, TechnicianNotVerifiedError, UnauthorizedError, WrongOwnershipError,
 } from './error';
-import type { PrismaTransactionHandle } from './types';
+import type { GenericResult, PrismaTransactionHandle } from './types';
 import type { CheckUserData } from '../user/types';
 import type { FaultUpdateData } from '../fault/types';
+import { backendErrorRequestResponse, notFoundRequestResponse, sendBadRequestResponse } from './responses';
 
 export const checkVehicle = async (
   data: CheckUVehicleData,
@@ -77,4 +81,20 @@ export const checkFaultUpdate = async (
   }
 
   return Result.ok(result);
+};
+
+export const errorResponsesHandle = async (
+  res : Response,
+  error: Error,
+  message?: string,
+) : Promise<void> => {
+  if (error instanceof DeletedRecordError || error instanceof NonexistentRecordError) {
+    return notFoundRequestResponse(res);
+  }
+  if (error instanceof AlreadyVerified || error instanceof RoleError) {
+    return sendBadRequestResponse(res, error.message);
+  }
+
+  if (error instanceof TechnicianNotVerifiedError || error instanceof AlreadyAssigned
+    || WrongOwnershipError) { return backendErrorRequestResponse(res); }
 };
