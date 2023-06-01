@@ -21,7 +21,7 @@ const technicianJozefRepairs : (Repair)[] = [{
   name: 'Oprava c.2',
   resolvedAt: null,
   vehicleId: '2be2a276-60f5-4583-8dc1-3c2be9aae841',
-  technicianId: '72e4eda6-5bd0-466c-8c56-b5405cd12e2f',
+  technicianId: null,
   workPrice: 0,
 },
 {

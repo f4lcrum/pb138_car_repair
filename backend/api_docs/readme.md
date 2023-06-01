@@ -15,6 +15,9 @@
 * [createBrandModel](admin/createBrandModel.md) : ``
 
 *Fault endpoints:*
+* [create](fault/create.md) : `POST /auth/fault`
+* [read](fault/read.md) : `GET /auth/fault`
+* [update](fault/update.md) : `PATCH /auth/fault`
 
 *Vehicle endpoints:*
 * [create](vehicle/create.md) : `POST /auth/vehicle`
@@ -24,5 +27,4 @@
 
 *User endpoints:*
 
-// TODO:
-* [update](user/update.md) : `PATCH /auth/`
+* [update](user/update.md) : `PATCH /auth/user`
