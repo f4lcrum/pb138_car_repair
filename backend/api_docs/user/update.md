@@ -1,12 +1,12 @@
 # Update user's information
 
-updates user's personal information - first name, last name or phone number
+updates user's personal information - first name, last name or phone number. Return only updated info.
 
-**URL**: `/auth/user`
+**URL** : `/auth/user`
 
-**Method** `PATCH`:
+**Method** : `PATCH`
 
-**Auth required**: `YES (CLIENT, ADMIN, TECHNICIAN)`
+**Auth required** : `YES (CLIENT, ADMIN, TECHNICIAN)`
 
 **Body constraints**
 
@@ -14,27 +14,35 @@ one of the fields *first name*, *last name* or *phone number* needs to be specif
 
 ## Success Response
 
-**Code**: `200 OK`
+**Code** : `200 OK`
 
-**Content example**:
-
+**Content example** :
+*request body:*
+```json
+{
+	"lastName" : "Vostinar",
+	"phoneNumber" : "+420123456789"
+}
+```
+*response body:*
 ```json
 {
 	"error": null,
 	"data": {
-		"lastName": "Slooota",
-		"updatedAt": "2023-06-01T13:27:12.705Z"
+		"lastName": "Vostinar",
+		"phoneNumber": "+420123456789",
+		"updatedAt": "2023-06-01T19:22:18.642Z"
 	}
 }
 ```
-
+(input and output do not have to correspond with your input and output)
 ## Error Response
 
-**Condition**: Body data is incorrect
+**Condition** : Body data is incorrect
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
-**Content**:
+**Content** :
 ```json
 {
 	"error": "Invalid body",
@@ -42,3 +50,14 @@ one of the fields *first name*, *last name* or *phone number* needs to be specif
 }
 ```
 
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+```json
+{
+	"error": "Unauthorized",
+	"data": null
+}
+```

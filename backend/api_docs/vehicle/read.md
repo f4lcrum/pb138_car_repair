@@ -6,9 +6,7 @@ reads all user's undeleted vehicles that meet filter conditions specified in the
 
 **Method** `GET`:
 
-//TODO: MAYBE REMOVE ADMIN FROM THIS 
-
-**Auth required**: `YES (CLIENT, ADMIN)`
+**Auth required**: `YES (CLIENT)`
 
 **Params constraints**
 
@@ -28,17 +26,17 @@ If both sorting parameters are given, vehicles are firstly sorted by date of cre
 
 sortOrder - specifies whether the vehicles shoudl be sort in ascending or descending order
 
-# Success Response
+## Success Response
 
-**Code**: `200 OK`
+**Code** : `200 OK`
 
-**Content example**:
+**Content example** :
 
-*Request*:
+*Request query:*
 ```code
 http://localhost:3000/auth/vehicle?manufacturedAt=true&sortOrder=asc
 ```
-*Response*:
+*Response body:*
 ```json
 {
 	"error": null,
@@ -68,5 +66,32 @@ http://localhost:3000/auth/vehicle?manufacturedAt=true&sortOrder=asc
 			"repairs": []
 		}
 	]
+}
+```
+(input and output do not have to correspond with your input and output)
+
+## Error Response
+
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+```json
+{
+	"error": "Unauthorized",
+	"data": null
+}
+```
+
+**Condition** : Forbidden user access (Forbidden access: TECHNICIAN, ADMIN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
 }
 ```

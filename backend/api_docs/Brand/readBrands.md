@@ -103,13 +103,14 @@ Read all brands and it's models
 
 ## Error Response
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+**Condition** : User is logged of thus unauthorized
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Code** : `401 UNAUTHORIZED`
 
-**Content example** :
+**Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
 }
 ```

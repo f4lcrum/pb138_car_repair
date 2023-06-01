@@ -2,11 +2,11 @@
 
 User creates a new vehicle
 
-**URL**: `/auth/vehicle`
+**URL** : `/auth/vehicle`
 
-**Method** `POST`:
+**Method** : `POST`
 
-**Auth required**: `YES (CLIENT)`
+**Auth required** : `YES (CLIENT)`
 
 **Data constraints**
 ```json
@@ -19,9 +19,19 @@ User creates a new vehicle
 ```
 ## Success Response
 
-**Code**: `201 CREATED`
+**Code** : `201 CREATED`
 
-**Content example**:
+**Content example** : *request body*
+```json
+{
+	"brandId" : "875bc2f6-bd26-4f6a-ae29-1c3669021831",
+	"licenslate" : "SC-123-II",
+	"vinCode" : "339411",
+	"manufacturedAt": "2001-03-09T16:00:00.000Z"
+}
+```
+
+**Content example** : *response body*
 ```json
 {
 	"error": null,
@@ -38,65 +48,65 @@ User creates a new vehicle
 	}
 }
 ```
-
+(input and output do not have to correspond with your input and output)
 ## Error Response
 
-**Condition**: Invalid user id is passed
+**Condition** : Invalid body is passed
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Invalid user id"
+	"error": "Invalid body",
+	"data": null
 }
 ```
 
-**Condition**: Invalid body is passed
+**Condition** : Vehicle with given license plate or vin code is already registered
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Invalid body"
+	"error": "Vehicle with given license plate or win code is already registered",
+	"data": null
 }
 ```
 
-**Condition**: Vehicle with given license plate or vin code is already registered
+**Condition** : Brand model with given brand id does not exist
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Vehicle with given license plate or win code is already registered"
+	"error": "Brand model does not exist!",
+	"data": null
 }
 ```
 
-**Condition**: Brand model with given brand id does not exist 
+**Condition** : User is logged of thus unauthorized
 
-**Code**: `400 BAD REQUEST`
+**Code** : `401 UNAUTHORIZED`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Brand model does not exist!"
+	"error": "Unauthorized",
+	"data": null
 }
 ```
 
-**Condition**: Other error - TODO: MAYBE CHANGE TO INTERNAL ERROR 
+**Condition** : Forbidden user access (Forbidden access: TECHNICIAN, ADMIN)
 
-**Code**: `400 BAD REQUEST`
+**Code** : `403 FORBIDDEN`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Something went wrong"
+	"error": "Forbidden",
+	"data": null
 }
 ```

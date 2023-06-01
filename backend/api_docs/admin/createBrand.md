@@ -12,7 +12,26 @@ Adds a new brand
 
 **Code** : `201 CREATED`
 
+
+**Body requirements**
+
+```json
+{
+    "name" : "[just a string]"
+}
+```
+
+
+**Body example**
+*request example*
+```json
+{
+	"name" : "SAAB"
+}
+```
+
 **Content example**
+*response example*
 ```json
 {
 	"error": null,
@@ -23,34 +42,8 @@ Adds a new brand
 }
 ```
 
-**Body requirements**
-
-```json
-{
-    "name" : "[just a string]"
-}
-```
-
-**Body example**
-
-```json
-{
-	"name" : "SAAB"
-}
-```
-
 ## Error Response
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
-
-**Code**: `500 INTERNAL SERVER ERROR`
-
-**Content example** :
-```json
-{
-    "status": "Internal error"
-}
-```
 
 **Condition** : If Body is invalid
 
@@ -60,6 +53,30 @@ Adds a new brand
 ```json
 {
 	"error": "Invalid Params",
+	"data": null
+}
+```
+
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+```json
+{
+	"error": "Unauthorized",
+	"data": null
+}
+```
+
+**Condition** : Forbidden user access (Forbidden access: CLIENT, TECHNICIAN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
 	"data": null
 }
 ```

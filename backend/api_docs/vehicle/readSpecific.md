@@ -16,21 +16,20 @@ A valid user's UUID
 
 At least one query parameter has to be specified:
 
-licensePlate: valid license plate of user's vehicle 
+licensePlate : valid license plate of user's vehicle
 
-vinCode: valid vin code of user's vehicle
+vinCode : valid vin code of user's vehicle
 
 # Success Response
 
-**Code**: `200 OK`
+**Code** : `200 OK`
 
-**Content example**:
-
-*Request*:
+**Content example** :
+*Request* :
 ```code
 http://localhost:3000/auth/vehicle/search?licensePlate=KE-333-KE
 ```
-*Response*:
+*Response* :
 ```json
 {
 	"error": null,
@@ -47,14 +46,52 @@ http://localhost:3000/auth/vehicle/search?licensePlate=KE-333-KE
 	}
 }
 ```
+(input and output do not have to correspond with your input and output)
 
 ## Error Response
+
+
+**Condition**: No query parameters were given
+
+**Code**: `400 BAD REQUEST`
+
+**Content**:
+```json
+{
+	"error": "Invalid Query",
+	"data": null
+}
+```
+
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+```json
+{
+	"error": "Unauthorized",
+	"data": null
+}
+```
+
+**Condition** : Forbidden user access (Forbidden access: TECHNICIAN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
+}
+```
 
 **Condition**: No vehicle meets the conditions
 
 **Code**: `404 NOT FOUND`
 
-**Content**: 
+**Content**:
 ```json
 {
 	"error": "The specified vehicle does not exist!",
@@ -62,14 +99,3 @@ http://localhost:3000/auth/vehicle/search?licensePlate=KE-333-KE
 }
 ```
 
-**Condition**: No query parameters were given
-
-**Code**: `400 BAD REQUEST`
-
-**Content**: 
-```json
-{
-	"error": "Invalid Query",
-	"data": null
-}
-```

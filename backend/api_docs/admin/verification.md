@@ -2,7 +2,7 @@
 
 Verify given technician user and gives him authorization to resolve faults.
 
-**URL**: `/auth/admin/technician/verification`
+**URL**: `/auth/admin/technician/verification/:id`
 
 **Method**: `POST`
 
@@ -12,15 +12,18 @@ Verify given technician user and gives him authorization to resolve faults.
 
 email: a valid email of existing unverified
 
-**Query example**
-
-localhost:3000/auth/admin/technician/verification/?email=jozino@azet.sk
 
 ## Success Response
 
 **Code** : `201 CREATED`
 
-**Content Example**
+**Query example** *request query :*
+
+```code
+localhost:3000/auth/admin/technician/verification/72e4eda6-5bd0-466c-8c56-b5405cd12e2f
+```
+
+**Content Example** *response body : *
 
 ```json
 {
@@ -38,15 +41,15 @@ localhost:3000/auth/admin/technician/verification/?email=jozino@azet.sk
 
 ## Error Response
 
-**Condition** : Invalid format of email.
+**Condition** : Invalid format of UUID.
 
 **Code** : `400 BAD REQUEST`
 
 **Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Invalid Query"
+	"error": "Invalid Params",
+	"data": null
 }
 ```
 
@@ -57,42 +60,56 @@ localhost:3000/auth/admin/technician/verification/?email=jozino@azet.sk
 **Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Technician is already verified!"
+	"error": "Technician is already verified!",
+	"data": null
 }
 ```
 
-**Condition** : Mail is valid however user belonging to mail is not technician.
+**Condition** : UUID is valid however user belonging to UUID is not technician.
 
 **Code** :  `400 BAD REQUEST`
 
 **Content** :
 ```json
 {
-	"status": "failure",
-	"error": "User is not a technician!"
+	"error": "User is not a technician!",
+	"data": null
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
 }
 ```
 
-**Condition** : If email of user does not exists.
+**Condition** : Forbidden user access (Forbidden access: CLIENT, TECHNICIAN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
+}
+```
+
+**Condition** : If UUID of user does not exists.
 
 **Code**: `404 NOT FOUND`
 
 **Content** :
 ```json
 {
-	"status": "Not found",
-	"error": "NotFound"
+	"error": "User with input email does not exists!",
+	"data": null
 }
 ```

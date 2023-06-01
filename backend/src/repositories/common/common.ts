@@ -50,11 +50,11 @@ export const checkVehicle = async (
   if (result === null) {
     throw new NonexistentRecordError('The vehicle does not exists!');
   }
-  if (result.deletedAt !== null) {
-    throw new DeletedRecordError('The specified vehicle has already been deleted!');
-  }
   if (result.ownerId !== data.ownerId) {
     throw new WrongOwnershipError('Ownership vehicle error');
+  }
+  if (result.deletedAt !== null) {
+    throw new DeletedRecordError('The specified vehicle has already been deleted!');
   }
   return Result.ok({});
 };
@@ -101,7 +101,7 @@ export const checkFaultUpdate = async (
     return Result.err(new UnauthorizedError('The fault has already been resolved!'));
   }
 
-  if (result.technicianId !== data.technicianId) {
+  if (result.technicianId !== data.technicianId && result.technicianId !== null) {
     return Result.err(new WrongOwnershipError('The fault is not assigned to you!'));
   }
 

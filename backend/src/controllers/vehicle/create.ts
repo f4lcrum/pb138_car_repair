@@ -1,16 +1,11 @@
 import type { Request, Response } from 'express';
 import { Prisma, Vehicle } from '@prisma/client';
-import uuidSchema from '../validationSchemas/common';
 import { vehicleCreateSchema } from '../validationSchemas/vehicle';
-import { createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import { backendErrorRequestResponse, createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import create from '../../repositories/vehicle/create';
 
 const createVehicle = async (req: Request, res: Response) => {
-  const parsedParams = uuidSchema.safeParse({ id: req.session.user!.id });
   const parsedBody = vehicleCreateSchema.safeParse(req.body);
-  if (!parsedParams.success) {
-    return sendBadRequestResponse(res, 'Invalid user id');
-  }
   if (!parsedBody.success) {
     return sendBadRequestResponse(res, 'Invalid body');
   }
@@ -26,7 +21,7 @@ const createVehicle = async (req: Request, res: Response) => {
         return sendBadRequestResponse(res, 'Brand model does not exist!');
       }
     }
-    return sendBadRequestResponse(res, 'Something went wrong');
+    return backendErrorRequestResponse(res);
   }
   const result: Vehicle = output.unwrap();
   return createdSuccessRequestResponse(res, result);

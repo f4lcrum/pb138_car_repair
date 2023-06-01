@@ -10,11 +10,8 @@ Adds a new model of given brand
 
 **Query requirements**
 
-id: valid UUID
+id : valid UUID
 
-**Query example**
-
-localhost:3000/auth/admin/brand/94ffe037-385f-4466-ac31-ca1b5fcc50f6/brand-model
 
 **Body requirements**
 
@@ -24,19 +21,24 @@ localhost:3000/auth/admin/brand/94ffe037-385f-4466-ac31-ca1b5fcc50f6/brand-model
 }
 ```
 
-**Body example**
-
-```json
-{
-	"name" : "styrkova oktavia"
-}
-```
-
 ## Success Response
 
 **Code** : `201 CREATED`
 
-**Content example**
+**Query example** : *request query :*
+```code
+localhost:3000/auth/admin/brand/94ffe037-385f-4466-ac31-ca1b5fcc50f6/brand-model
+```
+
+**Body example** *request body :*
+
+```json
+{
+	"name" : "volga"
+}
+```
+
+**Content example** *response body :*
 
 ```json
 {
@@ -51,33 +53,9 @@ localhost:3000/auth/admin/brand/94ffe037-385f-4466-ac31-ca1b5fcc50f6/brand-model
 
 ## Error Response
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
-
-**Code**: `500 INTERNAL SERVER ERROR`
-
-**Content example** :
-```json
-{
-    "status": "Internal error"
-}
-```
-
-
-**Condition** : If UUID of brand does not exists.
-
-**Code**: `404 NOT FOUND`
-
-**Content example** :
-```json
-{
-	"status": "Not found",
-	"error": "NotFound"
-}
-```
-
 **Condition** : If Brand model with given name already exists.
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
 **Content example** :
 ```json
@@ -96,6 +74,42 @@ localhost:3000/auth/admin/brand/94ffe037-385f-4466-ac31-ca1b5fcc50f6/brand-model
 ```json
 {
 	"error": "Invalid Params",
+	"data": null
+}
+```
+
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+```json
+{
+	"error": "Unauthorized",
+	"data": null
+}
+```
+
+**Condition** : Forbidden user access (Forbidden access: CLIENT, TECHNICIAN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
+}
+```
+
+**Condition** : If UUID of brand does not exists.
+
+**Code**: `404 NOT FOUND`
+
+**Content example** :
+```json
+{
+	"error": "not found",
 	"data": null
 }
 ```

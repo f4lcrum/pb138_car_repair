@@ -4,6 +4,11 @@
 
 * [Login](auth/login.md) : `POST /auth/login/`
 * [Register](auth/register.md) : `POST /auth/registration`
+
+## Secured Endpoints
+
+*Auth endpoints*:
+
 * [Logout](auth/logout.md) : `POST /auth/logout`
 * [readAuth](auth/readAuth.md) : `GET /auth/info`
 
@@ -11,13 +16,14 @@
 
 * [verification](admin/verification.md) : `POST /auth/admin/technician/verification`
 * [technician](admin/technician.md) : `GET /auth/admin/technician`
-* [createBrand](admin/createBrand.md) : `POST /auth/admin/brand/:id/brand-model`
-* [createBrandModel](admin/createBrandModel.md) : ``
+* [createBrand](admin/createBrand.md) : `POST /auth/admin/brand`
+* [createBrandModel](admin/createBrandModel.md) : `POST /auth/admin/brand/:id/brand-model`
 
 *Fault endpoints:*
 * [create](fault/create.md) : `POST /auth/fault`
 * [read](fault/read.md) : `GET /auth/fault`
 * [update](fault/update.md) : `PATCH /auth/fault`
+* [assign](fault/assign.md) : `PATCH /auth/fault/assignment/:id`
 
 *Vehicle endpoints:*
 * [create](vehicle/create.md) : `POST /auth/vehicle`
@@ -28,3 +34,7 @@
 *User endpoints:*
 
 * [update](user/update.md) : `PATCH /auth/user`
+
+*Brand endpoints:*
+
+* [read brands](brand/readBrands.md) : `GET /auth/brand`

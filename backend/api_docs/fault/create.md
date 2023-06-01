@@ -24,18 +24,26 @@ Parameter needs to be UUID of vehicle
 
 **Code** : `201 CREATED`
 
-**Content example**
+**Content example** : *request body*
+```json
+{
+	"description": "Auto mi netaha ani na vysokych otackach, strata vykonu.."
+}
+```
+
+**Content example** : *response body*
 
 ```json
 {
+	"error": null,
 	"data": {
-		"id": "8650aee8-297f-4378-8a6c-59e33534be1a",
-		"createdAt": "2023-05-30T21:53:21.444Z",
+		"id": "42721e54-5fc2-4489-8869-5d4cf35238ab",
+		"createdAt": "2023-06-01T16:36:11.501Z",
 		"description": "Auto mi netaha ani na vysokych otackach, strata vykonu..",
 		"mileage": null,
 		"name": null,
 		"technicianId": null,
-		"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
+		"vehicleId": "fc986e3f-f341-417b-b180-a52aef37e049",
 		"resolvedAt": null,
 		"workPrice": 0
 	}
@@ -49,12 +57,12 @@ Parameter needs to be UUID of vehicle
 
 **Code** : `400 BAD REQUEST`
 
-**Content**:
+**Content** :
 
 ```json
 {
-	"status": "failure",
-	"error": "Invalid params"
+	"error": "Invalid Params",
+	"data": null
 }
 ```
 
@@ -62,36 +70,36 @@ Parameter needs to be UUID of vehicle
 
 **Code** : `400 BAD REQUEST`
 
-**Content**:
+**Content** :
 
 ```json
 {
-	"status": "failure",
-	"error": "Invalid Body"
+	"error": "Invalid Body",
+	"data": null
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+**Condition** : User is logged of thus unauthorized
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Code** : `401 UNAUTHORIZED`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
 }
 ```
 
-
-**Condition** : If user tries to create fault of vehicle, which don't belongs to him.
+**Condition** : If user tries to create fault of vehicle, which don't belongs to him or user have role of TECHNICIAN
 
 **Code** :  `403 FORBIDDEN`
 
 **Content** :
 ```json
 {
-	"status": "Forbidden",
-	"error": "Forbidden"
+	"error": "Forbidden",
+	"data": null
 }
 ```
 
@@ -102,7 +110,7 @@ Parameter needs to be UUID of vehicle
 **Content** :
 ```json
 {
-	"status": "Not found",
-	"error": "NotFound"
+	"error": "The vehicle does not exists!",
+	"data": null
 }
 ```

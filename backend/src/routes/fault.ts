@@ -7,7 +7,7 @@ import auth from '../middleware/authMiddleware';
 const faultRouter = Router();
 const faultRouteGeneric = `${authRoute}/fault`;
 const faultRouteSpecific = `${faultRouteGeneric}/:id`;
-const faultRouteAssign = `${faultRouteGeneric}/assign/:id`;
+const faultRouteAssign = `${faultRouteGeneric}/assignment/:id`;
 
 faultRouter.get(faultRouteSpecific, auth(Role.CLIENT, Role.ADMIN), FaultController.readFault);
 faultRouter.post(faultRouteSpecific, auth(Role.CLIENT, Role.ADMIN), FaultController.createFault);

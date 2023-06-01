@@ -2,9 +2,9 @@
 
 Gets info about current logged user
 
-**URL**: `/auth/info`
+**URL** : `/auth/info`
 
-**Method**: `POST`
+**Method** : `GET`
 
 **Auth required** : YES (ANY ROLE)
 
@@ -12,27 +12,33 @@ Gets info about current logged user
 
 **Code** : `200 OK`
 
-**Content example**
+**Content example** : *response body :*
 
 ```json
 {
-	"item": {
-		"firstName": "Vladqo",
-		"lastName": "sherlock",
-		"email": "jozsissadfo@azet.sk",
-		"role": "TECHNICIAN"
-	},
-	"message": "User Vladqo is authorized"
+	"error": null,
+	"data": {
+		"item": {
+			"firstName": "Andrej",
+			"lastName": "DJ",
+			"email": "andrej@admin.com",
+			"role": "ADMIN"
+		},
+		"message": "User Andrej is authorized"
+	}
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+## Error Response
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
 }
 ```

@@ -10,7 +10,7 @@ import uuidSchema from '../validationSchemas/common';
 const verify = async (req: Request, res : Response) => {
   const bodyData = uuidSchema.safeParse(req.params);
   if (!bodyData.success) {
-    return sendBadRequestResponse(res, 'Invalid Query');
+    return sendBadRequestResponse(res, 'Invalid Params');
   }
   const output = await verifyTechnician({ id: bodyData.data.id });
   if (output.isErr) {

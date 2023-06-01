@@ -2,23 +2,25 @@
 
 Deletes a specific vehicle
 
-**URL**: `/auth/vehicle/:id`
+**URL** : `/auth/vehicle/:id`
 
-**Method** `DELETE`:
+**Method** : `DEL`
 
-//TODO: MAYBE REMOVE ADMIN FROM THIS, SINCE HE WONT HAVE ANY VEHICLES
-AND WE ONLY DELETE VEHICLES OF USER WITH CORRESPONDING ID IN SESSION 
-
-**Auth required**: `YES (CLIENT, ADMIN)`
+**Auth required** : `YES (CLIENT)`
 
 **Params constraints**
 A valid UUID of user's vehicle
 
 ## Success Response
 
-**Code**: `200 OK`
+**Code** : `200 OK`
 
-**Content example**:
+**Content example** : *request*
+```code
+http://localhost:3000/auth/vehicle/d72bea9b-40d8-41f4-9e85-a2ee59fe9adb
+```
+
+**Content example** : *response*
 ```json
 {
 	"error": null,
@@ -35,41 +37,66 @@ A valid UUID of user's vehicle
 	}
 }
 ```
-
+(input and output do not have to correspond with your input and output)
 ## Error Response
 
-**Condition**: Vehicle does not exist
+**Condition** : Vehicle does not exist
 
-**Code**: `400 BAD REQUEST`
+**Code** : `400 BAD REQUEST`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "The vehicle does not exists!"
+	"error": "The vehicle does not exists!",
+	"data": null
 }
 ```
 
-**Condition**: Vehicle was already deleted
+**Condition** : User is logged of thus unauthorized
 
-**Code**: `400 BAD REQUEST`
+**Code** : `401 UNAUTHORIZED`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "The specified vehicle has already been deleted!"
+	"error": "Unauthorized",
+	"data": null
 }
 ```
 
-**Condition**: Vehicle is not user's vehicle
+**Condition** : Vehicle is not user's vehicle
 
-**Code**: `400 BAD REQUEST`
+**Code** : `403 FORBIDDEN`
 
-**Content**: 
+**Content** :
 ```json
 {
-	"status": "failure",
-	"error": "Ownership vehicle error"
+	"error": "Forbidden",
+	"data": null
+}
+
+```
+**Condition** : Forbidden user access (Forbidden access: TECHNICIAN, ADMIN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
+}
+```
+
+
+**Condition** : Vehicle was already deleted
+
+**Code** : `404 BAD REQUEST`
+
+**Content**:
+```json
+{
+	"error": "The specified vehicle has already been deleted!",
+	"data": null
 }
 ```
