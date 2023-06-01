@@ -1,6 +1,6 @@
 # Create Fault
 
-User creates a fault, however only inputs description
+User creates a fault
 
 **URL** : `/auth/fault/:id`
 
@@ -10,7 +10,7 @@ User creates a fault, however only inputs description
 
 **Params constraints**
 
-Param need to be UUID of vehicle
+Parameter needs to be UUID of vehicle
 
 **Data constraints**
 
@@ -45,7 +45,7 @@ Param need to be UUID of vehicle
 
 ## Error Responses
 
-**Condition** : If Invalid UUID is passed to function
+**Condition** : Invalid UUID is passed to function
 
 **Code** : `400 BAD REQUEST`
 
@@ -58,7 +58,7 @@ Param need to be UUID of vehicle
 }
 ```
 
-**Condition** : If invalid body is sent to endpoint
+**Condition** : Invalid body is sent to endpoint
 
 **Code** : `400 BAD REQUEST`
 

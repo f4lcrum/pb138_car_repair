@@ -10,18 +10,15 @@ const readSpecificVehicle = async (req: Request, res: Response) => {
   if (!parsedQueryParams.success) {
     return sendBadRequestResponse(res, 'Invalid Query');
   }
-  const inputData : VehicleReadOneData = { ownerId: req.session.user!.id };
-  if (parsedQueryParams.data.licensePlate !== undefined) {
-    inputData.licensePlate = parsedQueryParams.data.licensePlate;
-  }
-  if (parsedQueryParams.data.vinCode !== undefined) {
-    inputData.vinCode = parsedQueryParams.data.vinCode;
-  }
+  const inputData : VehicleReadOneData = {
+    ownerId: req.session.user!.id,
+    ...req.query,
+  };
   const output = await read(inputData);
   if (output.isErr) {
     return errorResponsesHandle(res, output.error);
   }
-  return receivedRequestResponse(res, output);
+  return receivedRequestResponse(res, output.value);
 };
 
 export default readSpecificVehicle;
