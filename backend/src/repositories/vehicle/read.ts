@@ -13,7 +13,10 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
     return Result.ok(
       await client.$transaction(async (tx) => {
         const vehicle = await tx.vehicle.findFirst({
-          where: data,
+          where: {
+            ...data,
+            deletedAt: null,
+          },
         });
         if (vehicle === null) {
           throw new NonexistentRecordError('The specified vehicle does not exist!');
