@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import { Prisma, Vehicle } from '@prisma/client';
 import uuidSchema from '../validationSchemas/common';
 import { vehicleCreateSchema } from '../validationSchemas/vehicle';
-import { receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import { createdSuccessRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import create from '../../repositories/vehicle/create';
 
 const createVehicle = async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ const createVehicle = async (req: Request, res: Response) => {
     return sendBadRequestResponse(res, 'Something went wrong');
   }
   const result: Vehicle = output.unwrap();
-  return receivedRequestResponse(res, result);
+  return createdSuccessRequestResponse(res, result);
 };
 
 export default createVehicle;
