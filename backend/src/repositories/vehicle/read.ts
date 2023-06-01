@@ -69,6 +69,8 @@ export const all = async (
       },
       orderBy: orderBy !== undefined ? orderBy : [],
     });
+    // TODO: IF NOT VEHICLES ARE FOUND, FUNCTION RETURNS EMPTY
+    // LIST [], THEREFORE THIS SHOULD BE INTERNAL ERROR OR SOME SHIT
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');
     }

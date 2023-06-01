@@ -11,7 +11,7 @@ export const sendBadRequestResponse = (res: Response, messageError: String) => {
 };
 
 export const notFoundRequestResponse = (res: Response, messageError?: String) => {
-  res.status(404).send({ error: messageError || null, data: null });
+  res.status(404).send({ error: (messageError || 'not found'), data: null });
 };
 
 export const receivedRequestResponse = (res: Response, inputData: any) => {
