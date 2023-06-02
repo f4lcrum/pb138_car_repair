@@ -7,7 +7,7 @@ import DbResult, { genericError } from '../common/types';
 import {
   checkFaultUpdate, checkTechnician, isVehicleDeleted,
 } from '../common/common';
-import { TechnicianNotVerifiedError } from '../common/error';
+import { TechnicianNotVerifiedError, WrongOwnershipError } from '../common/error';
 
 const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
   try {
@@ -17,10 +17,13 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
         technicianId:
         data.technicianId,
       }, tx);
-      const technicianCheck = await checkTechnician(data.technicianId);
       if (faultCheck.isErr) {
         return Result.err(faultCheck.error);
       }
+      if (faultCheck.unwrap().technicianId === null) {
+        return Result.err(new WrongOwnershipError('The fault is not assigned to you!'));
+      }
+      const technicianCheck = await checkTechnician(data.technicianId);
       if (technicianCheck.isErr) {
         return Result.err(technicianCheck.error);
       }

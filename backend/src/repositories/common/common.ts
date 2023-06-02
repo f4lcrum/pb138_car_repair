@@ -101,7 +101,7 @@ export const checkFaultUpdate = async (
     return Result.err(new UnauthorizedError('The fault has already been resolved!'));
   }
 
-  if (result.technicianId !== data.technicianId && result.technicianId !== null) {
+  if (result.technicianId !== null && result.technicianId !== data.technicianId) {
     return Result.err(new WrongOwnershipError('The fault is not assigned to you!'));
   }
 
