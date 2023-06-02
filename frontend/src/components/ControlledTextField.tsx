@@ -10,9 +10,11 @@ interface ControlledTextFieldProps {
 type ControlledTextFieldPropsUnited = ControlledTextFieldProps &
   Omit<TextFieldProps, "name">;
 
-const ControlledTextField: FC<ControlledTextFieldPropsUnited> = (props) => {
-  const { name, control, label, type, error, helperText } = props;
-
+const ControlledTextField: FC<ControlledTextFieldPropsUnited> = ({
+  name,
+  control,
+  ...props
+}) => {
   return (
     <Controller
       name={name}
@@ -20,12 +22,9 @@ const ControlledTextField: FC<ControlledTextFieldPropsUnited> = (props) => {
       render={({ field: { onChange, value } }) => (
         <TextField
           fullWidth={true}
-          onChange={onChange}
           value={value}
-          error={error}
-          helperText={helperText}
-          label={label}
-          type={type}
+          onChange={onChange}
+          {...props}
         />
       )}
     />

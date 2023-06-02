@@ -12,13 +12,24 @@ export const appTheme = createTheme({
       default: "#FAF2E9",
     },
     error: {
-      main: "#ff0000",
+      main: "#FF0000",
     },
     info: {
       main: "#C2DDDD",
     },
     warning: {
       main: "#FEB417",
+    },
+  },
+  components: {
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "#fdfbf8",
+          },
+        },
+      },
     },
   },
 });

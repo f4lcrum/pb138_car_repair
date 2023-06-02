@@ -8,9 +8,12 @@ import {
 } from "@mui/material";
 import ControlledTextField from "../components/ControlledTextField";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage: FC = () => {
-  const { handleSubmit, control } = useForm();
+  const { control } = useForm();
+  const navigate = useNavigate();
+
   return (
     <>
       <form>
@@ -73,8 +76,13 @@ const RegisterPage: FC = () => {
               }
             />
           </Grid>
-          <Grid item onClick={handleSubmit}>
-            <Button variant="outlined">register</Button>
+          <Grid item>
+            <Button onClick={() => navigate("/")} variant="outlined">
+              register
+            </Button>
+            <Button onClick={() => navigate("/login")} variant="outlined">
+              Login
+            </Button>
           </Grid>
         </Grid>
       </form>

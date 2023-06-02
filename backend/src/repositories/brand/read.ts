@@ -38,6 +38,7 @@ const read = async (): BrandReadResult => {
       await client.$transaction(async (tx) => {
         const brandsWithBrandModels = await tx.brand.findMany({
           select: {
+            id: true,
             name: true,
             models: {
               select: {
@@ -51,6 +52,7 @@ const read = async (): BrandReadResult => {
           throw new NonexistentRecordError('No brand was found!');
         }
         const result = brandsWithBrandModels.map((brandWithModel) => ({
+          id: brandWithModel.id,
           brand: brandWithModel.name,
           models: brandWithModel.models,
         }));

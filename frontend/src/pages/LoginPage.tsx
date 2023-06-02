@@ -2,9 +2,11 @@ import React, { FC } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: FC = () => {
-  const { handleSubmit, control } = useForm();
+  const { control } = useForm();
+  const navigate = useNavigate();
   return (
     <>
       <form>
@@ -35,8 +37,13 @@ const LoginPage: FC = () => {
               type="password"
             />
           </Grid>
-          <Grid item onClick={handleSubmit}>
-            <Button variant="outlined">Login</Button>
+          <Grid item>
+            <Button onClick={() => navigate("/")} variant="outlined">
+              Login
+            </Button>
+            <Button onClick={() => navigate("/register")} variant="outlined">
+              Register
+            </Button>
           </Grid>
         </Grid>
       </form>
