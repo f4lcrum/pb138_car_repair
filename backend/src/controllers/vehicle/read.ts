@@ -9,9 +9,9 @@ const readVehicles = async (req: Request, res: Response) => {
   if (!parsedQueryParams.success) {
     return sendBadRequestResponse(res, 'Invalid Query');
   }
-  const output = await all({ userId: req.session.user!.id, ...req.body });
+  const output = await all({ userId: req.session.user!.id, ...req.query });
   if (output.isErr) {
-    return notFoundRequestResponse(res);
+    return notFoundRequestResponse(res, output.error.message);
   }
   const result : Vehicle[] = output.unwrap();
   return receivedRequestResponse(res, result);

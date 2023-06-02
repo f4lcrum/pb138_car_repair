@@ -44,12 +44,12 @@ model User {
 
 model Vehicle {
   id             String      @id @default(uuid())
-  brand          BrandModel  @relation(fields: [brandId], references: [id])
+  brandModel     BrandModel  @relation(fields: [brandId], references: [id])
   brandId        String
   ownerId        String
   owner          User        @relation(fields: [ownerId], references: [id])
   licensePlate   String      @unique
-  winCode        String      @unique
+  vinCode        String      @unique
   manufacturedAt DateTime
   createdAt      DateTime    @default(now())
   scrappedAt     DateTime?

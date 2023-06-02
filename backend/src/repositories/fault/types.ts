@@ -30,6 +30,8 @@ export type IsVerifiedTechnicianData = {
 
 export type IsVerifiedTechnicianResult = DbResult<Boolean>;
 
+export type CheckFaultData = AssignFaultData;
+
 export type FaultUpdateData = {
   // TODO: WHAT ABOUT THE ID
   id: string,
@@ -53,3 +55,10 @@ export type FaultUpdateResult = {
   workPrice: number,
   material: RepairMaterialWithoutSensitiveInfo[] | undefined,
 };
+
+export type AssignFaultData = {
+  technicianId : string,
+  faultId: string
+};
+
+export type AssignFaultResult = DbRepair;

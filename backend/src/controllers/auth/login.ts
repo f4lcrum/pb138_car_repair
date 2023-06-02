@@ -13,7 +13,7 @@ const login = async (req : Request, res : Response) => {
   try {
     const result = await userLoginSchema.safeParseAsync(req.body);
     if (!result.success) {
-      return sendBadRequestResponse(res, result.error.message);
+      return sendBadRequestResponse(res, 'Invalid Body');
     }
 
     const { email, password } = result.data;

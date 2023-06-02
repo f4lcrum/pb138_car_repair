@@ -11,11 +11,11 @@ import { createBrandModelSchema } from '../validationSchemas/admin';
 import create from '../../repositories/admin/createBrandModel';
 import { NonexistentRecordError } from '../../repositories/common/error';
 
-const createBrandModel = async (_req: Request, res: Response) => {
+const createBrandModel = async (req: Request, res: Response) => {
   // given brandId in params must exist
 
-  const paramsData = uuidSchema.safeParse(_req.params);
-  const bodyData = createBrandModelSchema.safeParse(_req.body);
+  const paramsData = uuidSchema.safeParse(req.params);
+  const bodyData = createBrandModelSchema.safeParse(req.body);
   if (!paramsData.success) {
     return sendBadRequestResponse(res, 'Invalid Params');
   }
@@ -23,8 +23,8 @@ const createBrandModel = async (_req: Request, res: Response) => {
     return sendBadRequestResponse(res, 'Invalid Body');
   }
   const output = await create({
-    brandId: _req.params.id,
-    ..._req.body,
+    brandId: req.params.id,
+    ...req.body,
   });
 
   if (output.isErr) {

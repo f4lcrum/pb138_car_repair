@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
 import { Prisma } from '@prisma/client';
-import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
+import {
+  createdSuccessRequestResponse, notFoundRequestResponse, sendBadRequestResponse,
+} from '../../repositories/common/responses';
 import create from '../../repositories/admin/createBrand';
 import { createBrandSchema } from '../validationSchemas/admin';
 
@@ -18,7 +20,7 @@ const createBrand = async (req: Request, res: Response) => {
     return notFoundRequestResponse(res);
   }
   const result = output.unwrap();
-  return receivedRequestResponse(res, result);
+  return createdSuccessRequestResponse(res, result);
 };
 
 export default createBrand;

@@ -12,7 +12,7 @@ const technicianJozef : (User) = {
   updatedAt: null,
   deletedAt: null,
   password: '12345678',
-  isVerified: false,
+  isVerified: true,
   phoneNumber: '+421123456789',
 };
 

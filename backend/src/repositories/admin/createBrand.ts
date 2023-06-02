@@ -11,9 +11,9 @@ const create = async (data: BrandCreateData): BrandCreateResult => {
       });
       return Result.ok(result);
     });
-  } catch (err) {
-    if (err instanceof Error) {
-      return Result.err(err);
+  } catch (e) {
+    if (e instanceof Error) {
+      return Result.err(e);
     }
     return genericError;
   }

@@ -14,38 +14,40 @@ Gets all unverified technicians
 
 **Content example**
 ```json
-[
-	{
-		"firstName": "Sherlock Holmes",
-		"lastName": "sherlock",
-		"email": "jozsio@azet.sk",
-		"role": "TECHNICIAN",
-		"isVerified": false
-	},
-	{
-		"firstName": "Vladqo",
-		"lastName": "sherlock",
-		"email": "jozsissadfo@azet.sk",
-		"role": "TECHNICIAN",
-		"isVerified": false
-	},
-	{
-		"firstName": "Vladqo",
-		"lastName": "sherlock",
-		"email": "jozsissdo@azet.sk",
-		"role": "TECHNICIAN",
-		"isVerified": false
-	}
-]
+{
+	"error": null,
+	"data": [
+		{
+			"firstName": "Jozef",
+			"lastName": "Novak",
+			"email": "jozino@azet.sk",
+			"role": "TECHNICIAN",
+			"isVerified": false
+		}
+	]
+}
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+**Condition** : User is logged of thus unauthorized
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Code** : `401 UNAUTHORIZED`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
+}
+```
+
+**Condition** : Forbidden user access (Forbidden access: CLIENT, TECHNICIAN)
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+```json
+{
+	"error": "Forbidden",
+	"data": null
 }
 ```

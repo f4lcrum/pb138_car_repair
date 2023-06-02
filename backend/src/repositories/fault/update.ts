@@ -1,48 +1,40 @@
 import { Result } from '@badrap/result';
-import type { Repair, RepairMaterial } from '@prisma/client';
 import client from '../client';
 import type {
-  FaultUpdateData, FaultUpdateResult, IsVerifiedTechnicianData, IsVerifiedTechnicianResult,
+  FaultUpdateData, FaultUpdateResult,
 } from './types';
 import DbResult, { genericError } from '../common/types';
-import { checkFaultUpdate } from '../common/common';
-import { NonexistentRecordError, TechnicianNotVerifiedError } from '../common/error';
-
-const isVerifiedTechnician = async (data : IsVerifiedTechnicianData):
-IsVerifiedTechnicianResult => {
-  try {
-    const result = await client.user.findUnique({
-      where: {
-        id: data.technicianId,
-      },
-      select: {
-        isVerified: true,
-      },
-    });
-    if (result === null) {
-      return Result.err(new NonexistentRecordError('Technician does not exists!'));
-    }
-    return Result.ok(result.isVerified);
-  } catch (e) {
-    return genericError;
-  }
-};
+import {
+  checkFaultUpdate, checkTechnician, isVehicleDeleted,
+} from '../common/common';
+import { TechnicianNotVerifiedError, WrongOwnershipError } from '../common/error';
 
 const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
   try {
     return await client.$transaction(async (tx) => {
-      const faultCheck = await checkFaultUpdate(data, tx);
-      const technicianCheck = await isVerifiedTechnician({ technicianId: data.technicianId });
+      const faultCheck = await checkFaultUpdate({
+        faultId: data.id,
+        technicianId:
+        data.technicianId,
+      }, tx);
       if (faultCheck.isErr) {
         return Result.err(faultCheck.error);
       }
+      if (faultCheck.unwrap().technicianId === null) {
+        return Result.err(new WrongOwnershipError('The fault is not assigned to you!'));
+      }
+      const technicianCheck = await checkTechnician(data.technicianId);
       if (technicianCheck.isErr) {
         return Result.err(technicianCheck.error);
       }
-      if (!technicianCheck) {
+      if (!technicianCheck.unwrap()) {
         return Result.err(new TechnicianNotVerifiedError('Technician is not verified!'));
       }
-      const fault: Repair & { material: RepairMaterial[] } = faultCheck.unwrap();
+      const vehicleCheck = await isVehicleDeleted({ vehicleId: faultCheck.unwrap().vehicleId }, tx);
+      if (vehicleCheck.isErr) {
+        return Result.err(vehicleCheck.error);
+      }
+      // const fault: Repair & { material: RepairMaterial[] } = faultCheck.unwrap();
       const updatedFault = await tx.repair.update({
         where: {
           id: data.id,
@@ -52,9 +44,6 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           ...(data.resolvedAt !== undefined ? { resolvedAt: data.resolvedAt } : {}),
           ...(data.workPrice !== undefined ? { workPrice: data.workPrice } : {}),
           ...(data.mileage !== undefined ? { mileage: data.mileage } : {}),
-          // TODO: is this what we want? if the fault does not have assigned technician
-          // and some technician is updating the fault, it will be automatically assigned.
-          ...(fault.technicianId === null ? { technicianId: data.technicianId } : {}),
           material: {
             create: data.material || [],
           },
@@ -79,6 +68,9 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
       return Result.ok(updatedFault);
     });
   } catch (e) {
+    if (e instanceof Error) {
+      return Result.err(e);
+    }
     return genericError;
   }
 };

@@ -2,9 +2,9 @@
 
 Logs the user out and destroy it's cookie session
 
-**URL**: `/auth/logout`
+**URL** : `/auth/logout`
 
-**Method**: `POST`
+**Method** : `POST`
 
 **Auth required** : YES
 
@@ -16,17 +16,24 @@ Logs the user out and destroy it's cookie session
 
 ```json
 {
-    "message": "Logged out"
+	"error": null,
+	"data": {
+		"message": "Logged out"
+	}
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+## Error Response
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Condition** : User is logged of thus unauthorized
+
+**Code** : `401 UNAUTHORIZED`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
+	"error": "Unauthorized",
+	"data": null
 }
 ```
+

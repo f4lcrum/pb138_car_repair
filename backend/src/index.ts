@@ -4,7 +4,6 @@ import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
 import cookieParser from 'cookie-parser';
 import type { Role } from '@prisma/client';
-import type { ApiResponse } from './controllers/types';
 import vehicle from './routes/vehicle';
 import fault from './routes/fault';
 import user from './routes/user';
@@ -12,6 +11,7 @@ import admin from './routes/admin';
 import session from './middleware/sessionMiddleware';
 import auth from './routes/auth';
 import brand from './routes/brand';
+import { notFoundRequestResponse } from './repositories/common/responses';
 
 declare module 'express-session' {
   interface SessionData {user: { id: string, role: Role }}
@@ -19,7 +19,6 @@ declare module 'express-session' {
 
 configEnvVariables();
 const app = express();
-// const port = env.PORT ?? 3000; povodny kod v DEV, zakomentovane preto lebo to hadzalo chybu
 const port = env.PORT ?? 3000;
 // JSON middleware
 app.use(express.json());
@@ -42,27 +41,13 @@ app.use('/', user);
 app.use('/', admin);
 app.use('/', brand);
 
-app.get('/', (_req, res) => {
-  res.send('Hello World!');
-});
-
-app.use((_req, res) => {
-  const response: ApiResponse<{}> = {
-    status: 'failure',
-    data: {},
-    error: 'No matching endpoint was found.',
-  };
-
-  return res.status(404).send(response);
-});
+app.use((_req, res) => notFoundRequestResponse(res));
 
 // env.NODE_ENV
-if (env.NODE_ENV !== 'test') {
-  app.listen(port, () => {
-    console.log(
-      `[${new Date().toISOString()}] RESTful API for SERVICE BOOK is listening on port ${port}`,
-    );
-  });
-}
+app.listen(port, () => {
+  console.log(
+    `[${new Date().toISOString()}] RESTful API for SERVICE BOOK is listening on port ${port}`,
+  );
+});
 
 export default app;

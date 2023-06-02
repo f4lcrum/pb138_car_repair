@@ -2,7 +2,6 @@ import { Result } from '@badrap/result';
 import { genericError } from '../common/types';
 import type { FaultReadOneData, FaultReadOneResult } from './types';
 import client from '../client';
-import { DeletedRecordError, NonexistentRecordError, WrongOwnershipError } from '../common/error';
 import { checkVehicle } from '../common/common';
 
 const read = async (data: FaultReadOneData): FaultReadOneResult => {
@@ -23,9 +22,7 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
       return Result.ok(fault);
     });
   } catch (e) {
-    if (e instanceof NonexistentRecordError
-      || e instanceof WrongOwnershipError
-      || e instanceof DeletedRecordError) {
+    if (e instanceof Error) {
       return Result.err(e);
     }
     return genericError;
