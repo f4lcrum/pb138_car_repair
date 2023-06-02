@@ -13,8 +13,9 @@ export type VehicleReadMultipleData = {
 
 // vehicle's id:
 export type VehicleReadOneData = {
+  ownerId: string,
   licensePlate?: string,
-  winCode?: string
+  vinCode?: string
 };
 
 export type VehicleDeleteData = {
@@ -39,9 +40,13 @@ export type VehicleCreateData = {
   ownerId: string,
   brandId: string,
   licensePlate: string,
-  winCode: string,
+  vinCode: string,
   manufacturedAt: Date,
 
 };
 
 export type VehicleCreateResult = DbVehicle;
+
+export type OrderBy =
+  ({ createdAt?: Prisma.SortOrder } &
+  { manufacturedAt?: Prisma.SortOrder })[];

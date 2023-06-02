@@ -3,6 +3,7 @@ import type { Vehicle } from '@prisma/client';
 import uuidSchema from '../validationSchemas/common';
 import { receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import deleteVehicle from '../../repositories/vehicle/delete';
+import { errorResponsesHandle } from '../../repositories/common/common';
 
 const deleteSpecificVehicle = async (req: Request, res: Response) => {
   // a ID of vehicle
@@ -12,7 +13,7 @@ const deleteSpecificVehicle = async (req: Request, res: Response) => {
   }
   const output = await deleteVehicle({ userId: req.session.user!.id, vehicleId: params.data.id });
   if (output.isErr) {
-    return sendBadRequestResponse(res, output.error.message);
+    return errorResponsesHandle(res, output.error);
   }
   const result: Vehicle = output.unwrap();
   return receivedRequestResponse(res, result);

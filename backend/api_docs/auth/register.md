@@ -2,7 +2,7 @@
 
 Insert a new user to Database and collect token for login (you stay logged after registration).
 
-**URL** : `/auth/register/`
+**URL** : `/auth/registration/`
 
 **Method** : `POST`
 
@@ -21,8 +21,8 @@ Insert a new user to Database and collect token for login (you stay logged after
 }
 ```
 
-**Data example**
-
+**Data example** :
+*request :*
 ```json
 {
 	"email": "jozsissadfo@azet.sk",
@@ -47,25 +47,26 @@ OR
 
 **Code** : `201 CREATED`
 
-**Content example**
+**Content example** : *response body :*
 
 ```json
 {
+	"error": null,
 	"data": {
 		"item": {
 			"firstName": "Vladqo",
 			"lastName": "sherlock",
-			"email": "jozsissdo@azet.sk",
-			"role": "TECHNICIAN"
+			"email": "example@azet.sk",
+			"role": "CLIENT"
 		},
-		"message": "User jozsissdo@azet.sk is authorized"
+		"message": "User example@azet.sk is authorized"
 	}
 }
 ```
 
 ## Error Responses
 
-**Condition** : If ANY of data does not pass validation.
+**Condition** : If body does not pass validation.
 
 **Code** : `400 BAD REQUEST`
 
@@ -73,30 +74,20 @@ OR
 
 ```json
 {
-	"status": "failure",
-	"error": "Invalid body data"
+	"error": "Invalid body data",
+	"data": null
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Condition** : If someone use input email already.
+
+**Code** : `400 BAD REQUEST`
 
 **Content** :
 ```json
 {
-    "status": "Internal error"
-}
-```
-
-**Condition** : If someone use input email already.
-
-**Code**: `400 BAD REQUEST`
-
-**Content**:
-```json
-{
-	"status": "failure",
-	"error": "Email is already in use!"
+	"error": "Email is already in use!",
+	"data": null
 }
 ```

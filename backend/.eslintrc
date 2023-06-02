@@ -4,7 +4,7 @@
         "airbnb-typescript/base"
     ],
     "parserOptions": {
-        "project": "./tsconfig.json",
+        "project": "./backend/tsconfig.json",
         "sourceType": "module",
         "ecmaVersion": "latest"
     },

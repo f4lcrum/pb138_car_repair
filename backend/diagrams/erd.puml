@@ -11,7 +11,7 @@ entity Vehicle {
 *ownerId: <<FK>>
 *brandModelId: <<FK>>
 *licensePlate: string
-*winCode: string
+*vinCode: string
 manufacturedAt: date
 scrappedAt: date
 }

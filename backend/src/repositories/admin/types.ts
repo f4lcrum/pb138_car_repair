@@ -10,11 +10,11 @@ export type ReadUnverifiedTechnicianResult = DbResult<{
 }[]>;
 
 export type VerifyData = {
-  email: string,
+  id: string,
 };
 
 export type VerifyDataResult = DbResult<{
-  email: string,
+  id: string,
   isVerified: boolean,
 }>;
 

@@ -1,18 +1,41 @@
 import { Result } from '@badrap/result';
-import type { Repair, RepairMaterial } from '@prisma/client';
+import { Repair, RepairMaterial, Role } from '@prisma/client';
 import type { Response } from 'express';
 import type { CheckUVehicleData, TransactionCheckOperationResult } from '../vehicle/types';
 import {
   AlreadyAssigned,
   AlreadyVerified,
-  DeletedRecordError, NonexistentRecordError, RoleError, TechnicianNotVerifiedError, UnauthorizedError, WrongOwnershipError,
+  DeletedRecordError, NonexistentRecordError,
+  RoleError, TechnicianNotVerifiedError,
+  UnauthorizedError, WrongOwnershipError,
 } from './error';
-import type { GenericResult, PrismaTransactionHandle } from './types';
+import { PrismaTransactionHandle, genericError } from './types';
 import type { CheckUserData } from '../user/types';
-import type { FaultUpdateData } from '../fault/types';
+import type { CheckFaultData } from '../fault/types';
 import {
-  backendErrorRequestResponse, forbiddenRequestResponse, notFoundRequestResponse, sendBadRequestResponse, unauthorizedRequestResponse,
+  backendErrorRequestResponse, forbiddenRequestResponse,
+  notFoundRequestResponse, sendBadRequestResponse,
+  unauthorizedRequestResponse,
 } from './responses';
+import client from '../../client';
+
+export const isVehicleDeleted = async (
+  data: { vehicleId: string },
+  tx: PrismaTransactionHandle,
+): TransactionCheckOperationResult => {
+  const result = await tx.vehicle.findUnique({
+    where: {
+      id: data.vehicleId,
+    },
+  });
+  if (result === null) {
+    throw new NonexistentRecordError('The vehicle does not exists!');
+  }
+  if (result.deletedAt !== null) {
+    throw new DeletedRecordError('The specified vehicle has already been deleted!');
+  }
+  return Result.ok({});
+};
 
 export const checkVehicle = async (
   data: CheckUVehicleData,
@@ -58,12 +81,12 @@ export const checkUser = async (
 };
 
 export const checkFaultUpdate = async (
-  data: FaultUpdateData,
+  data: CheckFaultData,
   tx: PrismaTransactionHandle,
 ): Promise<Result<Repair & { material: RepairMaterial[] }>> => {
   const result = await tx.repair.findUnique({
     where: {
-      id: data.id,
+      id: data.faultId,
     },
     include: {
       material: true,
@@ -78,8 +101,8 @@ export const checkFaultUpdate = async (
     return Result.err(new UnauthorizedError('The fault has already been resolved!'));
   }
 
-  if (result.technicianId !== data.technicianId && result.technicianId !== null) {
-    return Result.err(new WrongOwnershipError('The fault has already been assigned to different technician!'));
+  if (result.technicianId !== null && result.technicianId !== data.technicianId) {
+    return Result.err(new WrongOwnershipError('The fault is not assigned to you!'));
   }
 
   return Result.ok(result);
@@ -89,8 +112,9 @@ export const errorResponsesHandle = async (
   res : Response,
   error: Error,
 ) : Promise<void> => {
+  console.log(error.message);
   if (error instanceof DeletedRecordError || error instanceof NonexistentRecordError) {
-    return notFoundRequestResponse(res);
+    return notFoundRequestResponse(res, error.message);
   }
   if (error instanceof AlreadyVerified || error instanceof RoleError) {
     return sendBadRequestResponse(res, error.message);
@@ -103,4 +127,27 @@ export const errorResponsesHandle = async (
     return unauthorizedRequestResponse(res, 'Unauthorized');
   }
   return backendErrorRequestResponse(res);
+};
+
+export const checkTechnician = async (id : string) : Promise<Result<Boolean>> => {
+  try {
+    const result = await client.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        isVerified: true,
+        role: true,
+      },
+    });
+    if (result === null) {
+      return Result.err(new NonexistentRecordError('User with input email does not exists!'));
+    }
+    if (result.role !== Role.TECHNICIAN) {
+      return Result.err(new RoleError('User is not a technician!'));
+    }
+    return Result.ok(result.isVerified);
+  } catch (e) {
+    return genericError;
+  }
 };

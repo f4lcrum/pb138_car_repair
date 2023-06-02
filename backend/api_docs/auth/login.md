@@ -31,12 +31,23 @@ Used to collect a Token for a registered User.
 **Code** : `200 OK`
 
 **Content example**
-
+*request body:*
 ```json
 {
-    "token": "93144b288eb1fdccbe46d6fc0f241a51766ecd3d"
+	"email" : "alino@gmail.com",
+	"password": "alinko123"
 }
 ```
+*Response* :
+```json
+{
+	"error": null,
+	"data": {
+		"message": "Logged in"
+	}
+}
+```
+
 
 ## Error Responses
 
@@ -48,18 +59,20 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-	"status": "failure",
-	"error": "Wrong mail or password"
+	"error": "Wrong mail or password",
+	"data": null
 }
 ```
 
-**Condition** : If Prisma or Postgresql endures a fatal error.
+**Condition** : If body does not pass validation.
 
-**Code**: `500 INTERNAL SERVER ERROR`
+**Code** : `400 BAD REQUEST`
 
 **Content** :
+
 ```json
 {
-    "status": "Internal error"
+	"error": "Invalid Body",
+	"data": null
 }
 ```

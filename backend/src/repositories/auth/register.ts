@@ -24,9 +24,9 @@ const registerUser = async (data: RegisterData) : RegisterResult => {
       },
     });
     return Result.ok(user);
-  } catch (err) {
-    if (err instanceof Error) {
-      return Result.err(err);
+  } catch (e) {
+    if (e instanceof Error) {
+      return Result.err(e);
     }
     return genericError;
   }

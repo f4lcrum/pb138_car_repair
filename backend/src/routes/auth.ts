@@ -10,7 +10,7 @@ const authRouteLogout = `${authRoute}/logout`;
 const authRouteInfo = `${authRoute}/info`;
 
 authRouter.post(authRouteLogin, authController.login);
-authRouter.post(authRouteLogout, authController.logout);
+authRouter.post(authRouteLogout, auth(), authController.logout);
 authRouter.post(authRouteRegister, authController.register);
 authRouter.get(authRouteInfo, auth(), authController.readAuth);
 

@@ -11,13 +11,13 @@ const vehicleRouteSpecific = `${vehicleRouteGeneric}/:id`;
 
 vehicleRouter.get(
   vehicleRouteGeneric,
-  auth(Role.CLIENT, Role.ADMIN),
+  auth(Role.CLIENT),
 
   VehicleController.readVehicles,
 );
 vehicleRouter.delete(
   vehicleRouteSpecific,
-  auth(Role.CLIENT, Role.ADMIN),
+  auth(Role.CLIENT),
 
   VehicleController.deleteSpecificVehicle,
 );
