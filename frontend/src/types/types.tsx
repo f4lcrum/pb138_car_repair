@@ -56,7 +56,7 @@ export type Fault = {
   technician?: User;
   mileage?: number;
   name?: string;
-  workPrice?: double;
+  workPrice?: number;
   createdAt?: Date;
   resolvedAt?: Date;
   description?: string;

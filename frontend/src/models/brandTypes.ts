@@ -1,9 +1,9 @@
 export interface Brand {
-    brand: string;
-    models: BrandModel[];
+  brand: string;
+  models: BrandModel[];
 }
 
 export interface BrandModel {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }

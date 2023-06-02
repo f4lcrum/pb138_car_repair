@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+/* eslint-disable prettier/prettier */
+import { FC } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
@@ -38,7 +39,10 @@ const LoginPage: FC = () => {
             />
           </Grid>
           <Grid item>
-            <Button onClick={() => navigate("/")} variant="outlined">
+            <Button
+              onClick={() => navigate("/")}
+              variant="outlined"
+            >
               Login
             </Button>
             <Button onClick={() => navigate("/register")} variant="outlined">
