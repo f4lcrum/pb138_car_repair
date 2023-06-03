@@ -11,10 +11,13 @@ const read = async (data: AuthReadData) : AuthReadResult => {
         id,
       },
       select: {
+        id: true,
         firstName: true,
         lastName: true,
         email: true,
         role: true,
+        phoneNumber: true,
+
       },
     });
     return Result.ok(user);

@@ -35,10 +35,19 @@ localhost:3000/auth/fault/2be2a276-60f5-4583-8dc1-3c2be9aae841
 			"description": "Vymena oleja",
 			"mileage": 90000,
 			"name": "Oprava c.1",
-			"technicianId": "72e4eda6-5bd0-466c-8c56-b5405cd12e2f",
 			"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
 			"resolvedAt": "2012-02-25T12:45:03.000Z",
-			"workPrice": 30
+			"workPrice": 30,
+			"material": [
+				{
+					"id": "41221bf6-d3d6-407b-bba7-ffe50f0275be",
+					"description": "5V20 motorovy olej",
+					"name": "5V20 by Bosch",
+					"price": 20
+				}
+			],
+			"technicianEmail": "jozino@azet.sk",
+			"technicianName": "Jozef Novak"
 		},
 		{
 			"id": "b9ec9015-9edc-4e66-bc96-b1eca94d64ca",
@@ -46,10 +55,11 @@ localhost:3000/auth/fault/2be2a276-60f5-4583-8dc1-3c2be9aae841
 			"description": "Vymena turba",
 			"mileage": 150000,
 			"name": "Oprava c.2",
-			"technicianId": null,
 			"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
 			"resolvedAt": null,
-			"workPrice": 0
+			"workPrice": 0,
+			"material": [],
+			"technicianName": " "
 		},
 		{
 			"id": "08cd4aa8-3482-4cc9-a542-806ee641eff4",
@@ -57,10 +67,31 @@ localhost:3000/auth/fault/2be2a276-60f5-4583-8dc1-3c2be9aae841
 			"description": "vymena baterie",
 			"mileage": 100000,
 			"name": "Oprava c.3",
-			"technicianId": "72e4eda6-5bd0-466c-8c56-b5405cd12e2f",
 			"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
 			"resolvedAt": "2012-03-25T12:45:03.000Z",
-			"workPrice": 120
+			"workPrice": 120,
+			"material": [
+				{
+					"id": "27c350c4-e2a0-4663-8129-f219909bacf6",
+					"description": "auto bateria",
+					"name": "Baterie AAAA",
+					"price": 80
+				}
+			],
+			"technicianEmail": "jozino@azet.sk",
+			"technicianName": "Jozef Novak"
+		},
+		{
+			"id": "b4558b1c-a7c7-400e-8207-cba6fb19ff20",
+			"createdAt": "2023-06-03T19:28:20.040Z",
+			"description": "Auto mi netaha ani na vysokych otackach, strata vykonu..",
+			"mileage": 300,
+			"name": "stock",
+			"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
+			"resolvedAt": null,
+			"workPrice": 0,
+			"material": [],
+			"technicianName": " "
 		}
 	]
 }

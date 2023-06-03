@@ -16,7 +16,9 @@ Parameter needs to be UUID of vehicle
 
 ```json
 {
-	"description": "[Any string]"
+	"description": "[Any string]",
+	"mileage": "[Alphanumeric string]",
+	"name": "[Any string]"
 }
 ```
 
@@ -27,7 +29,9 @@ Parameter needs to be UUID of vehicle
 **Content example** : *request body*
 ```json
 {
-	"description": "Auto mi netaha ani na vysokych otackach, strata vykonu.."
+	"description": "Auto mi netaha ani na vysokych otackach, strata vykonu..",
+	"name": "stock",
+	"mileage": "300"
 }
 ```
 
@@ -37,13 +41,13 @@ Parameter needs to be UUID of vehicle
 {
 	"error": null,
 	"data": {
-		"id": "42721e54-5fc2-4489-8869-5d4cf35238ab",
-		"createdAt": "2023-06-01T16:36:11.501Z",
+		"id": "b4558b1c-a7c7-400e-8207-cba6fb19ff20",
+		"createdAt": "2023-06-03T19:28:20.040Z",
 		"description": "Auto mi netaha ani na vysokych otackach, strata vykonu..",
-		"mileage": null,
-		"name": null,
+		"mileage": 300,
+		"name": "stock",
 		"technicianId": null,
-		"vehicleId": "fc986e3f-f341-417b-b180-a52aef37e049",
+		"vehicleId": "2be2a276-60f5-4583-8dc1-3c2be9aae841",
 		"resolvedAt": null,
 		"workPrice": 0
 	}

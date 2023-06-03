@@ -23,10 +23,21 @@ export type VehicleDeleteData = {
   vehicleId: string,
 };
 
-type DbVehicles = DbResult<Vehicle[]>;
 type DbVehicle = DbResult<Vehicle>;
 
-export type VehicleReadMultipleResult = DbVehicles;
+export type VehicleReadMultipleResult = DbResult<{
+  brandModel: string;
+  brandName: string;
+  id: string;
+  ownerId: string;
+  licensePlate: string;
+  vinCode: string;
+  manufacturedAt: Date;
+  createdAt: Date;
+  scrappedAt: Date | null;
+  deletedAt: Date | null;
+}[]>;
+
 export type VehicleReadOneResult = DbVehicle;
 export type VehicleDeleteResult = DbVehicle;
 export type CheckUVehicleData = {

@@ -4,7 +4,7 @@ import {
   receivedRequestResponse,
   sendBadRequestResponse,
 } from '../../repositories/common/responses';
-import read from '../../repositories/fault/read';
+import { read } from '../../repositories/fault/read';
 import { errorResponsesHandle } from '../../repositories/common/common';
 
 const readFault = async (req: Request, res: Response) => {

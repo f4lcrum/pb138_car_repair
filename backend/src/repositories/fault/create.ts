@@ -20,9 +20,9 @@ const create = async (data: FaultCreateData) : FaultCreateResult => {
         data: {
           vehicleId: data.vehicleId,
           description: data.description,
-          mileage: null,
+          mileage: data.mileage,
           createdAt,
-          name: null,
+          name: data.name,
           workPrice: 0,
         },
       });

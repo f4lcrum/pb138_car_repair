@@ -21,6 +21,8 @@ const createFault = async (req : Request, res : Response) => {
   const output = await create({
     userId: req.session.user!.id,
     description: bodyData.data.description,
+    name: bodyData.data.name,
+    mileage: bodyData.data.mileage,
     vehicleId: paramsData.data.id,
   });
   if (output.isErr) {

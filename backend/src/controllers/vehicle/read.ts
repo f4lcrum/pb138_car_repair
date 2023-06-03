@@ -1,5 +1,4 @@
 import type { Request, Response } from 'express';
-import type { Vehicle } from '@prisma/client';
 import { all } from '../../repositories/vehicle/read';
 import { notFoundRequestResponse, receivedRequestResponse, sendBadRequestResponse } from '../../repositories/common/responses';
 import { vehicleReadManySchema } from '../validationSchemas/vehicle';
@@ -13,7 +12,7 @@ const readVehicles = async (req: Request, res: Response) => {
   if (output.isErr) {
     return notFoundRequestResponse(res, output.error.message);
   }
-  const result : Vehicle[] = output.unwrap();
+  const result = output.unwrap();
   return receivedRequestResponse(res, result);
 };
 

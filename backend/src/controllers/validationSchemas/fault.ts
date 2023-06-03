@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const createFaultSchema = z.object({
+  name: z.string().nonempty({ message: "Can't be empty" }),
   description: z.string().nonempty({ message: "Can't be empty" }),
+  mileage: z.coerce.number(),
 }).strict();
 
 const RepairMaterialZod = z.object({

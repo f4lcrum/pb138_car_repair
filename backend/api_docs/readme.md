@@ -22,6 +22,7 @@
 *Fault endpoints:*
 * [create](fault/create.md) : `POST /auth/fault`
 * [read](fault/read.md) : `GET /auth/fault`
+* [readAll](fault/readAll.md) : `GET /auth/fault/unresolved/all`
 * [update](fault/update.md) : `PATCH /auth/fault`
 * [assign](fault/assign.md) : `PATCH /auth/fault/assignment/:id`
 

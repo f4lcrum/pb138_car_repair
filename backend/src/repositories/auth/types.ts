@@ -11,10 +11,12 @@ export type UserResult = DbResult<{
 } | null>;
 
 export type AuthReadResult = DbResult<{
+  id: string,
   firstName: string,
   lastName: string,
   email: string,
   role: Role,
+  phoneNumber: string,
 } | null>;
 export type RegisterResult = UserResult;
 export type LoginResult = DbResult<User | null>;

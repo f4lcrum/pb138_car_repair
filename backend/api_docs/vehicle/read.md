@@ -43,7 +43,6 @@ http://localhost:3000/auth/vehicle?manufacturedAt=true&sortOrder=asc
 	"data": [
 		{
 			"id": "fc986e3f-f341-417b-b180-a52aef37e049",
-			"brandId": "40fc1f92-dbc5-4595-ad7e-a61e677d2843",
 			"ownerId": "38b610c6-f744-11ed-b67e-0242ac120002",
 			"licensePlate": "KE-222-TT",
 			"vinCode": "885765",
@@ -51,11 +50,11 @@ http://localhost:3000/auth/vehicle?manufacturedAt=true&sortOrder=asc
 			"createdAt": "2015-03-05T16:00:00.000Z",
 			"scrappedAt": null,
 			"deletedAt": null,
-			"repairs": []
+			"brandModel": "BMW X6",
+			"brandName": "BMW"
 		},
 		{
 			"id": "ef0aff69-2657-403f-96e7-4dbb8d5ebb00",
-			"brandId": "6f439f5e-f745-11ed-b67e-0242ac120002",
 			"ownerId": "38b610c6-f744-11ed-b67e-0242ac120002",
 			"licensePlate": "KE-333-KE",
 			"vinCode": "111765",
@@ -63,7 +62,8 @@ http://localhost:3000/auth/vehicle?manufacturedAt=true&sortOrder=asc
 			"createdAt": "2016-03-05T16:00:00.000Z",
 			"scrappedAt": null,
 			"deletedAt": null,
-			"repairs": []
+			"brandModel": "911 Carrera T",
+			"brandName": "porsche"
 		}
 	]
 }

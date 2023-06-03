@@ -1,4 +1,4 @@
-import type { Prisma, Vehicle } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { Result } from '@badrap/result';
 import client from '../client';
 import type {
@@ -60,24 +60,30 @@ export const all = async (
       orderBy.push({ manufacturedAt: sortOrder });
     }
 
-    const result : Vehicle[] = await client.vehicle.findMany({
+    const result = await client.vehicle.findMany({
       where: vehicleFilter,
-      // TODO: PROBS REMOVE THE REPAIRS AND MATERIAL:
       include: {
-        repairs: {
+        brandModel: {
           include: {
-            material: true,
+            brand: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },
       orderBy: orderBy !== undefined ? orderBy : [],
     });
-    // TODO: IF NOT VEHICLES ARE FOUND, FUNCTION RETURNS EMPTY
-    // LIST [], THEREFORE THIS SHOULD BE INTERNAL ERROR OR SOME SHIT
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');
     }
-    return Result.ok(result);
+    const vehicles = result.map(({ brandId, ...car }) => ({
+      ...car,
+      brandModel: car.brandModel.name,
+      brandName: car.brandModel.brand.name,
+    }));
+    return Result.ok(vehicles);
   } catch (e) {
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);

@@ -4,7 +4,9 @@ import type DbResult from '../common/types';
 type DbRepair = DbResult<Repair>;
 type DbRepairs = DbResult<Repair[]>;
 export type FaultCreateData = {
+  name: string,
   description: string,
+  mileage: number,
   userId: string,
   vehicleId: string,
 };
@@ -16,7 +18,18 @@ export type FaultReadOneData = {
   vehicleId: string,
 };
 
-export type FaultReadOneResult = DbRepairs;
+export type FaultReadOneResult = DbResult<{
+  technicianEmail: string | undefined;
+  technicianName: string | undefined;
+  id: string;
+  createdAt: Date;
+  description: string;
+  mileage: number | null;
+  name: string | null;
+  vehicleId: string;
+  resolvedAt: Date | null;
+  workPrice: number;
+}[]>;
 
 export type FaultReadManyData = {
   userId: string,

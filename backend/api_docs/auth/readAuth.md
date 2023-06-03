@@ -19,12 +19,14 @@ Gets info about current logged user
 	"error": null,
 	"data": {
 		"item": {
-			"firstName": "Andrej",
-			"lastName": "DJ",
-			"email": "andrej@admin.com",
-			"role": "ADMIN"
+			"id": "72e4eda6-5bd0-466c-8c56-b5405cd12e2f",
+			"firstName": "Jozef",
+			"lastName": "Novak",
+			"email": "jozino@azet.sk",
+			"role": "TECHNICIAN",
+			"phoneNumber": "+421123456789"
 		},
-		"message": "User Andrej is authorized"
+		"message": "User Jozef is authorized"
 	}
 }
 ```

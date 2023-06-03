@@ -1,10 +1,10 @@
 import { Result } from '@badrap/result';
 import { genericError } from '../common/types';
-import type { FaultReadOneData, FaultReadOneResult } from './types';
+import type { FaultReadManyResult, FaultReadOneData, FaultReadOneResult } from './types';
 import client from '../client';
 import { checkVehicle } from '../common/common';
 
-const read = async (data: FaultReadOneData): FaultReadOneResult => {
+export const read = async (data: FaultReadOneData): FaultReadOneResult => {
   try {
     return await client.$transaction(async (tx) => {
       const vehicleCheck = await checkVehicle(
@@ -18,8 +18,30 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
         where: {
           vehicleId: data.vehicleId,
         },
+        include: {
+          technician: {
+            select: {
+              email: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+          material: {
+            select: {
+              id: true,
+              description: true,
+              name: true,
+              price: true,
+            },
+          },
+        },
       });
-      return Result.ok(fault);
+      const result = fault.map(({ technicianId, technician, ...rest }) => ({
+        ...rest,
+        technicianEmail: technician?.email,
+        technicianName: [technician?.firstName, technician?.lastName].join(' '),
+      }));
+      return Result.ok(result);
     });
   } catch (e) {
     if (e instanceof Error) {
@@ -29,40 +51,23 @@ const read = async (data: FaultReadOneData): FaultReadOneResult => {
   }
 };
 
-// TODO: readMany repairs:
-// --filter:
-// --- get repairs of one specific user - DONE
-// --- get user's resolved/unresolved repairs
-// --- get all unresolved repairs
-// --sorting:
-// --- default by createdAt in desc order - DONE
-// --- can be specified in params
-
-// const all = async (data: FaultReadManyData): FaultReadManyResult => {
-//   try {
-//     return Result.ok(
-//       await client.$transaction(async (tx) => {
-
-//         const faults = await tx.repair.findMany({
-//           where: {
-//             vehicle: {
-//               ownerId: data.userId,
-//             },
-//           },
-//           // get the newest ones first:
-//           orderBy: {
-//             createdAt: 'desc',
-//           },
-//         });
-//         return faults;
-
-//       })
-//     )
-
-//   } catch (e) {
-//     return genericError;
-//   }
-
-// };
-
-export default read;
+export const all = async (): FaultReadManyResult => {
+  try {
+    return Result.ok(
+      await client.$transaction(async (tx) => {
+        const faults = await tx.repair.findMany({
+          where: {
+            resolvedAt: null,
+            technicianId: null,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        });
+        return faults;
+      }),
+    );
+  } catch (e) {
+    return genericError;
+  }
+};
