@@ -25,7 +25,7 @@ User creates a new vehicle
 ```json
 {
 	"brandId" : "875bc2f6-bd26-4f6a-ae29-1c3669021831",
-	"licenslate" : "SC-123-II",
+	"licensePlate" : "SC-123-II",
 	"vinCode" : "339411",
 	"manufacturedAt": "2001-03-09T16:00:00.000Z"
 }
