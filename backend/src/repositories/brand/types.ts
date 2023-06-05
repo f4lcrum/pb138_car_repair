@@ -6,6 +6,7 @@ export type BrandReadData = {
 };
 
 export type BrandReadResult = DbResult<{
+  id: string,
   brand: string,
   models: {
     id: string,
