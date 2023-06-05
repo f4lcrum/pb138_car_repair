@@ -9,9 +9,9 @@ const readUnverifiedTechnicians = async () : ReadUnverifiedTechnicianResult => {
     const result = await client.user.findMany({
       where: {
         role: Role.TECHNICIAN,
-        isVerified: false,
       },
       select: {
+        id: true,
         firstName: true,
         lastName: true,
         email: true,
