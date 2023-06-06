@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { authApi } from "../services";
-import { Credentials } from "../models/authTypes";
+import { Credentials, RegistrationRequest } from "../models/authTypes";
 
 const getAuthInfo = async () => {
   return await authApi.readAuth().then((response) => {
@@ -38,4 +38,19 @@ export const useLogOut = () => {
   });
 
   return { logOut };
+};
+
+const registerUser = async (registration: RegistrationRequest) => {
+  return await authApi.register(registration).then((response) => {
+    return response.data;
+  });
+};
+
+export const useRegistration = () => {
+  const queryClient = useQueryClient();
+  const { mutate: register } = useMutation(registerUser, {
+    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+  });
+
+  return { register };
 };
