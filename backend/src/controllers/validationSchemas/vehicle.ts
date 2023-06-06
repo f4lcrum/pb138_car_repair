@@ -14,7 +14,7 @@ export const vehicleReadSpecificSchema = z.object({
 
 export const vehicleCreateSchema = z.object({
   brandId: z.string().uuid(),
-  licensePlate: z.string().min(4).max(10),
-  vinCode: z.string().min(4).max(17),
+  licensePlate: z.string().trim().min(4).max(10),
+  vinCode: z.string().trim().min(4).max(17),
   manufacturedAt: z.coerce.date().max(new Date()),
 }).strict();

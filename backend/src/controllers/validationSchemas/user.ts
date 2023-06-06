@@ -2,14 +2,14 @@ import { z } from 'zod';
 import validator from 'validator';
 
 export const updateUserSchema = z.object({
-  firstName: z.string().min(2).optional(),
-  lastName: z.string().min(2).optional(),
+  firstName: z.string().trim().min(2).optional(),
+  lastName: z.string().trim().min(2).optional(),
   phoneNumber: z.string().refine(validator.isMobilePhone).optional(),
 }).strict().refine(({ firstName, lastName, phoneNumber }) => firstName !== undefined || lastName !== undefined || phoneNumber !== undefined, { message: 'One of the fields must be defined!' });
 
 export const userRegistrationSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().trim().min(2),
+  lastName: z.string().trim().min(2),
   email: z.string().email(),
   password: z.string().min(8),
   phoneNumber: z.string().refine(validator.isMobilePhone),

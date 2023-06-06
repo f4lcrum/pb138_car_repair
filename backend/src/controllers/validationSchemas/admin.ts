@@ -5,9 +5,9 @@ export const verifyTechnicianSchema = z.object({
 });
 
 export const createBrandSchema = z.object({
-  name: z.string().nonempty(),
+  name: z.string().trim().nonempty(),
 }).strict();
 
 export const createBrandModelSchema = z.object({
-  name: z.string().nonempty(),
+  name: z.string().trim().nonempty(),
 }).strict();
