@@ -3,13 +3,22 @@ export interface Credentials {
   password: string;
 }
 
+export interface LogInOutRequest {
+  message: string;
+}
+
 export interface RegistrationRequest {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   phoneNumber: string;
-  role?: "TECHNICIAN";
+  role?: "TECHNICIAN" | null;
+}
+
+export interface RegistrationResponse {
+  item: AuthUserRegistration;
+  message: string;
 }
 
 export interface AuthInfo {
@@ -17,11 +26,16 @@ export interface AuthInfo {
   message: string;
 }
 
-interface AuthUser {
+interface AuthUserRegistration {
   firstName: string;
   lastName: string;
   email: string;
   role: Role;
+}
+
+interface AuthUser extends AuthUserRegistration {
+  id: string;
+  phoneNumber: string;
 }
 
 export enum Role {

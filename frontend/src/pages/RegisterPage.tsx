@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import {
   Button,
   Checkbox,
@@ -7,16 +7,36 @@ import {
   Typography,
 } from "@mui/material";
 import ControlledTextField from "../components/ControlledTextField";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "../services";
+
+//todo add validation (password.length >= 8)
 
 const RegisterPage: FC = () => {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm();
   const navigate = useNavigate();
 
+  //todo add authService in front of register
+  const onSubmit = (data: FieldValues) => {
+    authApi
+      .register({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: "721440633",
+        password: data.password,
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch();
+  };
+
+  //todo add phonenumber
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid
           container
           spacing={2}
@@ -77,8 +97,8 @@ const RegisterPage: FC = () => {
             />
           </Grid>
           <Grid item>
-            <Button onClick={() => navigate("/")} variant="outlined">
-              register
+            <Button type="submit" variant="outlined">
+              Register
             </Button>
             <Button onClick={() => navigate("/login")} variant="outlined">
               Login

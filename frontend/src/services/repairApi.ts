@@ -1,28 +1,39 @@
 import {
-  Repair,
   RepairCreateRequest,
   RepairUpdateRequest,
   RepairUpdateResponse,
+  RepairWithTechnician,
+  SingleRepair,
 } from "../models/repairTypes";
 import { RestResponse } from "../models/responseTypes";
 import axiosInstance from "./base";
 
 export const getRepairs = async (
   vehicleId: string
-): Promise<RestResponse<Repair[]>> => {
-  return await axiosInstance.get(`/auth/fault/${vehicleId}`);
+): Promise<RestResponse<RepairWithTechnician[]>> => {
+  const response = await axiosInstance.get(`/auth/fault/${vehicleId}`);
+  return response.data;
+};
+
+export const getAllUnresolvedRepairs = async (): Promise<
+  RestResponse<SingleRepair[]>
+> => {
+  const response = await axiosInstance.get("/auth/fault/unresolved/all");
+  return response.data;
 };
 
 export const createRepair = async (
   vehicleId: string,
   repair: RepairCreateRequest
-): Promise<RestResponse<Repair>> => {
-  return await axiosInstance.post(`/auth/fault/${vehicleId}`, repair);
+): Promise<RestResponse<SingleRepair>> => {
+  const response = await axiosInstance.post(`/auth/fault/${vehicleId}`, repair);
+  return response.data;
 };
 
 export const updateRepair = async (
-  vehicleId: string,
+  id: string,
   repair: RepairUpdateRequest
 ): Promise<RestResponse<RepairUpdateResponse>> => {
-  return await axiosInstance.patch(`/auth/fault/${vehicleId}`, repair);
+  const response = await axiosInstance.patch(`/auth/fault/${id}`, repair);
+  return response.data;
 };

@@ -1,34 +1,40 @@
 import { RestResponse } from "../models/responseTypes";
 import {
-  ManyVehicleQueryParams,
+  SingleVehicle,
   SingleVehicleQueryParams,
-  Vehicle,
-  VehicleCreate,
+  VehicleCreateRequest,
+  VehicleWithBrand,
 } from "../models/vehicleTypes";
 import axiosInstance from "./base";
 
 export const createVehicle = async (
-  vehicle: VehicleCreate
-): Promise<RestResponse<Vehicle>> => {
-  return await axiosInstance.post("/auth/vehicle", vehicle);
+  vehicle: VehicleCreateRequest
+): Promise<RestResponse<SingleVehicle>> => {
+  const response = await axiosInstance.post("/auth/vehicle", vehicle);
+  return response.data;
 };
 
 export const deleteVehicle = async (
   id: string
-): Promise<RestResponse<Vehicle>> => {
-  return await axiosInstance.delete(`/auth/vehicle/${id}`);
+): Promise<RestResponse<SingleVehicle>> => {
+  const response = await axiosInstance.delete(`/auth/vehicle/${id}`);
+  return response.data;
 };
 
 export const getVehicle = async (
   queryParams: SingleVehicleQueryParams
-): Promise<RestResponse<Vehicle>> => {
-  return await axiosInstance.get("/auth/vehicle/search", {
+): Promise<RestResponse<SingleVehicle>> => {
+  const response = await axiosInstance.get("/auth/vehicle/search", {
     params: queryParams,
   });
+  return response.data;
 };
 
 export const getAllVehicles = async (
-  queryParams: ManyVehicleQueryParams
-): Promise<RestResponse<Vehicle[]>> => {
-  return await axiosInstance.get("/auth/vehicle", { params: queryParams });
+  queryParams: URLSearchParams
+): Promise<RestResponse<VehicleWithBrand[]>> => {
+  const response = await axiosInstance.get("/auth/vehicle", {
+    params: queryParams,
+  });
+  return response.data;
 };
