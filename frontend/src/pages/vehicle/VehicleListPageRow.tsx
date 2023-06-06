@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { format } from "date-fns";
 import {
   Box,
   Button,
@@ -11,18 +10,23 @@ import {
 } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Fault, Vehicle } from "../../types/types";
-import FaultModal from "../../components/modals/FaultModal";
+import RepairModal from "../../components/modals/RepairModal";
 import FaultTable from "../../components/tables/FaultTable";
+import { VehicleWithBrand } from "../../models/vehicleTypes";
+import { format } from "date-fns";
+import { RepairWithTechnician } from "../../models/repairTypes";
 
-const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
+const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   const { vehicle } = props;
   const [open, setOpen] = useState(false);
   const [faultModalOpen, setFaultModalOpen] = useState(false);
-  const [fault, setFault] = useState<Fault | undefined>(undefined);
+  const [selectedRepair, setSelectedRepair] = useState<
+    RepairWithTechnician | undefined
+  >(undefined);
 
   return (
     <>
+      {/* is the key ok? */}
       <TableRow key={Math.random()} sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
@@ -33,15 +37,17 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{vehicle.brand}</TableCell>
-        <TableCell>{vehicle.model}</TableCell>
+        <TableCell>{vehicle.brandName}</TableCell>
+        <TableCell>{vehicle.brandModel}</TableCell>
         <TableCell>{vehicle.licensePlate}</TableCell>
-        <TableCell>{format(vehicle.manufacturedAt, "yyyy")}</TableCell>
+        <TableCell>
+          {format(new Date(vehicle.manufacturedAt), "yyyy")}
+        </TableCell>
         <TableCell align={"right"}>
           <Button
             variant={"contained"}
             onClick={() => {
-              setFault(undefined);
+              setSelectedRepair(undefined);
               setFaultModalOpen(true);
             }}
           >
@@ -49,6 +55,7 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
           </Button>
         </TableCell>
       </TableRow>
+      {/* is the key ok? */}
       <TableRow key={Math.random()}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -57,8 +64,8 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
                 Faults
               </Typography>
               <FaultTable
-                faults={vehicle.faults}
-                setFault={setFault}
+                vehicleId={vehicle.id}
+                setRepair={setSelectedRepair}
                 setModalOpen={setFaultModalOpen}
                 size={"small"}
               />
@@ -66,10 +73,11 @@ const VehicleListPageRow = (props: { vehicle: Vehicle }) => {
           </Collapse>
         </TableCell>
       </TableRow>
-      <FaultModal
+      <RepairModal
         open={faultModalOpen}
         setOpen={setFaultModalOpen}
-        fault={fault}
+        repair={selectedRepair}
+        vehicleId={vehicle.id}
       />
     </>
   );

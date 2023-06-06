@@ -2,9 +2,10 @@ import { TextField, TextFieldProps } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 import { FC } from "react";
 
+//todo fix control type
 interface ControlledTextFieldProps {
   name: string;
-  control: Control;
+  control: Control<any, object>;
 }
 
 type ControlledTextFieldPropsUnited = ControlledTextFieldProps &
