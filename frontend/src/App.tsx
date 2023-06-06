@@ -11,6 +11,8 @@ import TechnicianListPage from "./pages/technic/TechnicianListPage";
 import RepairListPage from "./pages/repair/RepairListPage";
 import BrandListPage from "./pages/brand/BrandListPage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const queryClient = new QueryClient();
 
@@ -20,22 +22,27 @@ const App = () => {
       <ThemeProvider theme={appTheme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <Router>
-            <Routes>
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/" element={<ProtectedRoute />}>
-                <Route path="/" element={<BasePage />}>
-                  <Route path="vehicle" element={<VehicleListPage />} />
-                  <Route path="fault" element={<RepairListPage />} />
-                  <Route path="brand" element={<BrandListPage />} />
-                  <Route path="technicians" element={<TechnicianListPage />} />
-                  <Route path="profile" element={<NotFoundPage />} />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Router>
+              <Routes>
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/" element={<ProtectedRoute />}>
+                  <Route path="/" element={<BasePage />}>
+                    <Route path="vehicle" element={<VehicleListPage />} />
+                    <Route path="fault" element={<RepairListPage />} />
+                    <Route path="brand" element={<BrandListPage />} />
+                    <Route
+                      path="technicians"
+                      element={<TechnicianListPage />}
+                    />
+                    <Route path="profile" element={<NotFoundPage />} />
+                  </Route>
                 </Route>
-              </Route>
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Router>
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Router>
+          </LocalizationProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </>

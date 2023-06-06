@@ -20,6 +20,7 @@ import { ModalProps } from "../../types/interfaces";
 import { useBrands } from "../../hooks/useBrands";
 import { Brand } from "../../models/brandTypes";
 import { useAddVehicle } from "../../hooks/useVehicles";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm<Vehicle>({});
@@ -27,6 +28,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { data, error, isLoading } = useBrands();
   const { addVehicle } = useAddVehicle();
   const [selectedModel, setSelectedModel] = useState<string>("");
+  const [manufacturedAt, setManufacturedAt] = useState<Date>(new Date(2000));
 
   const getModelMenuItems = (brand: Brand) => {
     return brand.models.map((model) => (
@@ -49,14 +51,12 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
 
   //todo add date field
   const onSubmit = (values: FieldValues) => {
-    const request = {
+    addVehicle({
       licensePlate: values.licensePlate,
       vinCode: values.vinCode,
-      manufacturedAt: new Date(1988, 4),
+      manufacturedAt: manufacturedAt,
       brandId: selectedModel ?? "",
-    };
-    console.log(request);
-    addVehicle(request);
+    });
     setOpen(false);
   };
 
@@ -101,7 +101,15 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
               </Select>
             </FormControl>
             <Grid item xs={12}>
-              Todo: date
+              <DatePicker
+                label="Year of manufacture"
+                openTo="year"
+                views={["year"]}
+                value={manufacturedAt}
+                onChange={(change) => {
+                  if (change != null) setManufacturedAt(change);
+                }}
+              />
             </Grid>
           </Grid>
         </DialogContent>
