@@ -5,8 +5,7 @@ import { useAuth } from "../hooks/useAuth.ts";
 const ProtectedRoute: FC = () => {
   const location = useLocation();
   const { data } = useAuth();
-
-  return !!data?.item ? (
+  return !!data?.item.role ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} />

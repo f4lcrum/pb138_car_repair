@@ -19,8 +19,8 @@ const barItems: BarItem[] = [
     roles: [Role.CLIENT, Role.TECHNICIAN],
   },
   {
-    label: "Faults",
-    route: "/fault",
+    label: "Repairs",
+    route: "/repair",
     roles: [Role.TECHNICIAN],
   },
   {
@@ -30,7 +30,7 @@ const barItems: BarItem[] = [
   },
   {
     label: "Technicians",
-    route: "/technicians",
+    route: "/technician",
     roles: [Role.ADMIN],
   },
 ];

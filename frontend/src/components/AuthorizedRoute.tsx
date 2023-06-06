@@ -16,7 +16,9 @@ const AuthorizedRoute: FC<AuthorizedRouteProps> = ({
   const userHasRequiredRole =
     !!data?.item.role && roles.includes(data?.item.role);
 
-  if (!userHasRequiredRole) {
+  const technicianVerified = data?.item.role != Role.TECHNICIAN || true; //todo
+
+  if (!userHasRequiredRole && technicianVerified) {
     return <UnauthorizedPage />;
   }
 
