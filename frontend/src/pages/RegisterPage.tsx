@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -9,28 +9,27 @@ import {
 import ControlledTextField from "../components/ControlledTextField";
 import { useForm, FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { authApi } from "../services";
+import { useRegistration } from "../hooks/useAuth";
 
 //todo add validation (password.length >= 8)
 
 const RegisterPage: FC = () => {
   const { control, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const { register } = useRegistration();
 
-  //todo add authService in front of register
+  const [isTechnician, setIsTechnician] = useState(false);
+
   const onSubmit = (data: FieldValues) => {
-    authApi
-      .register({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phoneNumber: "721440633",
-        password: data.password,
-      })
-      .then(() => {
-        navigate("/");
-      })
-      .catch();
+    register({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      password: data.password,
+      isTechnician: isTechnician,
+    });
+    navigate("/");
   };
 
   //todo add phonenumber
@@ -68,6 +67,14 @@ const RegisterPage: FC = () => {
           </Grid>
           <Grid item>
             <ControlledTextField
+              id="phoneNumber"
+              name="phoneNumber"
+              control={control}
+              label="Phone Number"
+            />
+          </Grid>
+          <Grid item>
+            <ControlledTextField
               id="password"
               name="password"
               control={control}
@@ -89,9 +96,8 @@ const RegisterPage: FC = () => {
               label="Register as a technician"
               control={
                 <Checkbox
-                  checked={false}
-                  indeterminate={false}
-                  onChange={undefined}
+                  checked={isTechnician}
+                  onChange={() => setIsTechnician(!isTechnician)}
                 />
               }
             />

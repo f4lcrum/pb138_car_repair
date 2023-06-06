@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { User } from "../../types/types";
 import {
@@ -10,43 +10,32 @@ import {
   Grid,
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
-import { AuthInfo } from "../../models/authTypes";
-import { authApi, userApi } from "../../services";
+import { useAuth, useUpdateUser } from "../../hooks/useAuth";
 
 interface UserModalProps {
   open: boolean;
-  setOpen: (open: boolean) => {};
+  setOpen: (open: boolean) => void;
 }
 
 const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
-  const [authInfo, setAuthInfo] = useState<AuthInfo | undefined>(undefined);
-
-  useEffect(() => {
-    authApi.readAuth().then((response) => {
-      setAuthInfo(response.data);
-    });
-  }, [open]);
+  const { data } = useAuth();
+  const { update } = useUpdateUser();
 
   const { control, handleSubmit } = useForm<User>();
 
-  const handleClose = (event, reason) => {
+  // @ts-ignore
+  const handleClose = (event: any, reason: any) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
   };
 
   const onSubmit = (data: FieldValues) => {
-    if (authInfo?.item.id) {
-      userApi
-        .updateUser({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phoneNumber: data.phoneNumber,
-        })
-        .then(() => {
-          setOpen(false);
-        });
-    }
+    update({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNumber: data.phoneNumber,
+    });
   };
 
   return (
@@ -54,14 +43,14 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>Profile</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 label={"E-mail"}
                 name={"email"}
                 control={control}
                 disabled={true}
-                defaultValue={authInfo?.item.email}
+                defaultValue={data?.item.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -69,7 +58,7 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"First Name"}
                 name={"firstName"}
                 control={control}
-                defaultValue={authInfo?.item.firstName}
+                defaultValue={data?.item.firstName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -77,7 +66,7 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"Last Name"}
                 name={"lastName"}
                 control={control}
-                defaultValue={authInfo?.item.lastName}
+                defaultValue={data?.item.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,7 +74,7 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"Phone Number"}
                 name={"phoneNumber"}
                 control={control}
-                defaultValue={authInfo?.item.phoneNumber}
+                defaultValue={data?.item.phoneNumber}
               />
             </Grid>
           </Grid>

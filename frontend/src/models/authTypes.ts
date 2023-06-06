@@ -13,7 +13,7 @@ export interface RegistrationRequest {
   email: string;
   password: string;
   phoneNumber: string;
-  role?: "TECHNICIAN" | null;
+  isTechnician: boolean;
 }
 
 export interface RegistrationResponse {
@@ -39,7 +39,7 @@ interface AuthUser extends AuthUserRegistration {
 }
 
 export enum Role {
-  TECHNICIAN,
-  ADMIN,
-  CLIENT,
+  TECHNICIAN = "TECHNICIAN",
+  ADMIN = "ADMIN",
+  CLIENT = "CLIENT",
 }

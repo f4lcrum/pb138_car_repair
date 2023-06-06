@@ -6,13 +6,15 @@ import RegisterPage from "./pages/RegisterPage";
 import { appTheme } from "./themes/appTheme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import VehicleListPage from "./pages/vehicle/VehicleListPage";
-import NotFoundPage from "./pages/NotFoundPage";
 import TechnicianListPage from "./pages/technic/TechnicianListPage";
 import RepairListPage from "./pages/repair/RepairListPage";
 import BrandListPage from "./pages/brand/BrandListPage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Role } from "./models/authTypes.ts";
+import AuthorizedRoute from "./components/AuthorizedRoute.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import HomePage from "./pages/HomePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -29,17 +31,41 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/" element={<ProtectedRoute />}>
                   <Route path="/" element={<BasePage />}>
-                    <Route path="vehicle" element={<VehicleListPage />} />
-                    <Route path="fault" element={<RepairListPage />} />
-                    <Route path="brand" element={<BrandListPage />} />
                     <Route
-                      path="technicians"
-                      element={<TechnicianListPage />}
+                      path="vehicle"
+                      element={
+                        <AuthorizedRoute roles={[Role.CLIENT, Role.TECHNICIAN]}>
+                          <VehicleListPage />
+                        </AuthorizedRoute>
+                      }
                     />
-                    <Route path="profile" element={<NotFoundPage />} />
+                    <Route
+                      path="repair"
+                      element={
+                        <AuthorizedRoute roles={[Role.TECHNICIAN]}>
+                          <RepairListPage />
+                        </AuthorizedRoute>
+                      }
+                    />
+                    <Route
+                      path="brand"
+                      element={
+                        <AuthorizedRoute roles={[Role.ADMIN]}>
+                          <BrandListPage />
+                        </AuthorizedRoute>
+                      }
+                    />
+                    <Route
+                      path="technician"
+                      element={
+                        <AuthorizedRoute roles={[Role.ADMIN]}>
+                          <TechnicianListPage />
+                        </AuthorizedRoute>
+                      }
+                    />
                   </Route>
                 </Route>
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path="*" element={<HomePage />} />
               </Routes>
             </Router>
           </LocalizationProvider>
