@@ -30,7 +30,7 @@ Insert a new user to Database and collect token for login (you stay logged after
 	"lastName": "sherlock",
 	"phoneNumber": "+421123456789",
 	"password": "12345678",
-	"isTechnician": "false"
+	"isTechnician": false
 }
 ```
 OR
@@ -41,7 +41,7 @@ OR
 	"lastName": "sherlock",
 	"phoneNumber": "+421123456789",
 	"password": "12345678",
-	"isTechnician": "true"
+	"isTechnician": true
 }
 ```
 ## Success Response
