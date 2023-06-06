@@ -13,7 +13,7 @@ export const userRegistrationSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   phoneNumber: z.string().refine(validator.isMobilePhone),
-  role: z.enum(['TECHNICIAN']).optional(),
+  isTechnician: z.enum(['true', 'false']).transform((value) => value === 'true'),
 }).strict();
 
 export const userLoginSchema = z.object({

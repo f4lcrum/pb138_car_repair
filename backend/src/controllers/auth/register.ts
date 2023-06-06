@@ -9,8 +9,7 @@ const register = async (req : Request, res : Response) => {
   if (!result.success) {
     return sendBadRequestResponse(res, 'Invalid body data');
   }
-
-  const output = await registerUser({ ...result.data, role: result.data.role ? result.data.role : 'CLIENT' });
+  const output = await registerUser({ ...result.data });
   if (output.isErr) {
     if (output.error instanceof Prisma.PrismaClientKnownRequestError && output.error.code === 'P2002') {
       return sendBadRequestResponse(res, 'Email is already in use!');

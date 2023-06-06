@@ -31,7 +31,7 @@ export type RegisterData = {
   email: string,
   password: string,
   phoneNumber: string,
-  role: Role,
+  isTechnician: Boolean,
 };
 
 export type LoginData = {

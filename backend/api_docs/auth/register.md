@@ -25,22 +25,23 @@ Insert a new user to Database and collect token for login (you stay logged after
 *request :*
 ```json
 {
-	"email": "jozsissadfo@azet.sk",
+	"email": "m23123@azet.sk",
 	"firstName": "Vladqo",
 	"lastName": "sherlock",
 	"phoneNumber": "+421123456789",
 	"password": "12345678",
-	"role": "TECHNICIAN"
+	"isTechnician": "false"
 }
 ```
 OR
 ```json
 {
-	"email": "jozsissadfo@azet.sk",
+	"email": "m23123@azet.sk",
 	"firstName": "Vladqo",
 	"lastName": "sherlock",
 	"phoneNumber": "+421123456789",
-	"password": "12345678"
+	"password": "12345678",
+	"isTechnician": "true"
 }
 ```
 ## Success Response
@@ -56,14 +57,29 @@ OR
 		"item": {
 			"firstName": "Vladqo",
 			"lastName": "sherlock",
-			"email": "example@azet.sk",
+			"email": "m23123@azet.sk",
 			"role": "CLIENT"
 		},
-		"message": "User example@azet.sk is authorized"
+		"message": "User m23123@azet.sk is authorized"
 	}
 }
 ```
+OR
 
+```json
+{
+	"error": null,
+	"data": {
+		"item": {
+			"firstName": "Vladqo",
+			"lastName": "sherlock",
+			"email": "m23123@azet.sk",
+			"role": "TECHNICIAN"
+		},
+		"message": "User m23123@azet.sk is authorized"
+	}
+}
+```
 ## Error Responses
 
 **Condition** : If body does not pass validation.
