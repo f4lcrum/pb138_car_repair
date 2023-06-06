@@ -1,10 +1,31 @@
 import { RestResponse } from "../models/responseTypes";
-import { UserUpdateRequest, UserUpdateResponse } from "../models/userTypes";
+import {
+  Technician,
+  TechnicianVerifyResponse,
+  UserUpdateRequest,
+  UserUpdateResponse,
+} from "../models/userTypes";
 import axiosInstance from "./base";
 
 export const updateUser = async (
-  id: string,
   updatedUser: UserUpdateRequest
 ): Promise<RestResponse<UserUpdateResponse>> => {
-  return await axiosInstance.patch(`/user/${id}`, updatedUser);
+  const response = await axiosInstance.patch("/auth/user", updatedUser);
+  return response.data;
+};
+
+export const getUnverifiedTechnicians = async (): Promise<
+  RestResponse<Technician[]>
+> => {
+  const response = await axiosInstance.get("/auth/admin/technician");
+  return response.data;
+};
+
+export const verifyTechnician = async (
+  id: string
+): Promise<RestResponse<TechnicianVerifyResponse>> => {
+  const response = await axiosInstance.post(
+    `/auth/admin/technician/verification/${id}`
+  );
+  return response.data;
 };

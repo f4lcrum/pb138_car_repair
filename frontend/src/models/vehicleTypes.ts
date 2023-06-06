@@ -1,29 +1,30 @@
-export interface Vehicle {
+interface Vehicle {
   id: string;
-  brandId: string;
   ownerId: string;
   licensePlate: string;
-  winCode: string;
+  vinCode: string;
   manufacturedAt: Date;
   scrappedAt?: Date;
   deletedAt?: Date;
 }
 
-export interface VehicleCreate {
+export interface SingleVehicle extends Vehicle {
+  brandId: string;
+}
+
+export interface VehicleWithBrand extends Vehicle {
+  brandName: string;
+  brandModel: string;
+}
+
+export interface VehicleCreateRequest {
   brandId: string;
   licensePlate: string;
-  winCode: string;
+  vinCode: string;
   manufacturedAt: Date;
 }
 
 export interface SingleVehicleQueryParams {
   licensePlate?: string;
-  winCode?: string;
-}
-
-export interface ManyVehicleQueryParams {
-  brandName?: string;
-  createdAt?: boolean;
-  manufacturedAt?: boolean;
-  sortOrder?: "asc" | "desc";
+  vinCode?: string;
 }

@@ -1,30 +1,33 @@
 import {
   AuthInfo,
   Credentials,
+  LogInOutRequest,
   RegistrationRequest,
+  RegistrationResponse,
 } from "../models/authTypes";
 import { RestResponse } from "../models/responseTypes";
 import axiosInstance from "./base";
 
-//todo change 'any' to actual type
 export const logIn = async (
   credentials: Credentials
-): Promise<RestResponse<any>> => {
-  return await axiosInstance.post("/auth/login", credentials);
+): Promise<RestResponse<LogInOutRequest>> => {
+  const response = await axiosInstance.post("/auth/login", credentials);
+  return response.data;
 };
 
-//todo change 'any' to actual type
-export const logOut = async (): Promise<RestResponse<any>> => {
-  return await axiosInstance.post("/auth/logout");
+export const logOut = async (): Promise<RestResponse<LogInOutRequest>> => {
+  const response = await axiosInstance.post("/auth/logout");
+  return response.data;
 };
 
-//todo change 'any' to actual type
 export const register = async (
   registration: RegistrationRequest
-): Promise<RestResponse<any>> => {
-  return await axiosInstance.post("/auth/registration", registration);
+): Promise<RestResponse<RegistrationResponse>> => {
+  const response = await axiosInstance.post("/auth/registration", registration);
+  return response.data;
 };
 
 export const readAuth = async (): Promise<RestResponse<AuthInfo>> => {
-  return await axiosInstance.get("/auth/info");
+  const response = await axiosInstance.get("/auth/info");
+  return response.data;
 };

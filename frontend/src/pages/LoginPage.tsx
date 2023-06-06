@@ -1,16 +1,26 @@
-/* eslint-disable prettier/prettier */
 import { FC } from "react";
 import { Button, Grid, Typography } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "../services";
+
+//todo add validation
 
 const LoginPage: FC = () => {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm();
   const navigate = useNavigate();
+
+  //todo not sure about the type
+  const onSubmit = (data: FieldValues) => {
+    authApi.logIn({ email: data.email, password: data.password }).then(() => {
+      navigate("/");
+    });
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid
           container
           spacing={2}
@@ -22,12 +32,14 @@ const LoginPage: FC = () => {
             <Typography variant="subtitle1">Login</Typography>
           </Grid>
           <Grid item>
-            <ControlledTextField
-              id="email"
-              name="email"
-              control={control}
-              label="Email"
-            />
+            <>
+              <ControlledTextField
+                id="email"
+                name="email"
+                control={control}
+                label="Email"
+              />
+            </>
           </Grid>
           <Grid item>
             <ControlledTextField
@@ -39,10 +51,7 @@ const LoginPage: FC = () => {
             />
           </Grid>
           <Grid item>
-            <Button
-              onClick={() => navigate("/")}
-              variant="outlined"
-            >
+            <Button type="submit" variant="outlined">
               Login
             </Button>
             <Button onClick={() => navigate("/register")} variant="outlined">
