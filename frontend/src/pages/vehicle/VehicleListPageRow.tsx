@@ -15,6 +15,7 @@ import FaultTable from "../../components/tables/FaultTable";
 import { VehicleWithBrand } from "../../models/vehicleTypes";
 import { format } from "date-fns";
 import { RepairWithTechnician } from "../../models/repairTypes";
+import { useRemoveVehicle } from "../../hooks/useVehicles";
 
 const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   const { vehicle } = props;
@@ -23,6 +24,11 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   const [selectedRepair, setSelectedRepair] = useState<
     RepairWithTechnician | undefined
   >(undefined);
+  const { removeVehicle } = useRemoveVehicle();
+
+  const handleRemove = () => {
+    removeVehicle(vehicle.id);
+  };
 
   return (
     <>
@@ -52,6 +58,9 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
             }}
           >
             Add fault
+          </Button>
+          <Button variant="outlined" onClick={handleRemove}>
+            Delete
           </Button>
         </TableCell>
       </TableRow>

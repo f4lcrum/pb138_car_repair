@@ -27,3 +27,18 @@ export const useAddVehicle = () => {
 
   return { addVehicle };
 };
+
+const deleteVehicle = async (id: string) => {
+  return await vehicleApi.deleteVehicle(id).then((response) => {
+    return response.data;
+  });
+};
+
+export const useRemoveVehicle = () => {
+  const queryClient = useQueryClient();
+  const { mutate: removeVehicle } = useMutation(deleteVehicle, {
+    onSuccess: () => queryClient.invalidateQueries(["vehicles"]),
+  });
+
+  return { removeVehicle };
+};
