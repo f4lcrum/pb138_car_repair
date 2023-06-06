@@ -10,6 +10,12 @@ interface Repair {
   materials: RepairMaterial[];
 }
 
+export interface RepairWithBrand extends Repair {
+  licensePlate: string;
+  brandName: string;
+  brandModel: string;
+}
+
 export interface SingleRepair extends Repair {
   technicianId?: string;
 }

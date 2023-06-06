@@ -2,6 +2,7 @@ import {
   RepairCreateRequest,
   RepairUpdateRequest,
   RepairUpdateResponse,
+  RepairWithBrand,
   RepairWithTechnician,
   SingleRepair,
 } from "../models/repairTypes";
@@ -16,7 +17,7 @@ export const getRepairs = async (
 };
 
 export const getAllUnresolvedRepairs = async (): Promise<
-  RestResponse<SingleRepair[]>
+  RestResponse<RepairWithBrand[]>
 > => {
   const response = await axiosInstance.get("/auth/fault/unresolved/all");
   return response.data;

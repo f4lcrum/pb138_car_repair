@@ -1,9 +1,19 @@
 import { FC, useState } from "react";
-import { Box, Paper, Switch, TableContainer, Typography } from "@mui/material";
-import FaultTable from "../../components/tables/FaultTable";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import RepairModal from "../../components/modals/RepairModal";
 import { SingleRepair } from "../../models/repairTypes";
 import { useUnresolvedRepairs } from "../../hooks/useUnresolvedRepairs";
+import { format } from "date-fns";
 
 //todo try to change this component because of the react query hook
 const RepairListPage: FC = () => {
@@ -15,22 +25,54 @@ const RepairListPage: FC = () => {
   //todo do something with the error
   const { data, error, isLoading } = useUnresolvedRepairs();
 
+  const handleDetail = (repair: SingleRepair) => {
+    setSelectedRepair(repair);
+    setRepairModalOpen(true);
+  };
+
   return (
     <>
-      {!isLoading && (
-        <Box sx={{ m: 2 }}>
-          <Typography variant={"h3"} color={"primary"}>
-            Faults
-          </Typography>
-          <Switch /> Show only my tasks
-          <TableContainer sx={{ marginTop: 4 }} component={Paper}>
-            <FaultTable
-              setRepair={setSelectedRepair}
-              setModalOpen={setRepairModalOpen}
-            />
-          </TableContainer>
-        </Box>
-      )}
+      <Typography variant={"h3"} color={"primary"}>
+        Repairs
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>License Plate</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>Model</TableCell>
+              <TableCell>Repair name</TableCell>
+              <TableCell>Created at</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          {!isLoading && (
+            <TableBody>
+              {data &&
+                Array.from(data).map((repair) => (
+                  <TableRow key={repair.id}>
+                    <TableCell>{repair.licensePlate}</TableCell>
+                    <TableCell>{repair.brandName}</TableCell>
+                    <TableCell>{repair.brandModel}</TableCell>
+                    <TableCell>{repair.name}</TableCell>
+                    <TableCell>
+                      {format(new Date(repair.createdAt), "dd/MM/yyyy HH:mm")}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        onClick={() => handleDetail(repair)}
+                      >
+                        Detail
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
 
       <RepairModal
         open={repairModalOpen}
