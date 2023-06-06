@@ -1,0 +1,41 @@
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { authApi } from "../services";
+import { Credentials } from "../models/authTypes";
+
+const getAuthInfo = async () => {
+  return await authApi.readAuth().then((response) => {
+    return response.data;
+  });
+};
+
+export const useAuth = () => useQuery(["auth"], getAuthInfo);
+
+const login = async (credentials: Credentials) => {
+  return await authApi.logIn(credentials).then((response) => {
+    return response.data;
+  });
+};
+
+export const useLogIn = () => {
+  const queryClient = useQueryClient();
+  const { mutate: logIn } = useMutation(login, {
+    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+  });
+
+  return { logIn };
+};
+
+const logout = async () => {
+  return await authApi.logOut().then((response) => {
+    return response.data;
+  });
+};
+
+export const useLogOut = () => {
+  const queryClient = useQueryClient();
+  const { mutate: logOut } = useMutation(logout, {
+    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+  });
+
+  return { logOut };
+};

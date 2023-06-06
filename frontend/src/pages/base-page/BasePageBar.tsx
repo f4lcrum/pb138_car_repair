@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserRole } from "../../types/types";
 import { useState } from "react";
 import UserModal from "../../components/modals/UserModal";
-import { authApi } from "../../services";
+import { useLogOut } from "../../hooks/useAuth";
 
 interface BarItem {
   label: string;
@@ -41,15 +41,12 @@ const barItems: BarItem[] = [
 
 const BasePageBar = () => {
   const navigate = useNavigate();
+  const { logOut } = useLogOut();
   const [userModalOpen, setUserModalOpen] = useState(false);
 
   const onLogOut = () => {
-    authApi
-      .logOut()
-      .then(() => {
-        navigate("/login");
-      })
-      .catch();
+    logOut();
+    navigate("/login");
   };
 
   return (

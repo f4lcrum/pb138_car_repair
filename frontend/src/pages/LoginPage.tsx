@@ -3,19 +3,19 @@ import { Button, Grid, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
 import { useNavigate } from "react-router-dom";
-import { authApi } from "../services";
+import { useLogIn } from "../hooks/useAuth";
 
 //todo add validation
 
 const LoginPage: FC = () => {
   const { control, handleSubmit } = useForm();
+  const { logIn } = useLogIn();
   const navigate = useNavigate();
 
   //todo not sure about the type
   const onSubmit = (data: FieldValues) => {
-    authApi.logIn({ email: data.email, password: data.password }).then(() => {
-      navigate("/");
-    });
+    logIn({ email: data.email, password: data.password });
+    navigate("/");
   };
 
   return (
