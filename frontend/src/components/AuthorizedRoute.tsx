@@ -1,0 +1,26 @@
+import { Role } from "../models/authTypes.ts";
+import React, { FC } from "react";
+import { useAuth } from "../hooks/useAuth.ts";
+import UnauthorizedPage from "../pages/UnauthorizedPage.tsx";
+
+interface AuthorizedRouteProps {
+  children?: React.ReactNode;
+  roles?: Role[];
+}
+
+const AuthorizedRoute: FC<AuthorizedRouteProps> = ({
+  children,
+  roles = [],
+}) => {
+  const { data } = useAuth();
+  const userHasRequiredRole =
+    !!data?.item.role && roles.includes(data?.item.role);
+
+  if (!userHasRequiredRole) {
+    return <UnauthorizedPage />;
+  }
+
+  return <>{children}</>;
+};
+
+export default AuthorizedRoute;

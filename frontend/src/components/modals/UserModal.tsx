@@ -15,7 +15,7 @@ import { authApi, userApi } from "../../services";
 
 interface UserModalProps {
   open: boolean;
-  setOpen: (open: boolean) => {};
+  setOpen: (open: boolean) => void;
 }
 
 const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
@@ -29,7 +29,8 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
 
   const { control, handleSubmit } = useForm<User>();
 
-  const handleClose = (event, reason) => {
+  // @ts-ignore
+  const handleClose = (event: any, reason: any) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
@@ -54,7 +55,7 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>Profile</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 label={"E-mail"}

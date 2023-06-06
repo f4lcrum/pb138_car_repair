@@ -39,7 +39,7 @@ interface AuthUser extends AuthUserRegistration {
 }
 
 export enum Role {
-  TECHNICIAN,
-  ADMIN,
-  CLIENT,
+  TECHNICIAN = "TECHNICIAN",
+  ADMIN = "ADMIN",
+  CLIENT = "CLIENT",
 }

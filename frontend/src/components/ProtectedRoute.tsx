@@ -1,12 +1,16 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { FC } from "react";
-
-// TODO: update when authentication is done on BE
+import { useAuth } from "../hooks/useAuth.ts";
 
 const ProtectedRoute: FC = () => {
-  const auth = true;
+  const location = useLocation();
+  const { data } = useAuth();
 
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  return !!data?.item ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/login" state={{ from: location }} />
+  );
 };
 
 export default ProtectedRoute;
