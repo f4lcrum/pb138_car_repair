@@ -13,7 +13,7 @@ export interface RegistrationRequest {
   email: string;
   password: string;
   phoneNumber: string;
-  role?: "TECHNICIAN" | null;
+  isTechnician: boolean;
 }
 
 export interface RegistrationResponse {
