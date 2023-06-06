@@ -17,7 +17,7 @@ const read = async (data: AuthReadData) : AuthReadResult => {
         email: true,
         role: true,
         phoneNumber: true,
-
+        isVerified: true,
       },
     });
     return Result.ok(user);

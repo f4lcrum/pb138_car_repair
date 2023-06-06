@@ -63,8 +63,26 @@ export const all = async (): FaultReadManyResult => {
           orderBy: {
             createdAt: 'desc',
           },
+          include: {
+            vehicle: {
+              include: {
+                brandModel: {
+                  include: {
+                    brand: true,
+                  },
+                },
+              },
+            },
+          },
         });
-        return faults;
+
+        const result = faults.map(({ vehicle, ...fault }) => ({
+          ...fault,
+          licensePlate: vehicle.licensePlate,
+          brandName: vehicle.brandModel.brand.name,
+          brandModel: vehicle.brandModel.name,
+        }));
+        return result;
       }),
     );
   } catch (e) {

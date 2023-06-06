@@ -2,7 +2,6 @@ import type { Repair } from '@prisma/client';
 import type DbResult from '../common/types';
 
 type DbRepair = DbResult<Repair>;
-type DbRepairs = DbResult<Repair[]>;
 export type FaultCreateData = {
   name: string,
   description: string,
@@ -35,7 +34,20 @@ export type FaultReadManyData = {
   userId: string,
 };
 
-export type FaultReadManyResult = DbRepairs;
+export type FaultReadManyResult = DbResult<{
+  licensePlate: string;
+  brandName: string;
+  brandModel: string;
+  id: string;
+  createdAt: Date;
+  description: string;
+  mileage: number | null;
+  name: string | null;
+  technicianId: string | null;
+  vehicleId: string;
+  resolvedAt: Date | null;
+  workPrice: number;
+}[]>;
 
 export type IsVerifiedTechnicianData = {
   technicianId: string,

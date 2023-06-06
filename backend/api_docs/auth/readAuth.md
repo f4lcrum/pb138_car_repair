@@ -16,7 +16,6 @@ Gets info about current logged user
 
 ```json
 {
-	"error": null,
 	"data": {
 		"item": {
 			"id": "72e4eda6-5bd0-466c-8c56-b5405cd12e2f",
@@ -24,7 +23,8 @@ Gets info about current logged user
 			"lastName": "Novak",
 			"email": "jozino@azet.sk",
 			"role": "TECHNICIAN",
-			"phoneNumber": "+421123456789"
+			"phoneNumber": "+421123456789",
+			"isVerified": true
 		},
 		"message": "User Jozef is authorized"
 	}
