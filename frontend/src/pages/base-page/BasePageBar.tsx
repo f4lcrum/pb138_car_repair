@@ -1,13 +1,30 @@
-import { AppBar, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import "@mui/material/Menu/Menu";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import UserModal from "../../components/modals/UserModal";
 import { useAuth, useLogOut } from "../../hooks/useAuth";
 import { Role } from "../../models/authTypes.ts";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+import AbcIcon from "@mui/icons-material/Abc";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
+import styles from "./basepagebar.module.css";
 
 interface BarItem {
   label: string;
+  icon: ReactNode;
   route: string;
   roles: Role[];
 }
@@ -15,21 +32,25 @@ interface BarItem {
 const barItems: BarItem[] = [
   {
     label: "Vehicles",
+    icon: <DirectionsCarIcon />,
     route: "/vehicle",
     roles: [Role.CLIENT],
   },
   {
     label: "Repairs",
+    icon: <CarRepairIcon />,
     route: "/repair",
     roles: [Role.TECHNICIAN],
   },
   {
     label: "Brands",
+    icon: <AbcIcon />,
     route: "/brand",
     roles: [Role.ADMIN],
   },
   {
     label: "Technicians",
+    icon: <ManageAccountsIcon />,
     route: "/technician",
     roles: [Role.ADMIN],
   },
@@ -51,10 +72,26 @@ const BasePageBar = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Car Service
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              className={styles.menuText}
+            >
+              <strong>Car Service</strong>
             </Typography>
-            <Stack direction={"row"} spacing={2}>
+            <Stack
+              className={styles.stack}
+              direction={"row"}
+              spacing={2}
+              divider={
+                <Divider
+                  className={styles.divider}
+                  orientation="vertical"
+                  flexItem
+                />
+              }
+            >
               {barItems
                 .filter(
                   (barItems) =>
@@ -67,7 +104,15 @@ const BasePageBar = () => {
                     onClick={() => navigate(item.route)}
                     color="inherit"
                   >
-                    {item.label}
+                    <Grid
+                      container
+                      direction="row"
+                      gap={1}
+                      justifyContent="center"
+                    >
+                      {item.icon}
+                      <span className={styles.menuText}>{item.label}</span>
+                    </Grid>
                   </Button>
                 ))}
               <Button
@@ -75,10 +120,16 @@ const BasePageBar = () => {
                 onClick={() => setUserModalOpen(true)}
                 color="inherit"
               >
-                Profile
+                <Grid container direction="row" gap={1} justifyContent="center">
+                  <PersonIcon />
+                  <span className={styles.menuText}>Profile</span>
+                </Grid>
               </Button>
               <Button onClick={onLogOut} color="inherit" variant={"outlined"}>
-                Logout
+                <Grid container direction="row" gap={1} justifyContent="center">
+                  <LogoutIcon />
+                  <span className={styles.menuText}>Logout</span>
+                </Grid>
               </Button>
             </Stack>
           </Toolbar>

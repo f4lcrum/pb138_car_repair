@@ -16,6 +16,7 @@ import * as yup from "yup";
 import { Registration } from "../models/authTypes";
 import {
   invalidEmail,
+  invalidPhoneNumber,
   nonmatchingPassword,
   requiredField,
   shortPassword,
@@ -23,11 +24,17 @@ import {
 import Logo from "./Logo";
 import styles from "./login.module.css";
 
+const phoneRegex =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 const validationScheme = yup.object({
   email: yup.string().email(invalidEmail).required(requiredField),
   firstName: yup.string().required(requiredField),
   lastName: yup.string().required(requiredField),
-  phoneNumber: yup.string().required(requiredField),
+  phoneNumber: yup
+    .string()
+    .matches(phoneRegex, invalidPhoneNumber)
+    .required(requiredField),
   password: yup.string().min(8, shortPassword).required(requiredField),
   repeatPassword: yup
     .string()

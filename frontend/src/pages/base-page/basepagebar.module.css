@@ -1,0 +1,21 @@
+.divider {
+    background-color: #F8F2E4;
+}
+
+@media screen and (min-width: 721px) {
+    .stack {
+        gap: 1vw;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .menuText {
+        display: none;
+    }
+
+    .stack {
+        flex-grow: 1;
+        justify-content: space-between;
+    }
+
+}
