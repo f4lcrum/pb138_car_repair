@@ -11,7 +11,7 @@ If a technician is assigned to a fault that is assigned to him, he deletes the a
 
 **Params Constraints**
 
-Parameter needs to be UUID of vehicle
+Parameter needs to be UUID of fault
 
 
 
