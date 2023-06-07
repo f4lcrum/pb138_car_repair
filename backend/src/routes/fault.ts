@@ -8,7 +8,6 @@ const faultRouter = Router();
 const faultRouteGeneric = `${authRoute}/fault`;
 const faultRouteSpecific = `${faultRouteGeneric}/:id`;
 const faultRouteAssign = `${faultRouteGeneric}/assignment/:id`;
-const faultRouteAll = `${authRoute}/fault/unresolved/all`;
 
 faultRouter.get(faultRouteSpecific, auth(Role.CLIENT, Role.ADMIN), FaultController.readFault);
 faultRouter.post(faultRouteSpecific, auth(Role.CLIENT, Role.ADMIN), FaultController.createFault);
@@ -24,7 +23,7 @@ faultRouter.patch(
 );
 
 faultRouter.get(
-  faultRouteAll,
+  '/auth/fault/',
   auth(Role.TECHNICIAN, Role.ADMIN),
   FaultController.readAllFaults,
 );

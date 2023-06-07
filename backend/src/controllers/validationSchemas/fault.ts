@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+export const readAllFaultSchema = z.object({
+  unresolved: z.enum(['true', 'false']).transform((value) => value === 'true'),
+}).strict();
+
 export const createFaultSchema = z.object({
   name: z.string().trim().nonempty({ message: "Can't be empty" }),
   description: z.string().trim().nonempty({ message: "Can't be empty" }),

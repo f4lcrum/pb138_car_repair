@@ -1,6 +1,8 @@
 import { Result } from '@badrap/result';
 import { genericError } from '../common/types';
-import type { FaultReadManyResult, FaultReadOneData, FaultReadOneResult } from './types';
+import type {
+  FaultReadManyData, FaultReadManyResult, FaultReadOneData, FaultReadOneResult,
+} from './types';
 import client from '../client';
 import { checkVehicle } from '../common/common';
 
@@ -51,15 +53,23 @@ export const read = async (data: FaultReadOneData): FaultReadOneResult => {
   }
 };
 
-export const all = async (): FaultReadManyResult => {
+export const all = async (data: FaultReadManyData): FaultReadManyResult => {
   try {
     return Result.ok(
       await client.$transaction(async (tx) => {
-        const faults = await tx.repair.findMany({
-          where: {
+        let where;
+        if (data.unresolved) {
+          where = {
             resolvedAt: null,
             technicianId: null,
-          },
+          };
+        } else {
+          where = {
+            technicianId: data.technicianId,
+          };
+        }
+        const faults = await tx.repair.findMany({
+          where,
           orderBy: {
             createdAt: 'desc',
           },
@@ -71,6 +81,12 @@ export const all = async (): FaultReadManyResult => {
                     brand: true,
                   },
                 },
+                owner: {
+                  select: {
+                    firstName: true,
+                    lastName: true,
+                  },
+                },
               },
             },
           },
@@ -79,6 +95,8 @@ export const all = async (): FaultReadManyResult => {
         const result = faults.map(({ vehicle, ...fault }) => ({
           ...fault,
           licensePlate: vehicle.licensePlate,
+          ownerFirstName: vehicle.owner.firstName,
+          ownerLastName: vehicle.owner.lastName,
           brandName: vehicle.brandModel.brand.name,
           brandModel: vehicle.brandModel.name,
         }));
