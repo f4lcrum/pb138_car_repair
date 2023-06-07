@@ -4,8 +4,6 @@ export const unauthorizedRequestResponse = (res: Response, messageError: string)
   res.status(401).send({ error: messageError });
 };
 
-// TODO: I added message into the error, since it was null,
-// should we just rather send some generic error message?
 export const sendBadRequestResponse = (res: Response, messageError: String) => {
   res.status(400).send({ error: messageError });
 };

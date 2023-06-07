@@ -19,17 +19,18 @@ const updateFault = async (req: Request, res: Response) => {
   if (!paramsData.success) {
     return sendBadRequestResponse(res, 'Invalid Params');
   }
-
   const output = await update({
     technicianId: req.session.user!.id,
     ...paramsData.data,
     ...bodyData.data,
   });
   if (output.isErr) {
+    console.log(output.error.message);
     return errorResponsesHandle(res, output.error);
   }
 
   const result = output.unwrap();
+  console.log(result);
   return receivedRequestResponse(res, result);
 };
 

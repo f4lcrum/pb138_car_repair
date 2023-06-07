@@ -12,8 +12,6 @@ import create from '../../repositories/admin/createBrandModel';
 import { NonexistentRecordError } from '../../repositories/common/error';
 
 const createBrandModel = async (req: Request, res: Response) => {
-  // given brandId in params must exist
-
   const paramsData = uuidSchema.safeParse(req.params);
   const bodyData = createBrandModelSchema.safeParse(req.body);
   if (!paramsData.success) {
