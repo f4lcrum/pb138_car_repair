@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -29,12 +29,10 @@ const RepairModal: FC<
   ModalProps & { repair?: RepairWithTechnician; vehicleId?: string }
 > = ({ open, setOpen, repair, vehicleId }) => {
   const { control, handleSubmit } = useForm<RepairWithTechnician>();
-  const descriptionRef = useRef(null);
   const { addRepair } = useAddRepair(repair?.vehicleId ?? vehicleId ?? "-1");
-  const { updateRepair } = useUpdateRepair(
-    repair?.vehicleId ?? vehicleId ?? "-1"
-  );
+  const { updateRepair } = useUpdateRepair(repair?.id ?? "-1");
   const { data } = useAuth();
+  const [resolved, setResolved] = useState(false);
 
   const [newMaterial, setNewMaterial] = useState("");
   const [newMaterialPrice, setNewMaterialPrice] = useState(0);
@@ -48,10 +46,15 @@ const RepairModal: FC<
 
   const handleAddMaterial = () => {
     if (repair) {
-      repair.material = [
-        ...repair.material,
-        { name: newMaterial, price: newMaterialPrice },
-      ];
+      if (!repair.material) {
+        repair.material = [{ name: newMaterial, price: newMaterialPrice }];
+      } else {
+        repair.material = [
+          ...repair.material,
+          { name: newMaterial, price: newMaterialPrice },
+        ];
+      }
+
       setNewMaterial("");
       setNewMaterialPrice(0);
     }
@@ -64,8 +67,6 @@ const RepairModal: FC<
     }
   };
 
-  //todo change date
-  //todo update description as well
   const onSubmit = (event: FieldValues) => {
     const newVehicleId = repair?.vehicleId ?? vehicleId ?? "-1";
 
@@ -75,9 +76,9 @@ const RepairModal: FC<
         id: repair.id,
         repair: {
           name: event.name,
-          resolvedAt: new Date(2001, 5),
+          resolvedAt: resolved ? new Date() : undefined,
           workPrice: event.workPrice,
-          mileage: +event.mileage,
+          mileage: event.mileage,
         },
       });
     } else {
@@ -86,7 +87,7 @@ const RepairModal: FC<
         repair: {
           name: event.name,
           description: event.description,
-          mileage: +event.mileage,
+          mileage: event.mileage,
         },
       });
     }
@@ -126,17 +127,13 @@ const RepairModal: FC<
             </Grid>
             <Grid item xs={12}>
               <ControlledTextField
-                ref={descriptionRef}
                 defaultValue={repair?.description ?? ""}
                 label={"Description"}
                 name={"description"}
                 control={control}
                 multiline
                 rows={4}
-                disabled={
-                  !!repair &&
-                  (!!repair?.resolvedAt || data?.item.role !== Role.TECHNICIAN)
-                }
+                disabled={!!repair}
               />
             </Grid>
 
@@ -229,7 +226,12 @@ const RepairModal: FC<
                   <Grid item>
                     <FormControlLabel
                       label="Mark as resolved"
-                      control={<Checkbox />}
+                      control={
+                        <Checkbox
+                          checked={resolved}
+                          onChange={() => setResolved(!resolved)}
+                        />
+                      }
                     />
                   </Grid>
                 )}
