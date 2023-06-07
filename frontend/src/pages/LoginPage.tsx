@@ -1,19 +1,38 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
 import { useNavigate } from "react-router-dom";
 import { useLogIn } from "../hooks/useAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Credentials } from "../models/authTypes";
+import {
+  invalidEmail,
+  requiredField,
+  shortPassword,
+} from "../constants/authValidations";
 
-//todo add validation
+const validationScheme = yup.object({
+  email: yup.string().email(invalidEmail).required(requiredField),
+  password: yup.string().min(8, shortPassword).required(requiredField),
+});
 
 const LoginPage: FC = () => {
-  const { control, handleSubmit } = useForm();
+  const [showFailure, setShowFailure] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Credentials>({
+    resolver: yupResolver(validationScheme),
+  });
   const navigate = useNavigate();
-  const { logIn } = useLogIn(navigate);
+  const { logIn } = useLogIn(navigate, setShowFailure);
 
   const onSubmit = (values: FieldValues) => {
     logIn({ email: values.email, password: values.password });
+    //todo add reset
   };
 
   return (
@@ -36,6 +55,8 @@ const LoginPage: FC = () => {
                 name="email"
                 control={control}
                 label="Email"
+                error={!!errors.email}
+                helperText={errors.email?.message}
               />
             </>
           </Grid>
@@ -46,6 +67,8 @@ const LoginPage: FC = () => {
               control={control}
               label="Password"
               type="password"
+              error={!!errors.password}
+              helperText={errors.password?.message}
             />
           </Grid>
           <Grid item>
@@ -56,6 +79,11 @@ const LoginPage: FC = () => {
               Register
             </Button>
           </Grid>
+          {showFailure && (
+            <Typography variant="h4" color="primary">
+              Invalid credentials
+            </Typography>
+          )}
         </Grid>
       </form>
     </>

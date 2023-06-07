@@ -18,9 +18,13 @@ const login = async (credentials: Credentials) => {
   });
 };
 
-export const useLogIn = (navigate: NavigateFunction) => {
+export const useLogIn = (
+  navigate: NavigateFunction,
+  setFailure: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   const queryClient = useQueryClient();
   const { mutate: logIn } = useMutation(login, {
+    onError: () => setFailure(true),
     onSuccess: () => {
       navigate("/home");
       queryClient.invalidateQueries(["auth"]);
@@ -51,10 +55,12 @@ const registerUser = async (registration: RegistrationRequest) => {
   });
 };
 
-export const useRegistration = () => {
+export const useRegistration = (navigate: NavigateFunction) => {
   const queryClient = useQueryClient();
   const { mutate: register } = useMutation(registerUser, {
-    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+    onSuccess: () => {
+      navigate("/home"), queryClient.invalidateQueries(["auth"]);
+    },
   });
 
   return { register };

@@ -10,13 +10,38 @@ import ControlledTextField from "../components/ControlledTextField";
 import { useForm, FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRegistration } from "../hooks/useAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Registration } from "../models/authTypes";
+import {
+  invalidEmail,
+  nonmatchingPassword,
+  requiredField,
+  shortPassword,
+} from "../constants/authValidations";
 
-//todo add validation (password.length >= 8)
+const validationScheme = yup.object({
+  email: yup.string().email(invalidEmail).required(requiredField),
+  firstName: yup.string().required(requiredField),
+  lastName: yup.string().required(requiredField),
+  phoneNumber: yup.string().required(requiredField),
+  password: yup.string().min(8, shortPassword).required(requiredField),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], nonmatchingPassword)
+    .required(requiredField),
+});
 
 const RegisterPage: FC = () => {
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Registration>({
+    resolver: yupResolver(validationScheme),
+  });
   const navigate = useNavigate();
-  const { register } = useRegistration();
+  const { register } = useRegistration(navigate);
 
   const [isTechnician, setIsTechnician] = useState(false);
 
@@ -29,10 +54,8 @@ const RegisterPage: FC = () => {
       password: data.password,
       isTechnician: isTechnician,
     });
-    navigate("/");
   };
 
-  //todo add phonenumber
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +70,13 @@ const RegisterPage: FC = () => {
             <Typography variant="subtitle1">Register</Typography>
           </Grid>
           <Grid item>
-            <ControlledTextField name="email" control={control} label="Email" />
+            <ControlledTextField
+              name="email"
+              control={control}
+              label="Email"
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
           </Grid>
           <Grid item>
             <ControlledTextField
@@ -55,6 +84,8 @@ const RegisterPage: FC = () => {
               name="firstName"
               control={control}
               label="First Name"
+              error={!!errors.firstName}
+              helperText={errors.firstName?.message}
             />
           </Grid>
           <Grid item>
@@ -63,6 +94,8 @@ const RegisterPage: FC = () => {
               name="lastName"
               control={control}
               label="Last Name"
+              error={!!errors.lastName}
+              helperText={errors.lastName?.message}
             />
           </Grid>
           <Grid item>
@@ -71,6 +104,8 @@ const RegisterPage: FC = () => {
               name="phoneNumber"
               control={control}
               label="Phone Number"
+              error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber?.message}
             />
           </Grid>
           <Grid item>
@@ -80,6 +115,8 @@ const RegisterPage: FC = () => {
               control={control}
               label="Password"
               type="password"
+              error={!!errors.password}
+              helperText={errors.password?.message}
             />
           </Grid>
           <Grid item>
@@ -89,6 +126,8 @@ const RegisterPage: FC = () => {
               control={control}
               label="Repeat password"
               type="password"
+              error={!!errors.repeatPassword}
+              helperText={errors.repeatPassword?.message}
             />
           </Grid>
           <Grid item>
