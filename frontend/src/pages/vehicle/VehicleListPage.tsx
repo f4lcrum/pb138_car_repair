@@ -28,7 +28,7 @@ import { useBrands } from "../../hooks/useBrands.ts";
 const VehicleListPage: FC = () => {
   const [searchParams, _] = useSearchParams();
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false);
-  const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const [order, setOrder] = useState<"asc" | "desc">("desc");
   const queryClient = useQueryClient();
   const [searchedBrand, setSearchedBrand] = useState<string>("NOT_SELECTED");
 
