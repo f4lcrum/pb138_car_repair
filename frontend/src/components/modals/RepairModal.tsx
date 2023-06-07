@@ -40,7 +40,7 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
   const [newMaterialPrice, setNewMaterialPrice] = useState(0);
   const [renderer, setRenderer] = useState(false);
 
-  const handleClose = (_, reason) => {
+  const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }

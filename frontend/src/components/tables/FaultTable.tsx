@@ -24,8 +24,7 @@ const FaultTable: FC<FaultProps> = ({
   setModalOpen,
   size = undefined,
 }) => {
-  //todo do something with the error
-  const { data, error, isLoading } = useRepairs(vehicleId ?? "");
+  const { data, isLoading } = useRepairs(vehicleId ?? "");
 
   return (
     <>

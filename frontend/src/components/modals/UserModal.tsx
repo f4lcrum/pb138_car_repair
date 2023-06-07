@@ -23,8 +23,7 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
 
   const { control, handleSubmit } = useForm<User>();
 
-  // @ts-ignore
-  const handleClose = (event: any, reason: any) => {
+  const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
@@ -36,6 +35,8 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
       lastName: data.lastName,
       phoneNumber: data.phoneNumber,
     });
+
+    setOpen(false);
   };
 
   return (

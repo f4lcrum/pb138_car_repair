@@ -17,7 +17,7 @@ const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm<Brand>({});
   const { addBrand } = useAddBrand();
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }

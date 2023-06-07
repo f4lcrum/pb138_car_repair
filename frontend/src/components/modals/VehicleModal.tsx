@@ -24,8 +24,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 
 const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm<Vehicle>({});
-  //todo do something with the error
-  const { data, error, isLoading } = useBrands();
+  const { data, isLoading } = useBrands();
   const { addVehicle } = useAddVehicle();
   const [selectedModel, setSelectedModel] = useState<string>("");
   const [manufacturedAt, setManufacturedAt] = useState<Date>(new Date(2000));
@@ -43,7 +42,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
     console.log(selectedModel);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }

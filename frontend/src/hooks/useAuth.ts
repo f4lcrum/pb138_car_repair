@@ -59,7 +59,8 @@ export const useRegistration = (navigate: NavigateFunction) => {
   const queryClient = useQueryClient();
   const { mutate: register } = useMutation(registerUser, {
     onSuccess: () => {
-      navigate("/home"), queryClient.invalidateQueries(["auth"]);
+      navigate("/home");
+      queryClient.invalidateQueries(["auth"]);
     },
   });
 

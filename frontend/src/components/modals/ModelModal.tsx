@@ -20,11 +20,11 @@ import { BrandModel } from "../../models/brandTypes";
 const ModelModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm<BrandModel>({});
   const [selectedBrand, setSelectedBrand] = useState<string>("");
-  //todo do something with the error
-  const { data, error, isLoading } = useBrands();
+
+  const { data, isLoading } = useBrands();
   const { addModel } = useAddModel();
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
