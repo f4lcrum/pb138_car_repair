@@ -79,6 +79,7 @@ const RepairModal: FC<
           resolvedAt: resolved ? new Date() : undefined,
           workPrice: event.workPrice,
           mileage: event.mileage,
+          material: repair.material,
         },
       });
     } else {
