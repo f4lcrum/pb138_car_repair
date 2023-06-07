@@ -40,7 +40,7 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
   const [newMaterialPrice, setNewMaterialPrice] = useState(0);
   const [renderer, setRenderer] = useState(false);
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
@@ -105,7 +105,10 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
                 label={"Fault Name"}
                 name={"name"}
                 control={control}
-                disabled={!!repair?.resolvedAt}
+                disabled={
+                  !!repair &&
+                  (!!repair?.resolvedAt || data?.item.role !== Role.TECHNICIAN)
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,7 +118,10 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
                 name={"mileage"}
                 control={control}
                 type={"number"}
-                disabled={!!repair?.resolvedAt}
+                disabled={
+                  !!repair &&
+                  (!!repair?.resolvedAt || data?.item.role !== Role.TECHNICIAN)
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,7 +133,10 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
                 control={control}
                 multiline
                 rows={4}
-                disabled={!!repair?.resolvedAt}
+                disabled={
+                  !!repair &&
+                  (!!repair?.resolvedAt || data?.item.role !== Role.TECHNICIAN)
+                }
               />
             </Grid>
 

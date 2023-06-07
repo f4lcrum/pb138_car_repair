@@ -20,8 +20,7 @@ const BrandListPage: FC = () => {
   const [brandModalOpen, setBrandModalOpen] = useState(false);
   const [modelModalOpen, setModelModalOpen] = useState(false);
 
-  //todo do something with the error
-  const { data, error, isLoading } = useBrands();
+  const { data, isLoading } = useBrands();
 
   return (
     <>
