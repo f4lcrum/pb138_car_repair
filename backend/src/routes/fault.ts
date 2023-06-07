@@ -23,7 +23,7 @@ faultRouter.patch(
 );
 
 faultRouter.get(
-  '/auth/fault/',
+  faultRouteGeneric,
   auth(Role.TECHNICIAN, Role.ADMIN),
   FaultController.readAllFaults,
 );
