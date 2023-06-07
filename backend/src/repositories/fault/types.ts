@@ -64,6 +64,7 @@ export type FaultUpdateData = {
   id: string,
   technicianId: string,
   resolvedAt?: Date | undefined,
+  description?: string | undefined,
   workPrice?: number | undefined,
   name?: string | undefined,
   mileage?: number | undefined,
@@ -71,7 +72,6 @@ export type FaultUpdateData = {
 };
 
 type RepairMaterialWithoutSensitiveInfo = {
-  description: string,
   name: string,
   price: number,
 };

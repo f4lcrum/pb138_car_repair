@@ -31,7 +31,6 @@ export const read = async (data: FaultReadOneData): FaultReadOneResult => {
           material: {
             select: {
               id: true,
-              description: true,
               name: true,
               price: true,
             },
@@ -62,10 +61,12 @@ export const all = async (data: FaultReadManyData): FaultReadManyResult => {
           where = {
             resolvedAt: null,
             technicianId: null,
+            deletedAt: null,
           };
         } else {
           where = {
             technicianId: data.technicianId,
+            deletedAt: null,
           };
         }
         const faults = await tx.repair.findMany({

@@ -11,16 +11,16 @@ export const createFaultSchema = z.object({
 }).strict();
 
 const RepairMaterialZod = z.object({
-  description: z.string().trim().min(5),
   name: z.string().trim().nonempty(),
   price: z.coerce.number().min(1),
 }).strict();
 export const updateFaultSchema = z.object({
+  description: z.string().min(2).optional(),
   name: z.string().min(4).optional(),
   resolvedAt: z.coerce.date().optional(),
   workPrice: z.coerce.number().min(1).optional(),
   material: z.array(RepairMaterialZod).optional(),
   mileage: z.coerce.number().min(1).optional(),
 }).strict().refine(({
-  workPrice, material, name, resolvedAt, mileage,
-}) => workPrice !== undefined || material !== undefined || name !== undefined || resolvedAt !== undefined || mileage !== undefined, { message: 'One of the fields must be defined!' });
+  workPrice, material, name, resolvedAt, mileage, description,
+}) => workPrice !== undefined || description !== undefined || material !== undefined || name !== undefined || resolvedAt !== undefined || mileage !== undefined, { message: 'One of the fields must be defined!' });

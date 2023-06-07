@@ -39,6 +39,7 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           id: data.id,
         },
         data: {
+          ...(data.description !== undefined ? { description: data.description } : {}),
           ...(data.name !== undefined ? { name: data.name } : {}),
           ...(data.resolvedAt !== undefined ? { resolvedAt: data.resolvedAt } : {}),
           ...(data.workPrice !== undefined ? { workPrice: data.workPrice } : {}),
@@ -54,7 +55,6 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
           mileage: data.mileage !== undefined,
           material: {
             select: {
-              description: true,
               name: true,
               price: true,
             },

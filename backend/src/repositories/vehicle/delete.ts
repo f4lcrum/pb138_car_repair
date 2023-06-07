@@ -25,6 +25,14 @@ const deleteVehicle = async (
           deletedAt,
         },
       });
+      await tx.repair.updateMany({
+        where: {
+          vehicleId: data.vehicleId,
+        },
+        data: {
+          deletedAt,
+        },
+      });
       return Result.ok(result);
     });
   } catch (e) {

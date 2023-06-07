@@ -73,12 +73,12 @@ model Repair {
   resolvedAt     DateTime?
   material       RepairMaterial[]
   workPrice      Int
+  deletedAt      DateTime?
 
 }
 
 model RepairMaterial {
   id             String     @id @default(uuid())
-  description    String
   name           String
   price          Int
   repairId       String

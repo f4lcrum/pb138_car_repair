@@ -12,6 +12,7 @@ const technicianJozefRepairs : (Repair)[] = [{
   name: 'Oprava c.1',
   technicianId: '72e4eda6-5bd0-466c-8c56-b5405cd12e2f',
   resolvedAt: new Date('2012-02-25T12:45:03.000Z'),
+  deletedAt: null,
 },
 {
   id: 'b9ec9015-9edc-4e66-bc96-b1eca94d64ca',
@@ -23,6 +24,7 @@ const technicianJozefRepairs : (Repair)[] = [{
   vehicleId: '2be2a276-60f5-4583-8dc1-3c2be9aae841',
   technicianId: null,
   workPrice: 0,
+  deletedAt: null,
 },
 {
   id: '08cd4aa8-3482-4cc9-a542-806ee641eff4',
@@ -34,6 +36,7 @@ const technicianJozefRepairs : (Repair)[] = [{
   name: 'Oprava c.3',
   technicianId: '72e4eda6-5bd0-466c-8c56-b5405cd12e2f',
   resolvedAt: new Date('2012-03-25T12:45:03.000Z'),
+  deletedAt: null,
 },
 
 {
@@ -46,6 +49,7 @@ const technicianJozefRepairs : (Repair)[] = [{
   name: 'Oprava c.4',
   technicianId: '72e4eda6-5bd0-466c-8c56-b5405cd12e2f',
   resolvedAt: new Date('2019-03-25T12:45:03.000Z'),
+  deletedAt: null,
 },
 ];
 
