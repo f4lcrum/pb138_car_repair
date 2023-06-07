@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
@@ -19,6 +19,7 @@ const validationScheme = yup.object({
 });
 
 const LoginPage: FC = () => {
+  const [showFailure, setShowFailure] = useState(false);
   const {
     control,
     handleSubmit,
@@ -27,7 +28,7 @@ const LoginPage: FC = () => {
     resolver: yupResolver(validationScheme),
   });
   const navigate = useNavigate();
-  const { logIn } = useLogIn(navigate);
+  const { logIn } = useLogIn(navigate, setShowFailure);
 
   const onSubmit = (values: FieldValues) => {
     logIn({ email: values.email, password: values.password });
@@ -78,6 +79,11 @@ const LoginPage: FC = () => {
               Register
             </Button>
           </Grid>
+          {showFailure && (
+            <Typography variant="h4" color="primary">
+              Invalid credentials
+            </Typography>
+          )}
         </Grid>
       </form>
     </>

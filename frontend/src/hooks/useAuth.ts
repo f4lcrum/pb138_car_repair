@@ -18,9 +18,13 @@ const login = async (credentials: Credentials) => {
   });
 };
 
-export const useLogIn = (navigate: NavigateFunction) => {
+export const useLogIn = (
+  navigate: NavigateFunction,
+  setFailure: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   const queryClient = useQueryClient();
   const { mutate: logIn } = useMutation(login, {
+    onError: () => setFailure(true),
     onSuccess: () => {
       navigate("/home");
       queryClient.invalidateQueries(["auth"]);
