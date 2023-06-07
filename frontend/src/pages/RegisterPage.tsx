@@ -41,7 +41,7 @@ const RegisterPage: FC = () => {
     resolver: yupResolver(validationScheme),
   });
   const navigate = useNavigate();
-  const { register } = useRegistration();
+  const { register } = useRegistration(navigate);
 
   const [isTechnician, setIsTechnician] = useState(false);
 

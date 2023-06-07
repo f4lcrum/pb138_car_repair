@@ -51,10 +51,12 @@ const registerUser = async (registration: RegistrationRequest) => {
   });
 };
 
-export const useRegistration = () => {
+export const useRegistration = (navigate: NavigateFunction) => {
   const queryClient = useQueryClient();
   const { mutate: register } = useMutation(registerUser, {
-    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+    onSuccess: () => {
+      navigate("/home"), queryClient.invalidateQueries(["auth"]);
+    },
   });
 
   return { register };
