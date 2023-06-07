@@ -1,7 +1,3 @@
-// import type { User } from '@prisma/client';
-// import type DbResult from '../common/types';
-
-// type DbUser = DbResult<User>;
 export type UserUpdateResult = {
   firstName: string | undefined,
   lastName: string | undefined,

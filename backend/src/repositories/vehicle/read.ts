@@ -33,7 +33,6 @@ export const read = async (data: VehicleReadOneData): VehicleReadOneResult => {
   }
 };
 
-// *** reads all vehicles of given user ***
 export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {

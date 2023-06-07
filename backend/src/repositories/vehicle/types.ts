@@ -7,11 +7,9 @@ export type VehicleReadMultipleData = {
   brandName?: string,
   createdAt? : boolean,
   manufacturedAt?: boolean,
-  // asc or desc:
   sortOrder?: Prisma.SortOrder,
 };
 
-// vehicle's id:
 export type VehicleReadOneData = {
   ownerId: string,
   licensePlate?: string,

@@ -61,7 +61,6 @@ export type IsVerifiedTechnicianResult = DbResult<Boolean>;
 export type CheckFaultData = AssignFaultData;
 
 export type FaultUpdateData = {
-  // TODO: WHAT ABOUT THE ID
   id: string,
   technicianId: string,
   resolvedAt?: Date | undefined,

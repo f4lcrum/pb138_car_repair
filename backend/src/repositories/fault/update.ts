@@ -34,7 +34,6 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
       if (vehicleCheck.isErr) {
         return Result.err(vehicleCheck.error);
       }
-      // const fault: Repair & { material: RepairMaterial[] } = faultCheck.unwrap();
       const updatedFault = await tx.repair.update({
         where: {
           id: data.id,
@@ -60,7 +59,6 @@ const update = async (data: FaultUpdateData): DbResult<FaultUpdateResult> => {
               price: true,
             },
           },
-          // TODO: probs won't be send, only for testing purposes for now
           technicianId: true,
         },
 
