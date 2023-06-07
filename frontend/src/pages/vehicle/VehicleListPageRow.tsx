@@ -16,11 +16,13 @@ import { VehicleWithBrand } from "../../models/vehicleTypes";
 import { format } from "date-fns";
 import { RepairWithTechnician } from "../../models/repairTypes";
 import { useRemoveVehicle } from "../../hooks/useVehicles";
+import ConfirmModal from "../../components/modals/ConfirmModal.tsx";
 
 const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   const { vehicle } = props;
   const [open, setOpen] = useState(false);
   const [faultModalOpen, setFaultModalOpen] = useState(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [selectedRepair, setSelectedRepair] = useState<
     RepairWithTechnician | undefined
   >(undefined);
@@ -32,8 +34,7 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
 
   return (
     <>
-      {/* is the key ok? */}
-      <TableRow key={Math.random()} sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow key={vehicle.id} sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             onClick={() => setOpen(!open)}
@@ -57,15 +58,14 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
               setFaultModalOpen(true);
             }}
           >
-            Add fault
+            Add repair
           </Button>
-          <Button variant="outlined" onClick={handleRemove}>
+          <Button variant="outlined" onClick={() => setConfirmModalOpen(true)}>
             Delete
           </Button>
         </TableCell>
       </TableRow>
-      {/* is the key ok? */}
-      <TableRow key={Math.random()}>
+      <TableRow key={vehicle.id + "_repairs"}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
@@ -87,6 +87,18 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
         setOpen={setFaultModalOpen}
         repair={selectedRepair}
         vehicleId={vehicle.id}
+      />
+      <ConfirmModal
+        open={confirmModalOpen}
+        setOpen={setConfirmModalOpen}
+        text={
+          "Do you really want to delete your vehicle " +
+          vehicle.brandModel +
+          " with license plate " +
+          vehicle.licensePlate +
+          "?"
+        }
+        confirmAction={handleRemove}
       />
     </>
   );

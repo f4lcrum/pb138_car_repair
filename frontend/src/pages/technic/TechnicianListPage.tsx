@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Box,
   Button,
@@ -9,7 +9,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -17,17 +16,23 @@ import {
   useUnverifiedTechnicians,
   useVerifyTechnician,
 } from "../../hooks/useUnverifiedTechnicians";
+import ConfirmModal from "../../components/modals/ConfirmModal.tsx";
+import { Technician } from "../../models/userTypes.ts";
 
 const TechnicianListPage: FC = () => {
   //todo do something with the error
   const { data, error, isLoading } = useUnverifiedTechnicians();
   const { verify } = useVerifyTechnician();
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [technicianToVerify, setTechnicianToVerify] = useState<
+    Technician | undefined
+  >(undefined);
 
   const handleVerify = (id: string) => {
     verify(id);
+    setTechnicianToVerify(undefined);
   };
 
-  //todo add technicians
   return (
     <>
       {!isLoading && (
@@ -66,7 +71,10 @@ const TechnicianListPage: FC = () => {
                             {!user.isVerified && (
                               <Button
                                 variant="outlined"
-                                onClick={() => handleVerify(user.id)}
+                                onClick={() => {
+                                  setTechnicianToVerify(user);
+                                  setConfirmModalOpen(true);
+                                }}
                               >
                                 Verify
                               </Button>
@@ -75,20 +83,24 @@ const TechnicianListPage: FC = () => {
                         </TableRow>
                       ))}
                   </TableBody>
-                  <TablePagination
-                    count={0}
-                    page={0}
-                    onPageChange={() => {
-                      return null;
-                    }}
-                    rowsPerPage={10}
-                  />
                 </Table>
               </TableContainer>
             </Grid>
           </Grid>
         </Box>
       )}
+      <ConfirmModal
+        open={confirmModalOpen}
+        setOpen={setConfirmModalOpen}
+        text={
+          "Are you sure you want to verify the technician " +
+          technicianToVerify?.firstName +
+          " " +
+          technicianToVerify?.lastName +
+          "?"
+        }
+        confirmAction={() => handleVerify(technicianToVerify?.id ?? "-1")}
+      />
     </>
   );
 };

@@ -61,7 +61,6 @@ const BrandListPage: FC = () => {
                     <TableRow>
                       <TableCell>Brand</TableCell>
                       <TableCell>Model</TableCell>
-                      <TableCell>Model Type</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -69,7 +68,7 @@ const BrandListPage: FC = () => {
                       Array.from(data).map((brand) => (
                         <>
                           {/* not sure about this key */}
-                          <TableRow key={brand.brand}>
+                          <TableRow key={brand.id}>
                             <TableCell colSpan={3} align={"left"}>
                               {brand.brand}
                             </TableCell>
@@ -77,8 +76,6 @@ const BrandListPage: FC = () => {
                           {brand.models?.map((model) => (
                             <TableRow key={model.id}>
                               <TableCell align={"right"} />
-                              <TableCell>{model.name}</TableCell>
-                              {/* todo there should be type */}
                               <TableCell>{model.name}</TableCell>
                             </TableRow>
                           ))}

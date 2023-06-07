@@ -9,7 +9,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -69,14 +68,6 @@ const VehicleListPage: FC = () => {
                         <VehicleListPageRow key={row.id} vehicle={row} />
                       ))}
                   </TableBody>
-                  <TablePagination
-                    count={data?.length || 0}
-                    page={0}
-                    onPageChange={() => {
-                      return null;
-                    }}
-                    rowsPerPage={10}
-                  />
                 </Table>
               </TableContainer>
             </Grid>

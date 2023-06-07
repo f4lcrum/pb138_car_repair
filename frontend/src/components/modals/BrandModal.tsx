@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { ModalProps } from "../../types/interfaces";
 import {
   Button,
@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Brand } from "../../types/types";
 import { useAddBrand } from "../../hooks/useBrands";
 
@@ -33,7 +33,7 @@ const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>Brand</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 label={"Brand Name"}

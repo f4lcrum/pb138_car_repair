@@ -65,7 +65,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>New Vehicle</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 defaultValue={""}
@@ -92,10 +92,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
                 {!isLoading &&
                   data &&
                   Array.from(data).map((brand) => [
-                    // is this key safe?
-                    <ListSubheader key={brand.brand}>
-                      {brand.brand}
-                    </ListSubheader>,
+                    <ListSubheader key={brand.id}>{brand.brand}</ListSubheader>,
                     ...getModelMenuItems(brand),
                   ])}
               </Select>
@@ -106,6 +103,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
                 openTo="year"
                 views={["year"]}
                 value={manufacturedAt}
+                sx={{ width: "100%" }}
                 onChange={(change) => {
                   if (change != null) setManufacturedAt(change);
                 }}
