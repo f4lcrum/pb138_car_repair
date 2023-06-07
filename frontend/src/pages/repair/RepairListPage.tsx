@@ -15,7 +15,6 @@ import { SingleRepair } from "../../models/repairTypes";
 import { useUnresolvedRepairs } from "../../hooks/useUnresolvedRepairs";
 import { format } from "date-fns";
 
-//todo try to change this component because of the react query hook
 const RepairListPage: FC = () => {
   const [repairModalOpen, setRepairModalOpen] = useState(false);
   const [selectedRepair, setSelectedRepair] = useState<

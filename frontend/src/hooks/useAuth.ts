@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { authApi, userApi } from "../services";
 import { Credentials, RegistrationRequest } from "../models/authTypes";
 import { UserUpdateRequest } from "../models/userTypes";
+import { NavigateFunction } from "react-router-dom";
 
 const getAuthInfo = async () => {
   return await authApi.readAuth().then((response) => {
@@ -17,10 +18,13 @@ const login = async (credentials: Credentials) => {
   });
 };
 
-export const useLogIn = () => {
+export const useLogIn = (navigate: NavigateFunction) => {
   const queryClient = useQueryClient();
   const { mutate: logIn } = useMutation(login, {
-    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+    onSuccess: () => {
+      navigate("/home");
+      queryClient.invalidateQueries(["auth"]);
+    },
   });
 
   return { logIn };
@@ -35,7 +39,7 @@ const logout = async () => {
 export const useLogOut = () => {
   const queryClient = useQueryClient();
   const { mutate: logOut } = useMutation(logout, {
-    onSuccess: () => queryClient.invalidateQueries(["auth"]),
+    onSuccess: () => queryClient.clear(),
   });
 
   return { logOut };

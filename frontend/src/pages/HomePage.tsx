@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.ts";
 import { Role } from "../models/authTypes.ts";
-import NotFoundPage from "./NotFoundPage.tsx";
+import LoadingPage from "./LoadingPage.tsx";
 
 const HomePage: FC = () => {
   const location = useNavigate();
@@ -17,7 +17,7 @@ const HomePage: FC = () => {
       return <Navigate to="/technician" state={{ from: location }} />;
   }
 
-  return <NotFoundPage />;
+  return <LoadingPage />;
 };
 
 export default HomePage;
