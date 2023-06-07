@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, Link } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../components/ControlledTextField";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ import {
   requiredField,
   shortPassword,
 } from "../constants/authValidations";
+import styles from "./login.module.css";
+import Logo from "./Logo";
 
 const validationScheme = yup.object({
   email: yup.string().email(invalidEmail).required(requiredField),
@@ -32,21 +34,24 @@ const LoginPage: FC = () => {
 
   const onSubmit = (values: FieldValues) => {
     logIn({ email: values.email, password: values.password });
-    //todo add reset
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Logo />
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.backgroundDiv}>
         <Grid
           container
+          position="relative"
           spacing={2}
           alignItems="center"
           justifyContent="center"
           direction="column"
         >
           <Grid item>
-            <Typography variant="subtitle1">Login</Typography>
+            <Typography variant="h4" color="primary">
+              <strong>LogIn</strong>
+            </Typography>
           </Grid>
           <Grid item>
             <>
@@ -71,19 +76,26 @@ const LoginPage: FC = () => {
               helperText={errors.password?.message}
             />
           </Grid>
+          {showFailure && (
+            <Grid item>
+              <div className={styles.invalidCredentials}>
+                Invalid credentials
+              </div>
+            </Grid>
+          )}
           <Grid item>
-            <Button type="submit" variant="outlined">
+            <Button type="submit" variant="contained">
               Login
             </Button>
-            <Button onClick={() => navigate("/register")} variant="outlined">
-              Register
-            </Button>
           </Grid>
-          {showFailure && (
-            <Typography variant="h4" color="primary">
-              Invalid credentials
+          <Grid item>
+            <Typography fontSize={12}>
+              Do not have an account?{" "}
+              <Link component="button" onClick={() => navigate("/register")}>
+                Create one here
+              </Link>
             </Typography>
-          )}
+          </Grid>
         </Grid>
       </form>
     </>

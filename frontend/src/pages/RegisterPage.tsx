@@ -4,6 +4,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  Link,
   Typography,
 } from "@mui/material";
 import ControlledTextField from "../components/ControlledTextField";
@@ -19,6 +20,8 @@ import {
   requiredField,
   shortPassword,
 } from "../constants/authValidations";
+import Logo from "./Logo";
+import styles from "./login.module.css";
 
 const validationScheme = yup.object({
   email: yup.string().email(invalidEmail).required(requiredField),
@@ -58,7 +61,8 @@ const RegisterPage: FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Logo />
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.backgroundDiv}>
         <Grid
           container
           spacing={2}
@@ -67,7 +71,9 @@ const RegisterPage: FC = () => {
           direction="column"
         >
           <Grid item>
-            <Typography variant="subtitle1">Register</Typography>
+            <Typography variant="h4" color="primary">
+              <strong>Register</strong>
+            </Typography>
           </Grid>
           <Grid item>
             <ControlledTextField
@@ -142,12 +148,17 @@ const RegisterPage: FC = () => {
             />
           </Grid>
           <Grid item>
-            <Button type="submit" variant="outlined">
+            <Button type="submit" variant="contained">
               Register
             </Button>
-            <Button onClick={() => navigate("/login")} variant="outlined">
-              Login
-            </Button>
+          </Grid>
+          <Grid item>
+            <Typography fontSize={12}>
+              Already have an account?{" "}
+              <Link component="button" onClick={() => navigate("/login")}>
+                Sign in
+              </Link>
+            </Typography>
           </Grid>
         </Grid>
       </form>
