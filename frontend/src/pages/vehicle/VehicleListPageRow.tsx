@@ -101,6 +101,7 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
         open={faultModalOpen}
         setOpen={setFaultModalOpen}
         repair={selectedRepair}
+        vehicleId={vehicle.id}
       />
       <ConfirmModal
         open={confirmModalOpen}

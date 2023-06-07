@@ -25,15 +25,15 @@ import { useAddRepair, useUpdateRepair } from "../../hooks/useRepairs";
 import { useAuth } from "../../hooks/useAuth.ts";
 import { Role } from "../../models/authTypes.ts";
 
-const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
-  open,
-  setOpen,
-  repair,
-}) => {
+const RepairModal: FC<
+  ModalProps & { repair?: RepairWithTechnician; vehicleId?: string }
+> = ({ open, setOpen, repair, vehicleId }) => {
   const { control, handleSubmit } = useForm<RepairWithTechnician>();
   const descriptionRef = useRef(null);
-  const { addRepair } = useAddRepair(repair?.vehicleId ?? "-1");
-  const { updateRepair } = useUpdateRepair(repair?.vehicleId ?? "-1");
+  const { addRepair } = useAddRepair(repair?.vehicleId ?? vehicleId ?? "-1");
+  const { updateRepair } = useUpdateRepair(
+    repair?.vehicleId ?? vehicleId ?? "-1"
+  );
   const { data } = useAuth();
 
   const [newMaterial, setNewMaterial] = useState("");
@@ -67,7 +67,7 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
   //todo change date
   //todo update description as well
   const onSubmit = (event: FieldValues) => {
-    const vehicleId = repair?.vehicleId ?? "-1";
+    const newVehicleId = repair?.vehicleId ?? vehicleId ?? "-1";
 
     if (repair) {
       //todo currently not working
@@ -82,7 +82,7 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
       });
     } else {
       addRepair({
-        vehicleId: vehicleId,
+        vehicleId: newVehicleId,
         repair: {
           name: event.name,
           description: event.description,
