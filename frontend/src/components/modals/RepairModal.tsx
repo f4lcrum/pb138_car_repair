@@ -241,9 +241,11 @@ const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
           <Button variant={"outlined"} onClick={() => setOpen(false)}>
             Close
           </Button>
-          <Button variant={"contained"} type="submit">
-            Save
-          </Button>
+          {(!repair || (!!repair && data?.item.role === Role.TECHNICIAN)) && (
+            <Button variant={"contained"} type="submit">
+              Save
+            </Button>
+          )}
         </DialogActions>
       </form>
     </Dialog>

@@ -18,11 +18,10 @@ import { useSearchParams } from "react-router-dom";
 import { useVehicles } from "../../hooks/useVehicles";
 
 const VehicleListPage: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, _] = useSearchParams();
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false);
 
-  //todo do something with the error
-  const { data, error, isLoading } = useVehicles(searchParams);
+  const { data, isLoading } = useVehicles(searchParams);
 
   return (
     <>

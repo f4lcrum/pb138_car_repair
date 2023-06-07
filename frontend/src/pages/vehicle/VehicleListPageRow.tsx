@@ -52,6 +52,13 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
         </TableCell>
         <TableCell align={"right"}>
           <Button
+            sx={{ margin: 0.5 }}
+            variant="outlined"
+            onClick={() => setConfirmModalOpen(true)}
+          >
+            Delete
+          </Button>
+          <Button
             variant={"contained"}
             onClick={() => {
               setSelectedRepair(undefined);
@@ -59,13 +66,6 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
             }}
           >
             Add repair
-          </Button>
-          <Button
-            sx={{ margin: 0.5 }}
-            variant="outlined"
-            onClick={() => setConfirmModalOpen(true)}
-          >
-            Delete
           </Button>
         </TableCell>
       </TableRow>
@@ -90,7 +90,6 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
         open={faultModalOpen}
         setOpen={setFaultModalOpen}
         repair={selectedRepair}
-        vehicleId={vehicle.id}
       />
       <ConfirmModal
         open={confirmModalOpen}
