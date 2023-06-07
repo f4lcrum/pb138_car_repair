@@ -38,15 +38,7 @@ export const all = async (
   data : VehicleReadMultipleData,
 ): VehicleReadMultipleResult => {
   try {
-    const vehicleFilter = data.brandName ? {
-      ownerId: data.userId,
-      deletedAt: null,
-      brand: {
-        brand: {
-          name: data.brandName,
-        },
-      },
-    } : {
+    const vehicleFilter = {
       ownerId: data.userId,
       deletedAt: null,
     };
@@ -60,7 +52,7 @@ export const all = async (
       orderBy.push({ manufacturedAt: sortOrder });
     }
 
-    const result = await client.vehicle.findMany({
+    let result = await client.vehicle.findMany({
       where: vehicleFilter,
       include: {
         brandModel: {
@@ -78,6 +70,9 @@ export const all = async (
     if (result === null) {
       throw new NonexistentRecordError('The specified user does not have vehicles!');
     }
+    if (data.brandName !== undefined) {
+      result = result.filter((key) => key.brandModel.brand.name === data.brandName);
+    }
     const vehicles = result.map(({ brandId, ...car }) => ({
       ...car,
       brandModel: car.brandModel.name,
@@ -88,7 +83,7 @@ export const all = async (
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
     }
-
+    console.log(e);
     return genericError;
   }
 };
