@@ -36,6 +36,7 @@ interface AuthUserRegistration {
 interface AuthUser extends AuthUserRegistration {
   id: string;
   phoneNumber: string;
+  isVerified: boolean;
 }
 
 export enum Role {
