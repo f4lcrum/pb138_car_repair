@@ -37,6 +37,29 @@ export const useAddRepair = (vehicleId: string) => {
   return { addRepair };
 };
 
+const assignRepair = async (repairId: string) => {
+  return await repairApi.assignRepair(repairId).then((response) => {
+    return response.data;
+  });
+};
+
+export const useAssignRepair = () => {
+  const queryClient = useQueryClient();
+  const { mutate: assign } = useMutation(assignRepair, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["unresolved_repairs"]);
+      queryClient.invalidateQueries(["technician_repairs"]);
+    },
+  });
+
+  return { assign };
+};
+
+interface createRepairVariables {
+  vehicleId: string;
+  repair: RepairCreateRequest;
+}
+
 interface updateRepairVariables {
   id: string;
   repair: RepairUpdateRequest;
@@ -58,3 +81,21 @@ export const useUpdateRepair = (vehicleId: string) => {
 
   return { updateRepair };
 };
+
+const getUnresolvedRepairs = async () => {
+  return await repairApi.getAllRepairs(true).then((response) => {
+    return response.data;
+  });
+};
+
+export const useUnresolvedRepairs = () =>
+  useQuery(["unresolved_repairs"], getUnresolvedRepairs);
+
+const getTechnicianRepairs = async () => {
+  return await repairApi.getAllRepairs(false).then((response) => {
+    return response.data;
+  });
+};
+
+export const useTechnicianRepairs = () =>
+  useQuery(["technician_repairs"], getTechnicianRepairs);

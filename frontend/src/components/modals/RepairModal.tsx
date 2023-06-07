@@ -22,14 +22,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ModalProps } from "../../types/interfaces";
 import { RepairWithTechnician } from "../../models/repairTypes";
 import { useAddRepair, useUpdateRepair } from "../../hooks/useRepairs";
+import { useAuth } from "../../hooks/useAuth.ts";
+import { Role } from "../../models/authTypes.ts";
 
-const RepairModal: FC<
-  ModalProps & { repair?: RepairWithTechnician; vehicleId: string }
-> = ({ open, setOpen, repair, vehicleId }) => {
+const RepairModal: FC<ModalProps & { repair?: RepairWithTechnician }> = ({
+  open,
+  setOpen,
+  repair,
+}) => {
   const { control, handleSubmit } = useForm<RepairWithTechnician>();
   const descriptionRef = useRef(null);
-  const { addRepair } = useAddRepair(vehicleId);
-  const { updateRepair } = useUpdateRepair(vehicleId);
+  const { addRepair } = useAddRepair(repair?.vehicleId ?? "-1");
+  const { updateRepair } = useUpdateRepair(repair?.vehicleId ?? "-1");
+  const { data } = useAuth();
 
   const [newMaterial, setNewMaterial] = useState("");
   const [newMaterialPrice, setNewMaterialPrice] = useState(0);
@@ -62,6 +67,8 @@ const RepairModal: FC<
   //todo change date
   //todo update description as well
   const onSubmit = (event: FieldValues) => {
+    const vehicleId = repair?.vehicleId ?? "-1";
+
     if (repair) {
       //todo currently not working
       updateRepair({
@@ -91,7 +98,7 @@ const RepairModal: FC<
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>{!repair ? "New Fault" : "Fault Details"}</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 defaultValue={repair?.name ?? ""}
@@ -124,8 +131,6 @@ const RepairModal: FC<
               />
             </Grid>
 
-            {/* Only Technician can modify this fields */}
-
             {!!repair && (
               <>
                 <Grid item xs={12}>
@@ -135,7 +140,10 @@ const RepairModal: FC<
                     name={"workPrice"}
                     control={control}
                     type={"number"}
-                    disabled={!!repair?.resolvedAt}
+                    disabled={
+                      !!repair?.resolvedAt ||
+                      data?.item.role !== Role.TECHNICIAN
+                    }
                   />
                 </Grid>
 
@@ -149,65 +157,73 @@ const RepairModal: FC<
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Array.from(repair?.material).map((material, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{material?.name}</TableCell>
-                          <TableCell>{material?.price}</TableCell>
-                          <TableCell>
-                            <IconButton
-                              size="small"
-                              onClick={() => handleDeleteMaterial(index)}
-                            >
-                              <CloseIcon color={"primary"} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                      <TableRow>
-                        <TableCell>
-                          <ControlledTextField
-                            label={"New Material Name"}
-                            name={"newMaterialName"}
-                            control={control}
-                            variant={"standard"}
-                            value={newMaterial}
-                            onChange={(event) =>
-                              setNewMaterial(event.target.value)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <ControlledTextField
-                            label={"New Material Price"}
-                            name={"newMaterialPrice"}
-                            control={control}
-                            variant={"standard"}
-                            type="number"
-                            value={newMaterialPrice}
-                            onChange={(event) =>
-                              setNewMaterialPrice(+event.target.value)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            variant={"outlined"}
-                            onClick={handleAddMaterial}
-                          >
-                            Add
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                      {repair?.material &&
+                        Array.from(repair?.material).map((material, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{material?.name}</TableCell>
+                            <TableCell>{material?.price}</TableCell>
+                            <TableCell>
+                              {data?.item.role === Role.TECHNICIAN && (
+                                <IconButton
+                                  size="small"
+                                  onClick={() => handleDeleteMaterial(index)}
+                                >
+                                  <CloseIcon color={"primary"} />
+                                </IconButton>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      {!repair?.resolvedAt &&
+                        data?.item.role === Role.TECHNICIAN && (
+                          <TableRow>
+                            <TableCell>
+                              <ControlledTextField
+                                label={"New Material Name"}
+                                name={"newMaterialName"}
+                                control={control}
+                                variant={"standard"}
+                                value={newMaterial}
+                                onChange={(event) =>
+                                  setNewMaterial(event.target.value)
+                                }
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <ControlledTextField
+                                label={"New Material Price"}
+                                name={"newMaterialPrice"}
+                                control={control}
+                                variant={"standard"}
+                                type="number"
+                                value={newMaterialPrice}
+                                onChange={(event) =>
+                                  setNewMaterialPrice(+event.target.value)
+                                }
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                variant={"outlined"}
+                                onClick={handleAddMaterial}
+                              >
+                                Add
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        )}
                     </TableBody>
                   </Table>
                 </TableContainer>
 
-                <Grid item>
-                  <FormControlLabel
-                    label="Mark as resolved"
-                    control={<Checkbox />}
-                  />
-                </Grid>
+                {!repair.resolvedAt && data?.item.role === Role.TECHNICIAN && (
+                  <Grid item>
+                    <FormControlLabel
+                      label="Mark as resolved"
+                      control={<Checkbox />}
+                    />
+                  </Grid>
+                )}
               </>
             )}
           </Grid>

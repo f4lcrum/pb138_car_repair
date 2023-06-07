@@ -46,15 +46,13 @@ const ModelModal: FC<ModalProps> = ({ open, setOpen }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle>Model</DialogTitle>
             <DialogContent>
-              <Grid container spacing={2} sx={{ marginTop: 2 }} workPrice>
+              <Grid container spacing={2} sx={{ marginTop: 2 }}>
                 <FormControl fullWidth sx={{ marginTop: 2, marginLeft: 2 }}>
                   <InputLabel>Brand</InputLabel>
                   <Controller
-                    name="brand"
-                    id="brand"
+                    name="name"
                     control={control}
-                    //todo what is this for?
-                    render={({ field }) => (
+                    render={() => (
                       <Select
                         value={selectedBrand}
                         label="Type"

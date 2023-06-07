@@ -6,7 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { appTheme } from "./themes/appTheme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import VehicleListPage from "./pages/vehicle/VehicleListPage";
-import TechnicianListPage from "./pages/technic/TechnicianListPage";
+import TechnicianListPage from "./pages/technician/TechnicianListPage";
 import RepairListPage from "./pages/repair/RepairListPage";
 import BrandListPage from "./pages/brand/BrandListPage";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -35,7 +35,7 @@ const App = () => {
                     <Route
                       path="vehicle"
                       element={
-                        <AuthorizedRoute roles={[Role.CLIENT, Role.TECHNICIAN]}>
+                        <AuthorizedRoute roles={[Role.CLIENT]}>
                           <VehicleListPage />
                         </AuthorizedRoute>
                       }

@@ -16,7 +16,7 @@ const barItems: BarItem[] = [
   {
     label: "Vehicles",
     route: "/vehicle",
-    roles: [Role.CLIENT, Role.TECHNICIAN],
+    roles: [Role.CLIENT],
   },
   {
     label: "Repairs",

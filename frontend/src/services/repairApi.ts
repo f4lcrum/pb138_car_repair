@@ -2,7 +2,7 @@ import {
   RepairCreateRequest,
   RepairUpdateRequest,
   RepairUpdateResponse,
-  RepairWithBrand,
+  RepairWithDetails,
   RepairWithTechnician,
   SingleRepair,
 } from "../models/repairTypes";
@@ -16,10 +16,12 @@ export const getRepairs = async (
   return response.data;
 };
 
-export const getAllUnresolvedRepairs = async (): Promise<
-  RestResponse<RepairWithBrand[]>
-> => {
-  const response = await axiosInstance.get("/auth/fault/unresolved/all");
+export const getAllRepairs = async (
+  unresolved: boolean
+): Promise<RestResponse<RepairWithDetails[]>> => {
+  const response = await axiosInstance.get(
+    `/auth/fault?unresolved=${unresolved}`
+  );
   return response.data;
 };
 
@@ -36,5 +38,12 @@ export const updateRepair = async (
   repair: RepairUpdateRequest
 ): Promise<RestResponse<RepairUpdateResponse>> => {
   const response = await axiosInstance.patch(`/auth/fault/${id}`, repair);
+  return response.data;
+};
+
+export const assignRepair = async (
+  id: string
+): Promise<RestResponse<RepairUpdateResponse>> => {
+  const response = await axiosInstance.patch(`/auth/fault/assignment/${id}`);
   return response.data;
 };

@@ -60,7 +60,11 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
           >
             Add repair
           </Button>
-          <Button variant="outlined" onClick={() => setConfirmModalOpen(true)}>
+          <Button
+            sx={{ margin: 0.5 }}
+            variant="outlined"
+            onClick={() => setConfirmModalOpen(true)}
+          >
             Delete
           </Button>
         </TableCell>

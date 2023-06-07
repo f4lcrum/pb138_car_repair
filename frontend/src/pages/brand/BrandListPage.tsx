@@ -9,7 +9,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -67,7 +66,6 @@ const BrandListPage: FC = () => {
                     {data &&
                       Array.from(data).map((brand) => (
                         <>
-                          {/* not sure about this key */}
                           <TableRow key={brand.id}>
                             <TableCell colSpan={3} align={"left"}>
                               {brand.brand}
@@ -82,14 +80,6 @@ const BrandListPage: FC = () => {
                         </>
                       ))}
                   </TableBody>
-                  <TablePagination
-                    count={data ? data.length : 0}
-                    page={0}
-                    onPageChange={() => {
-                      return null;
-                    }}
-                    rowsPerPage={10}
-                  />
                 </Table>
               </TableContainer>
             </Grid>

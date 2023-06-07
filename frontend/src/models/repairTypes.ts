@@ -10,10 +10,13 @@ interface Repair {
   material: RepairMaterial[];
 }
 
-export interface RepairWithBrand extends Repair {
+export interface RepairWithDetails extends Repair {
   licensePlate: string;
   brandName: string;
   brandModel: string;
+  ownerFirstName: string;
+  ownerLastName: string;
+  technicianId?: string;
 }
 
 export interface SingleRepair extends Repair {
