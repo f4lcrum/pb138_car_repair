@@ -76,6 +76,13 @@ const LoginPage: FC = () => {
               helperText={errors.password?.message}
             />
           </Grid>
+          {showFailure && (
+            <Grid item>
+              <div className={styles.invalidCredentials}>
+                Invalid credentials
+              </div>
+            </Grid>
+          )}
           <Grid item>
             <Button type="submit" variant="contained">
               Login
@@ -89,11 +96,6 @@ const LoginPage: FC = () => {
               </Link>
             </Typography>
           </Grid>
-          {showFailure && (
-            <Typography variant="h4" color="primary">
-              Invalid credentials
-            </Typography>
-          )}
         </Grid>
       </form>
     </>

@@ -8,3 +8,10 @@
     margin: auto;
     top: 50vh;
 }
+
+.invalidCredentials {
+    background-color: #FCB414;
+    border-radius: 20px;
+    padding: 1rem;
+    opacity: 0.8;
+}
