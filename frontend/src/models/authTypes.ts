@@ -7,6 +7,15 @@ export interface LogInOutRequest {
   message: string;
 }
 
+export interface Registration {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  password: string;
+  repeatPassword: string;
+}
+
 export interface RegistrationRequest {
   firstName: string;
   lastName: string;
