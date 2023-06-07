@@ -10,18 +10,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
   Typography,
 } from "@mui/material";
 import VehicleListPageRow from "./VehicleListPageRow";
 import VehicleModal from "../../components/modals/VehicleModal";
 import { useSearchParams } from "react-router-dom";
 import { useVehicles } from "../../hooks/useVehicles";
+import { useQueryClient } from "react-query";
 
 const VehicleListPage: FC = () => {
   const [searchParams, _] = useSearchParams();
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false);
+  const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useVehicles(searchParams);
+
+  const handleSort = () => {
+    const newOrder = order === "asc" ? "desc" : "asc";
+    searchParams.set("manufacturedAt", "true");
+    searchParams.set("sortOrder", newOrder);
+    queryClient.invalidateQueries(["vehicles"]);
+    setOrder(newOrder);
+  };
 
   return (
     <>
@@ -57,7 +69,15 @@ const VehicleListPage: FC = () => {
                       <TableCell>Brand</TableCell>
                       <TableCell>Model</TableCell>
                       <TableCell>License Plate</TableCell>
-                      <TableCell>Manufactured At</TableCell>
+                      <TableCell sortDirection={order}>
+                        <TableSortLabel
+                          active
+                          direction={order}
+                          onClick={() => handleSort()}
+                        >
+                          Manufactured At
+                        </TableSortLabel>
+                      </TableCell>
                       <TableCell />
                     </TableRow>
                   </TableHead>

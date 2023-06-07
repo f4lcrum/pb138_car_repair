@@ -20,8 +20,7 @@ import ConfirmModal from "../../components/modals/ConfirmModal.tsx";
 import { Technician } from "../../models/userTypes.ts";
 
 const TechnicianListPage: FC = () => {
-  //todo do something with the error
-  const { data, error, isLoading } = useUnverifiedTechnicians();
+  const { data, isLoading } = useUnverifiedTechnicians();
   const { verify } = useVerifyTechnician();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [technicianToVerify, setTechnicianToVerify] = useState<

@@ -35,7 +35,7 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   return (
     <>
       <TableRow key={vehicle.id} sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell component="th" scope="row">
           <IconButton
             onClick={() => setOpen(!open)}
             aria-label="expand row"
@@ -44,13 +44,19 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{vehicle.brandName}</TableCell>
-        <TableCell>{vehicle.brandModel}</TableCell>
-        <TableCell>{vehicle.licensePlate}</TableCell>
-        <TableCell>
+        <TableCell component="th" scope="row">
+          {vehicle.brandName}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {vehicle.brandModel}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {vehicle.licensePlate}
+        </TableCell>
+        <TableCell component="th" scope="row">
           {format(new Date(vehicle.manufacturedAt), "yyyy")}
         </TableCell>
-        <TableCell align={"right"}>
+        <TableCell component="th" scope="row" align={"right"}>
           <Button
             sx={{ margin: 0.5 }}
             variant="outlined"
@@ -70,7 +76,12 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
         </TableCell>
       </TableRow>
       <TableRow key={vehicle.id + "_repairs"}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          component="th"
+          scope="row"
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={6}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
