@@ -9,13 +9,11 @@ import { useLogIn } from "../hooks/useAuth";
 
 const LoginPage: FC = () => {
   const { control, handleSubmit } = useForm();
-  const { logIn } = useLogIn();
   const navigate = useNavigate();
+  const { logIn } = useLogIn(navigate);
 
-  //todo not sure about the type
-  const onSubmit = (data: FieldValues) => {
-    logIn({ email: data.email, password: data.password });
-    navigate("/");
+  const onSubmit = (values: FieldValues) => {
+    logIn({ email: values.email, password: values.password });
   };
 
   return (
