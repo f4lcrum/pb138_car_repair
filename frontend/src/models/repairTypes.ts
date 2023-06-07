@@ -7,7 +7,7 @@ interface Repair {
   vehicleId: string;
   resolvedAt?: Date;
   workPrice: number;
-  materials: RepairMaterial[];
+  material: RepairMaterial[];
 }
 
 export interface RepairWithBrand extends Repair {
@@ -49,7 +49,7 @@ export interface RepairUpdateResponse {
 
 export interface RepairMaterial {
   id?: string;
-  description: string;
+  description?: string;
   name: string;
   price: number;
 }

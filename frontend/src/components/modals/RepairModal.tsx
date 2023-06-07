@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -31,15 +31,36 @@ const RepairModal: FC<
   const { addRepair } = useAddRepair(vehicleId);
   const { updateRepair } = useUpdateRepair(vehicleId);
 
+  const [newMaterial, setNewMaterial] = useState("");
+  const [newMaterialPrice, setNewMaterialPrice] = useState(0);
+  const [renderer, setRenderer] = useState(false);
+
   const handleClose = (event, reason) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
   };
 
+  const handleAddMaterial = () => {
+    if (repair) {
+      repair.material = [
+        ...repair.material,
+        { name: newMaterial, price: newMaterialPrice },
+      ];
+      setNewMaterial("");
+      setNewMaterialPrice(0);
+    }
+  };
+
+  const handleDeleteMaterial = (index: number) => {
+    if (repair) {
+      repair.material = [...repair.material.filter((_, i) => i !== index)];
+      setRenderer(!renderer);
+    }
+  };
+
   //todo change date
   //todo update description as well
-  //todo add material
   const onSubmit = (event: FieldValues) => {
     if (repair) {
       //todo currently not working
@@ -128,12 +149,15 @@ const RepairModal: FC<
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {repair?.materials?.map((material) => (
-                        <TableRow key={material.id}>
+                      {Array.from(repair?.material).map((material, index) => (
+                        <TableRow key={index}>
                           <TableCell>{material?.name}</TableCell>
                           <TableCell>{material?.price}</TableCell>
                           <TableCell>
-                            <IconButton size="small">
+                            <IconButton
+                              size="small"
+                              onClick={() => handleDeleteMaterial(index)}
+                            >
                               <CloseIcon color={"primary"} />
                             </IconButton>
                           </TableCell>
@@ -146,6 +170,10 @@ const RepairModal: FC<
                             name={"newMaterialName"}
                             control={control}
                             variant={"standard"}
+                            value={newMaterial}
+                            onChange={(event) =>
+                              setNewMaterial(event.target.value)
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -154,10 +182,20 @@ const RepairModal: FC<
                             name={"newMaterialPrice"}
                             control={control}
                             variant={"standard"}
+                            type="number"
+                            value={newMaterialPrice}
+                            onChange={(event) =>
+                              setNewMaterialPrice(+event.target.value)
+                            }
                           />
                         </TableCell>
                         <TableCell>
-                          <Button variant={"outlined"}>Add</Button>
+                          <Button
+                            variant={"outlined"}
+                            onClick={handleAddMaterial}
+                          >
+                            Add
+                          </Button>
                         </TableCell>
                       </TableRow>
                     </TableBody>
