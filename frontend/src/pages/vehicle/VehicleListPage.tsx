@@ -25,7 +25,6 @@ import { useQueryClient } from "react-query";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useBrands } from "../../hooks/useBrands.ts";
-import styles from "../commonpage.module.css";
 
 const VehicleListPage: FC = () => {
   const [searchParams, _] = useSearchParams();
@@ -68,14 +67,17 @@ const VehicleListPage: FC = () => {
             </Typography>
           </Box>
 
-          <Grid
-            container
-            justifyContent={"flex-end"}
-            alignItems={"center"}
-            spacing={2}
-            padding="2vw"
-          >
-            {/*TODO: Style*/}
+          <Grid container alignItems={"center"} spacing={2} padding="2vw">
+            <Grid item>
+              <TextField
+                label="License Plate"
+                fullWidth={true}
+                value={searchedLicensePlate}
+                onChange={(event) => {
+                  setSearchedLicensePlate(event.target.value);
+                }}
+              />
+            </Grid>
             <Grid item>
               <FormControl fullWidth>
                 <InputLabel>Brand</InputLabel>
@@ -85,7 +87,7 @@ const VehicleListPage: FC = () => {
                   onChange={handleBrandSearch}
                 >
                   <MenuItem key={"NOT_SELECTED"} value={"NOT_SELECTED"}>
-                    Not selected
+                    All brands
                   </MenuItem>
                   {brands.data &&
                     Array.from(brands.data).map((brand) => (
@@ -96,17 +98,7 @@ const VehicleListPage: FC = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item>
-              <TextField
-                label="License Plate"
-                defaultValue={""}
-                fullWidth={true}
-                value={searchedLicensePlate}
-                onChange={(event) => {
-                  setSearchedLicensePlate(event.target.value);
-                }}
-              />
-            </Grid>
+            <Grid item flexGrow={1} />
             <Grid item>
               <Button
                 onClick={() => setVehicleModalOpen(true)}
@@ -121,16 +113,22 @@ const VehicleListPage: FC = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell />
-                      <TableCell>Brand</TableCell>
-                      <TableCell>Model</TableCell>
-                      <TableCell>License Plate</TableCell>
+                      <TableCell>
+                        <b>Brand</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Model</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>License Plate</b>
+                      </TableCell>
                       <TableCell sortDirection={order}>
                         <TableSortLabel
                           active
                           direction={order}
                           onClick={() => handleSort()}
                         >
-                          Manufactured At
+                          <b>Manufactured At</b>
                         </TableSortLabel>
                       </TableCell>
                       <TableCell />
@@ -139,10 +137,10 @@ const VehicleListPage: FC = () => {
                   <TableBody>
                     {data &&
                       Array.from(data)
-                        .filter(
-                          (vehicle) =>
-                            searchedLicensePlate === "" ||
-                            vehicle.licensePlate.includes(searchedLicensePlate)
+                        .filter((vehicle) =>
+                          vehicle.licensePlate
+                            .toLowerCase()
+                            .includes(searchedLicensePlate.toLowerCase())
                         )
                         .map((row) => (
                           <VehicleListPageRow key={row.id} vehicle={row} />

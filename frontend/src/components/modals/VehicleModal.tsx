@@ -21,9 +21,42 @@ import { Brand } from "../../models/brandTypes";
 import { useAddVehicle } from "../../hooks/useVehicles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { SingleVehicle } from "../../models/vehicleTypes.ts";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { requiredField } from "../../constants/authValidations.ts";
+import {
+  invalidDate,
+  longLicensePlate,
+  longVinCode,
+  shortLicensePlate,
+  shortVinCode,
+} from "../../constants/vehicleValidation.ts";
+
+const validationSchema = yup.object({
+  licensePlate: yup
+    .string()
+    .min(4, shortLicensePlate)
+    .max(10, longLicensePlate)
+    .required(requiredField),
+  vinCode: yup
+    .string()
+    .min(4, shortVinCode)
+    .max(17, longVinCode)
+    .required(requiredField),
+  manufacturedAt: yup
+    .date()
+    .max(new Date(), invalidDate)
+    .required(requiredField),
+});
 
 const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const { control, handleSubmit } = useForm<SingleVehicle>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<SingleVehicle>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       licensePlate: "",
       vinCode: "",
@@ -52,6 +85,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
     if (reason !== "backdropClick") {
       setOpen(false);
     }
+    reset();
   };
 
   const onSubmit = (values: FieldValues) => {
@@ -59,9 +93,10 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
       licensePlate: values.licensePlate,
       vinCode: values.vinCode,
       manufacturedAt: manufacturedAt,
-      brandId: selectedModel ?? "",
+      brandId: selectedModel,
     });
     setOpen(false);
+    reset();
   };
 
   return (
@@ -75,6 +110,8 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
                 label={"License Plate"}
                 name={"licensePlate"}
                 control={control}
+                error={!!errors.licensePlate}
+                helperText={errors.licensePlate?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,6 +119,8 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
                 label={"Vin Code"}
                 name={"vinCode"}
                 control={control}
+                error={!!errors.vinCode}
+                helperText={errors.vinCode?.message}
               />
             </Grid>
             <FormControl fullWidth sx={{ marginTop: 2, marginLeft: 2 }}>
@@ -90,6 +129,7 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
                 value={selectedModel}
                 label="Type"
                 onChange={handleSelectChange}
+                error={!!errors.brandId}
               >
                 {!isLoading &&
                   data &&
