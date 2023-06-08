@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Box,
   Button,
@@ -64,7 +64,7 @@ const BrandListPage: FC = () => {
                   <TableBody>
                     {data &&
                       Array.from(data).map((brand) => (
-                        <>
+                        <React.Fragment key={"fragment_" + brand.id}>
                           <TableRow key={brand.id}>
                             <TableCell colSpan={3} align={"left"}>
                               {brand.brand}
@@ -76,7 +76,7 @@ const BrandListPage: FC = () => {
                               <TableCell>{model.name}</TableCell>
                             </TableRow>
                           ))}
-                        </>
+                        </React.Fragment>
                       ))}
                   </TableBody>
                 </Table>
