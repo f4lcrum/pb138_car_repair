@@ -66,7 +66,7 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
               setFaultModalOpen(true);
             }}
           >
-            Add repair
+            Add fault
           </Button>
           <Button
             sx={{ margin: 0.5 }}

@@ -28,7 +28,7 @@ const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
   };
 
   const onSubmit = (data: FieldValues) => {
-    addBrand(data.name);
+    addBrand(data.brand);
     setOpen(false);
   };
 
