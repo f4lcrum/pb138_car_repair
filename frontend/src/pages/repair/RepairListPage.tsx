@@ -24,20 +24,22 @@ const RepairListPage: FC = () => {
   const unresolvedRepairs = useUnresolvedRepairs();
   const specificRepairs = useTechnicianRepairs();
 
-  let repairs = showUnresolvedRepairs ? unresolvedRepairs : specificRepairs;
+  const repairs = showUnresolvedRepairs ? unresolvedRepairs : specificRepairs;
 
   return (
     <>
-      <Box sx={{ m: 2 }}>
-        <Typography variant={"h3"} color={"primary"}>
-          Repairs
-        </Typography>
+      <Box>
+        <Box margin={4}>
+          <Typography variant={"h3"} color={"primary"} fontWeight="bold">
+            Repairs
+          </Typography>
+        </Box>
         <Grid
           container
           justifyContent={"flex-end"}
           alignItems={"center"}
           spacing={2}
-          sx={{ marginTop: 2 }}
+          padding="2vw"
         >
           <Grid item>
             <Button
@@ -54,11 +56,11 @@ const RepairListPage: FC = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Owner</TableCell>
-                    <TableCell>License plate</TableCell>
-                    <TableCell>Model</TableCell>
-                    <TableCell>Repair name</TableCell>
-                    <TableCell>Creation date</TableCell>
+                    <TableCell><b>Owner</b></TableCell>
+                    <TableCell><b>License plate</b></TableCell>
+                    <TableCell><b>Model</b></TableCell>
+                    <TableCell><b>Repair name</b></TableCell>
+                    <TableCell><b>Creation date</b></TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>
