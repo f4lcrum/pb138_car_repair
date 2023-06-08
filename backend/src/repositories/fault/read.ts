@@ -75,6 +75,13 @@ export const all = async (data: FaultReadManyData): FaultReadManyResult => {
             createdAt: 'desc',
           },
           include: {
+            material: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              },
+            },
             vehicle: {
               include: {
                 brandModel: {

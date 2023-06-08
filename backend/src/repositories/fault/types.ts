@@ -28,6 +28,11 @@ export type FaultReadOneResult = DbResult<{
   vehicleId: string;
   resolvedAt: Date | null;
   workPrice: number;
+  material: {
+    id: string,
+    name: string,
+    price: number,
+  }[],
 }[]>;
 
 export type FaultReadManyData = {
@@ -50,6 +55,11 @@ export type FaultReadManyResult = DbResult<{
   workPrice: number;
   ownerFirstName: string,
   ownerLastName: string,
+  material: {
+    id: string,
+    name: string,
+    price: number,
+  }[],
 }[]>;
 
 export type IsVerifiedTechnicianData = {
