@@ -56,11 +56,21 @@ const RepairListPage: FC = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell><b>Owner</b></TableCell>
-                    <TableCell><b>License plate</b></TableCell>
-                    <TableCell><b>Model</b></TableCell>
-                    <TableCell><b>Repair name</b></TableCell>
-                    <TableCell><b>Creation date</b></TableCell>
+                    <TableCell>
+                      <b>Owner</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>License plate</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Model</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Repair name</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Creation date</b>
+                    </TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>

@@ -71,11 +71,11 @@ const modifyRepair = async ({ id, repair }: updateRepairVariables) => {
   });
 };
 
-export const useUpdateRepair = (repairId: string) => {
+export const useUpdateRepair = () => {
   const queryClient = useQueryClient();
   const { mutate: updateRepair } = useMutation(modifyRepair, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["repairs", repairId]);
+      queryClient.invalidateQueries(["technician_repairs"]);
     },
   });
 

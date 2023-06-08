@@ -38,7 +38,7 @@ const RepairModal: FC<
     },
   });
   const { addRepair } = useAddRepair(repair?.vehicleId ?? vehicleId ?? "-1");
-  const { updateRepair } = useUpdateRepair(repair?.id ?? "-1");
+  const { updateRepair } = useUpdateRepair();
   const { data } = useAuth();
   const [resolved, setResolved] = useState(false);
 
