@@ -30,11 +30,11 @@ const RepairModal: FC<
 > = ({ open, setOpen, repair, vehicleId }) => {
   const { control, handleSubmit } = useForm<RepairWithTechnician>({
     defaultValues: {
-      name: "",
-      description: "",
-      workPrice: 0,
-      mileage: 0,
-      material: [],
+      name: repair?.name ?? "",
+      description: repair?.description ?? "",
+      workPrice: repair?.workPrice ?? 0,
+      mileage: repair?.mileage ?? 0,
+      material: repair?.material ?? [],
     },
   });
   const { addRepair } = useAddRepair(repair?.vehicleId ?? vehicleId ?? "-1");
