@@ -33,7 +33,7 @@ const Logo: FC = () => {
       <Grid item>
         <Typography textAlign="center" color="primary">
           <i>
-            Get your cars online. We got it covered for you... you motherfucker
+            Get your cars online. We got it covered for you... Possibly
           </i>
         </Typography>
       </Grid>

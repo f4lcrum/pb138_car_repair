@@ -15,7 +15,6 @@ import AuthorizedRoute from "./components/AuthorizedRoute.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import HomePage from "./pages/HomePage.tsx";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
@@ -70,7 +69,6 @@ const App = () => {
               </Routes>
             </Router>
           </LocalizationProvider>
-          <ReactQueryDevtools />
         </QueryClientProvider>
       </ThemeProvider>
     </>
