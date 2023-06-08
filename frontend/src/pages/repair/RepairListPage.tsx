@@ -67,6 +67,7 @@ const RepairListPage: FC = () => {
                     {repairs.data &&
                       Array.from(repairs.data).map((repair) => (
                         <RepairListPageRow
+                          key={"row_" + repair.id}
                           repair={repair}
                           showDetailButton={!showUnresolvedRepairs}
                         />

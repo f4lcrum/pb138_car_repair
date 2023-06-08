@@ -14,6 +14,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  TextField,
   Typography,
 } from "@mui/material";
 import VehicleListPageRow from "./VehicleListPageRow";
@@ -32,7 +33,7 @@ const VehicleListPage: FC = () => {
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const queryClient = useQueryClient();
   const [searchedBrand, setSearchedBrand] = useState<string>("NOT_SELECTED");
-
+  const [searchedLicensePlate, setSearchedLicensePlate] = useState<string>("");
   const { data, isLoading } = useVehicles(searchParams);
   const brands = useBrands();
 
@@ -61,7 +62,11 @@ const VehicleListPage: FC = () => {
     <>
       {!isLoading && (
         <Box sx={{ m: 2 }}>
-          <Typography variant={"h3"} color={"primary"} className={styles.pageTitle}>
+          <Typography
+            variant={"h3"}
+            color={"primary"}
+            className={styles.pageTitle}
+          >
             Vehicles
           </Typography>
           <Grid
@@ -72,7 +77,7 @@ const VehicleListPage: FC = () => {
             sx={{ marginTop: 2 }}
           >
             {/*TODO: Style*/}
-            <Grid item sx={{ margin: 2 }}>
+            <Grid item>
               <FormControl fullWidth>
                 <InputLabel>Brand</InputLabel>
                 <Select
@@ -91,6 +96,17 @@ const VehicleListPage: FC = () => {
                     ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item>
+              <TextField
+                label="License Plate"
+                defaultValue={""}
+                fullWidth={true}
+                value={searchedLicensePlate}
+                onChange={(event) => {
+                  setSearchedLicensePlate(event.target.value);
+                }}
+              />
             </Grid>
             <Grid item>
               <Button
@@ -123,9 +139,15 @@ const VehicleListPage: FC = () => {
                   </TableHead>
                   <TableBody>
                     {data &&
-                      Array.from(data).map((row) => (
-                        <VehicleListPageRow key={row.id} vehicle={row} />
-                      ))}
+                      Array.from(data)
+                        .filter(
+                          (vehicle) =>
+                            searchedLicensePlate === "" ||
+                            vehicle.licensePlate.includes(searchedLicensePlate)
+                        )
+                        .map((row) => (
+                          <VehicleListPageRow key={row.id} vehicle={row} />
+                        ))}
                   </TableBody>
                 </Table>
               </TableContainer>
