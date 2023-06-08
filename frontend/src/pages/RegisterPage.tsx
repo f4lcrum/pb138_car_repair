@@ -18,14 +18,12 @@ import {
   invalidEmail,
   invalidPhoneNumber,
   nonmatchingPassword,
+  phoneRegex,
   requiredField,
   shortPassword,
 } from "../constants/authValidations";
 import Logo from "./Logo";
 import styles from "./login.module.css";
-
-const phoneRegex =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const validationScheme = yup.object({
   email: yup.string().email(invalidEmail).required(requiredField),
