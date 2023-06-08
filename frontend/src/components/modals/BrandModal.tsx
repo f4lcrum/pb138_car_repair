@@ -14,7 +14,11 @@ import { Brand } from "../../types/types";
 import { useAddBrand } from "../../hooks/useBrands";
 
 const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const { control, handleSubmit } = useForm<Brand>({});
+  const { control, handleSubmit } = useForm<Brand>({
+    defaultValues: {
+      name: "",
+    },
+  });
   const { addBrand } = useAddBrand();
 
   const handleClose = (_: Object, reason: string) => {

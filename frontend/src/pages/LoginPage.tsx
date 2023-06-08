@@ -28,6 +28,10 @@ const LoginPage: FC = () => {
     formState: { errors },
   } = useForm<Credentials>({
     resolver: yupResolver(validationScheme),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
   const navigate = useNavigate();
   const { logIn } = useLogIn(navigate, setShowFailure);

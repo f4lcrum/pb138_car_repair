@@ -39,6 +39,7 @@ export interface RepairUpdateRequest {
   resolvedAt?: Date;
   workPrice?: number;
   mileage?: number;
+  description?: string;
   material?: RepairMaterial[];
 }
 
@@ -47,12 +48,12 @@ export interface RepairUpdateResponse {
   resolvedAt?: Date;
   technicianId?: string;
   workPrice: number;
+  description?: string;
   material?: RepairMaterial[];
 }
 
 export interface RepairMaterial {
   id?: string;
-  description?: string;
   name: string;
   price: number;
 }

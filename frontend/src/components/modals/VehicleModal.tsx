@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Vehicle } from "../../types/types";
 import {
   Button,
   Dialog,
@@ -21,9 +20,17 @@ import { useBrands } from "../../hooks/useBrands";
 import { Brand } from "../../models/brandTypes";
 import { useAddVehicle } from "../../hooks/useVehicles";
 import { DatePicker } from "@mui/x-date-pickers";
+import { SingleVehicle } from "../../models/vehicleTypes.ts";
 
 const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const { control, handleSubmit } = useForm<Vehicle>({});
+  const { control, handleSubmit } = useForm<SingleVehicle>({
+    defaultValues: {
+      licensePlate: "",
+      vinCode: "",
+      brandId: "NOT_SELECTED",
+      manufacturedAt: new Date(),
+    },
+  });
   const { data, isLoading } = useBrands();
   const { addVehicle } = useAddVehicle();
   const [selectedModel, setSelectedModel] = useState<string>("");
@@ -39,7 +46,6 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     setSelectedModel(event.target.value);
-    console.log(selectedModel);
   };
 
   const handleClose = (_: Object, reason: string) => {
@@ -48,7 +54,6 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
     }
   };
 
-  //todo add date field
   const onSubmit = (values: FieldValues) => {
     addVehicle({
       licensePlate: values.licensePlate,
@@ -67,7 +72,6 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
-                defaultValue={""}
                 label={"License Plate"}
                 name={"licensePlate"}
                 control={control}
@@ -75,7 +79,6 @@ const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
             </Grid>
             <Grid item xs={12}>
               <ControlledTextField
-                defaultValue={""}
                 label={"Vin Code"}
                 name={"vinCode"}
                 control={control}

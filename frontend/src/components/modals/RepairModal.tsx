@@ -28,7 +28,15 @@ import { Role } from "../../models/authTypes.ts";
 const RepairModal: FC<
   ModalProps & { repair?: RepairWithTechnician; vehicleId?: string }
 > = ({ open, setOpen, repair, vehicleId }) => {
-  const { control, handleSubmit } = useForm<RepairWithTechnician>();
+  const { control, handleSubmit } = useForm<RepairWithTechnician>({
+    defaultValues: {
+      name: "",
+      description: "",
+      workPrice: 0,
+      mileage: 0,
+      material: [],
+    },
+  });
   const { addRepair } = useAddRepair(repair?.vehicleId ?? vehicleId ?? "-1");
   const { updateRepair } = useUpdateRepair(repair?.id ?? "-1");
   const { data } = useAuth();
@@ -71,12 +79,12 @@ const RepairModal: FC<
     const newVehicleId = repair?.vehicleId ?? vehicleId ?? "-1";
 
     if (repair) {
-      //todo currently not working
       updateRepair({
         id: repair.id,
         repair: {
           name: event.name,
           resolvedAt: resolved ? new Date() : undefined,
+          description: event.description,
           workPrice: event.workPrice,
           mileage: event.mileage,
           material: repair.material,
@@ -103,7 +111,6 @@ const RepairModal: FC<
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
-                defaultValue={repair?.name ?? ""}
                 label={"Fault Name"}
                 name={"name"}
                 control={control}
@@ -115,7 +122,6 @@ const RepairModal: FC<
             </Grid>
             <Grid item xs={12}>
               <ControlledTextField
-                defaultValue={repair?.mileage ?? 0}
                 label={"Mileage (km)"}
                 name={"mileage"}
                 control={control}
@@ -128,13 +134,15 @@ const RepairModal: FC<
             </Grid>
             <Grid item xs={12}>
               <ControlledTextField
-                defaultValue={repair?.description ?? ""}
                 label={"Description"}
                 name={"description"}
                 control={control}
                 multiline
                 rows={4}
-                disabled={!!repair}
+                disabled={
+                  !!repair &&
+                  (!!repair?.resolvedAt || data?.item.role !== Role.TECHNICIAN)
+                }
               />
             </Grid>
 
@@ -142,7 +150,6 @@ const RepairModal: FC<
               <>
                 <Grid item xs={12}>
                   <ControlledTextField
-                    defaultValue={repair?.workPrice ?? 0}
                     label={"Work price (€)"}
                     name={"workPrice"}
                     control={control}

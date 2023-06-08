@@ -25,7 +25,7 @@ export type Vehicle = {
   owner?: User;
   model?: Model;
   licensePlate?: string;
-  winCode?: string;
+  vinCode?: string;
   manufacturedAt?: Date;
   scrappedAt?: Date;
   faults?: Fault[];

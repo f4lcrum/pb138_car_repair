@@ -49,6 +49,14 @@ const RegisterPage: FC = () => {
     formState: { errors },
   } = useForm<Registration>({
     resolver: yupResolver(validationScheme),
+    defaultValues: {
+      email: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      password: "",
+      repeatPassword: "",
+    },
   });
   const navigate = useNavigate();
   const { register } = useRegistration(navigate);

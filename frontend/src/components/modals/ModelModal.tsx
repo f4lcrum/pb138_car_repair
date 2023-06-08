@@ -18,7 +18,12 @@ import { useAddModel, useBrands } from "../../hooks/useBrands";
 import { BrandModel } from "../../models/brandTypes";
 
 const ModelModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const { control, handleSubmit } = useForm<BrandModel>({});
+  const { control, handleSubmit } = useForm<BrandModel>({
+    defaultValues: {
+      id: "NOT_SELECTED",
+      name: "",
+    },
+  });
   const [selectedBrand, setSelectedBrand] = useState<string>("");
 
   const { data, isLoading } = useBrands();
