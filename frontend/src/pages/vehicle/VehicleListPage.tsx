@@ -113,16 +113,22 @@ const VehicleListPage: FC = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell />
-                      <TableCell>Brand</TableCell>
-                      <TableCell>Model</TableCell>
-                      <TableCell>License Plate</TableCell>
+                      <TableCell>
+                        <b>Brand</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Model</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>License Plate</b>
+                      </TableCell>
                       <TableCell sortDirection={order}>
                         <TableSortLabel
                           active
                           direction={order}
                           onClick={() => handleSort()}
                         >
-                          Manufactured At
+                          <b>Manufactured At</b>
                         </TableSortLabel>
                       </TableCell>
                       <TableCell />
