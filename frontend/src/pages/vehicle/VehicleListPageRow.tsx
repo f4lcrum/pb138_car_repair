@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { RepairWithTechnician } from "../../models/repairTypes";
 import { useRemoveVehicle } from "../../hooks/useVehicles";
 import ConfirmModal from "../../components/modals/ConfirmModal.tsx";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 
 const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   const { vehicle } = props;
@@ -35,35 +36,29 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
   return (
     <>
       <TableRow key={vehicle.id} sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell component="th" scope="row">
+        <TableCell component="td" scope="row">
           <IconButton
             onClick={() => setOpen(!open)}
             aria-label="expand row"
             size="small"
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            <DirectionsCarIcon color="primary" />
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="td" scope="row">
           {vehicle.brandName}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="td" scope="row">
           {vehicle.brandModel}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="td" scope="row">
           {vehicle.licensePlate}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="td" scope="row">
           {format(new Date(vehicle.manufacturedAt), "yyyy")}
         </TableCell>
-        <TableCell component="th" scope="row" align={"right"}>
-          <Button
-            sx={{ margin: 0.5 }}
-            variant="outlined"
-            onClick={() => setConfirmModalOpen(true)}
-          >
-            Delete
-          </Button>
+        <TableCell component="td" scope="row" align={"right"}>
           <Button
             variant={"contained"}
             onClick={() => {
@@ -73,11 +68,18 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
           >
             Add repair
           </Button>
+          <Button
+            sx={{ margin: 0.5 }}
+            variant="outlined"
+            onClick={() => setConfirmModalOpen(true)}
+          >
+            Delete
+          </Button>
         </TableCell>
       </TableRow>
       <TableRow key={vehicle.id + "_repairs"}>
         <TableCell
-          component="th"
+          component="td"
           scope="row"
           style={{ paddingBottom: 0, paddingTop: 0 }}
           colSpan={6}
@@ -85,7 +87,7 @@ const VehicleListPageRow = (props: { vehicle: VehicleWithBrand }) => {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Faults
+                Faults and repairs
               </Typography>
               <FaultTable
                 vehicleId={vehicle.id}

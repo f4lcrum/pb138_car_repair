@@ -26,6 +26,13 @@ const FaultTable: FC<FaultProps> = ({
 }) => {
   const { data, isLoading } = useRepairs(vehicleId ?? "");
 
+  const getTotalPrice = (repair: RepairWithTechnician) => {
+    return (
+      repair.workPrice +
+      repair.material.reduce((sum, current) => sum + current.price, 0)
+    );
+  };
+
   return (
     <>
       {!isLoading && (
@@ -54,7 +61,7 @@ const FaultTable: FC<FaultProps> = ({
                       : ""}
                   </TableCell>
                   <TableCell>{repair.technicianName}</TableCell>
-                  <TableCell>{repair.workPrice}</TableCell>
+                  <TableCell>{getTotalPrice(repair)}</TableCell>
                   <TableCell>{repair.mileage}</TableCell>
                   <TableCell align={"right"}>
                     <Button

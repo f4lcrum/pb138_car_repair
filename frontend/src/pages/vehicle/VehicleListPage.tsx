@@ -24,6 +24,7 @@ import { useQueryClient } from "react-query";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useBrands } from "../../hooks/useBrands.ts";
+import styles from "../commonpage.module.css";
 
 const VehicleListPage: FC = () => {
   const [searchParams, _] = useSearchParams();
@@ -60,7 +61,7 @@ const VehicleListPage: FC = () => {
     <>
       {!isLoading && (
         <Box sx={{ m: 2 }}>
-          <Typography variant={"h3"} color={"primary"}>
+          <Typography variant={"h3"} color={"primary"} className={styles.pageTitle}>
             Vehicles
           </Typography>
           <Grid
