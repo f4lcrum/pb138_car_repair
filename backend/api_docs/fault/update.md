@@ -22,7 +22,6 @@ Updates fault. Fields *workPrice*, *name*, *mileage*, *material* and *resolvedAt
 		"name": "Oprava",
 		"material": [
 			{
-				"description": "uzasny popisok",
 				"name": "ziarovka dalsia joj",
 				"price": 200
 			}
@@ -40,7 +39,6 @@ Updates fault. Fields *workPrice*, *name*, *mileage*, *material* and *resolvedAt
 		"name": "Change of autobattery",
 		"material": [
 			{
-				"description": "autobattery AAA 427X",
 				"name": "Autobattery",
 				"price": 100
 			}

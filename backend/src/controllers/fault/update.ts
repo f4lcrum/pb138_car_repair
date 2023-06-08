@@ -30,7 +30,6 @@ const updateFault = async (req: Request, res: Response) => {
   }
 
   const result = output.unwrap();
-  console.log(result);
   return receivedRequestResponse(res, result);
 };
 
