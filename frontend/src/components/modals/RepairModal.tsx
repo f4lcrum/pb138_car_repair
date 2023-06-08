@@ -19,7 +19,7 @@ import {
 import ControlledTextField from "../ControlledTextField";
 import { FieldValues, useForm } from "react-hook-form";
 import CloseIcon from "@mui/icons-material/Close";
-import { ModalProps } from "../../types/interfaces";
+import { ModalProps } from "../../interfaces/interfaces";
 import { RepairWithTechnician } from "../../models/repairTypes";
 import { useAddRepair, useUpdateRepair } from "../../hooks/useRepairs";
 import { useAuth } from "../../hooks/useAuth.ts";

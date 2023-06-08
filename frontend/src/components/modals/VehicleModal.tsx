@@ -15,7 +15,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
-import { ModalProps } from "../../types/interfaces";
+import { ModalProps } from "../../interfaces/interfaces";
 import { useBrands } from "../../hooks/useBrands";
 import { Brand } from "../../models/brandTypes";
 import { useAddVehicle } from "../../hooks/useVehicles";

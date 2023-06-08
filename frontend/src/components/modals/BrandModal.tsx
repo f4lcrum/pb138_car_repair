@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ModalProps } from "../../types/interfaces";
+import { ModalProps } from "../../interfaces/interfaces";
 import {
   Button,
   Dialog,
@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
 import { FieldValues, useForm } from "react-hook-form";
-import { Brand } from "../../types/types";
 import { useAddBrand } from "../../hooks/useBrands";
+import { Brand } from "../../models/brandTypes.ts";
 
 const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm<Brand>({
     defaultValues: {
-      name: "",
+      brand: "",
     },
   });
   const { addBrand } = useAddBrand();
@@ -41,7 +41,7 @@ const BrandModal: FC<ModalProps> = ({ open, setOpen }) => {
             <Grid item xs={12}>
               <ControlledTextField
                 label={"Brand Name"}
-                name={"name"}
+                name={"brand"}
                 control={control}
               />
             </Grid>

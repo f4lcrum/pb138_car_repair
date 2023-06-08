@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { User } from "../../types/types";
 import {
   Button,
   Dialog,
@@ -18,6 +17,7 @@ import {
   phoneRegex,
   requiredField,
 } from "../../constants/authValidations";
+import { UserUpdateRequest } from "../../models/userTypes.ts";
 
 const validationSchema = yup.object({
   firstName: yup.string().required(requiredField),
@@ -41,10 +41,9 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<User>({
+  } = useForm<UserUpdateRequest>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      email: data?.item.email,
       firstName: data?.item.firstName,
       lastName: data?.item.lastName,
       phoneNumber: data?.item.phoneNumber,
@@ -70,15 +69,14 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogTitle>
-          Profile
-        </DialogTitle>
+        <DialogTitle>Profile</DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
               <ControlledTextField
                 label={"E-mail"}
                 name={"email"}
+                value={data?.item.email ?? ""}
                 control={control}
                 disabled={true}
               />

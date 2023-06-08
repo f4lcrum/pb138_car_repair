@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { ModalProps } from "../../types/interfaces.tsx";
+import { ModalProps } from "../../interfaces/interfaces.tsx";
 
 const ConfirmModal: FC<
   ModalProps & { text: string; confirmAction: () => void }

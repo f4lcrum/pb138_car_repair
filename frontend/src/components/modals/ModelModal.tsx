@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
-import { ModalProps } from "../../types/interfaces";
+import { ModalProps } from "../../interfaces/interfaces";
 import {
   Button,
   Dialog,
