@@ -25,16 +25,18 @@ const BrandListPage: FC = () => {
   return (
     <>
       {!isLoading && (
-        <Box sx={{ m: 2 }}>
-          <Typography variant={"h3"} color={"primary"}>
-            Brands
-          </Typography>
+        <Box>
+          <Box margin={4}>
+            <Typography variant={"h3"} color={"primary"} fontWeight="bold">
+              Brands
+            </Typography>
+          </Box>
           <Grid
             container
             justifyContent={"flex-end"}
             alignItems={"center"}
             spacing={2}
-            sx={{ marginTop: 2 }}
+            padding="2vw"
           >
             <Grid item>
               <Button
@@ -57,8 +59,8 @@ const BrandListPage: FC = () => {
                 <Table aria-label="collapsible table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Brand</TableCell>
-                      <TableCell>Model</TableCell>
+                      <TableCell><b>Brand</b></TableCell>
+                      <TableCell><b>Model</b></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
