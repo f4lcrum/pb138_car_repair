@@ -43,10 +43,6 @@ const validationSchema = yup.object({
     .min(4, shortVinCode)
     .max(17, longVinCode)
     .required(requiredField),
-  manufacturedAt: yup
-    .date()
-    .max(new Date(), invalidDate)
-    .required(requiredField),
 });
 
 const VehicleModal: FC<ModalProps> = ({ open, setOpen }) => {
