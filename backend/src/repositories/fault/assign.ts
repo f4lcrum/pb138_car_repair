@@ -11,11 +11,9 @@ const assign = async (data: AssignFaultData) : AssignFaultResult => {
       const technicianCheck = await checkTechnician(data.technicianId);
       const faultCheck = await checkFaultUpdate(data, tx);
       if (faultCheck.isErr) {
-        console.log(faultCheck.error.message);
         return Result.err(faultCheck.error);
       }
       if (technicianCheck.isErr) {
-        console.log(technicianCheck.error.message);
         return Result.err(technicianCheck.error);
       }
       if (!technicianCheck.unwrap()) {

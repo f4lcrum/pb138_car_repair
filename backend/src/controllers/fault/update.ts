@@ -25,7 +25,7 @@ const updateFault = async (req: Request, res: Response) => {
     ...bodyData.data,
   });
   if (output.isErr) {
-    console.log(output.error.message);
+    console.log(output.error.message); // for debug sessions
     return errorResponsesHandle(res, output.error);
   }
 
