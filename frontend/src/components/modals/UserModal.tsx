@@ -11,6 +11,22 @@ import {
 } from "@mui/material";
 import ControlledTextField from "../ControlledTextField";
 import { useAuth, useUpdateUser } from "../../hooks/useAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {
+  invalidPhoneNumber,
+  phoneRegex,
+  requiredField,
+} from "../../constants/authValidations";
+
+const validationSchema = yup.object({
+  firstName: yup.string().required(requiredField),
+  lastName: yup.string().required(requiredField),
+  phoneNumber: yup
+    .string()
+    .matches(phoneRegex, invalidPhoneNumber)
+    .required(requiredField),
+});
 
 interface UserModalProps {
   open: boolean;
@@ -21,7 +37,19 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
   const { data } = useAuth();
   const { update } = useUpdateUser();
 
-  const { control, handleSubmit } = useForm<User>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<User>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      email: data?.item.email,
+      firstName: data?.item.firstName,
+      lastName: data?.item.lastName,
+      phoneNumber: data?.item.phoneNumber,
+    },
+  });
 
   const handleClose = (_: Object, reason: string) => {
     if (reason !== "backdropClick") {
@@ -42,7 +70,9 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogTitle>Profile</DialogTitle>
+        <DialogTitle>
+          Profile
+        </DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
@@ -51,7 +81,6 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 name={"email"}
                 control={control}
                 disabled={true}
-                defaultValue={data?.item.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -59,7 +88,8 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"First Name"}
                 name={"firstName"}
                 control={control}
-                defaultValue={data?.item.firstName}
+                error={!!errors.firstName}
+                helperText={errors.firstName?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -67,7 +97,8 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"Last Name"}
                 name={"lastName"}
                 control={control}
-                defaultValue={data?.item.lastName}
+                error={!!errors.lastName}
+                helperText={errors.lastName?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -75,7 +106,8 @@ const UserModal: FC<UserModalProps> = ({ open, setOpen }) => {
                 label={"Phone Number"}
                 name={"phoneNumber"}
                 control={control}
-                defaultValue={data?.item.phoneNumber}
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber?.message}
               />
             </Grid>
           </Grid>
