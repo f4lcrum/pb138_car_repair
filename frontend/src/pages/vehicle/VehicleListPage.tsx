@@ -68,34 +68,7 @@ const VehicleListPage: FC = () => {
             </Typography>
           </Box>
 
-          <Grid
-            container
-            justifyContent={"flex-end"}
-            alignItems={"center"}
-            spacing={2}
-            padding="2vw"
-          >
-            {/*TODO: Style*/}
-            <Grid item>
-              <FormControl fullWidth>
-                <InputLabel>Brand</InputLabel>
-                <Select
-                  value={searchedBrand}
-                  label="brand"
-                  onChange={handleBrandSearch}
-                >
-                  <MenuItem key={"NOT_SELECTED"} value={"NOT_SELECTED"}>
-                    Not selected
-                  </MenuItem>
-                  {brands.data &&
-                    Array.from(brands.data).map((brand) => (
-                      <MenuItem key={brand.id} value={brand.brand}>
-                        {brand.brand}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
+          <Grid container alignItems={"center"} spacing={2} padding="2vw">
             <Grid item>
               <TextField
                 label="License Plate"
@@ -107,6 +80,27 @@ const VehicleListPage: FC = () => {
                 }}
               />
             </Grid>
+            <Grid item>
+              <FormControl fullWidth>
+                <InputLabel>Brand</InputLabel>
+                <Select
+                  value={searchedBrand}
+                  label="brand"
+                  onChange={handleBrandSearch}
+                >
+                  <MenuItem key={"NOT_SELECTED"} value={"NOT_SELECTED"}>
+                    All brands
+                  </MenuItem>
+                  {brands.data &&
+                    Array.from(brands.data).map((brand) => (
+                      <MenuItem key={brand.id} value={brand.brand}>
+                        {brand.brand}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item flexGrow={1} />
             <Grid item>
               <Button
                 onClick={() => setVehicleModalOpen(true)}
@@ -139,10 +133,10 @@ const VehicleListPage: FC = () => {
                   <TableBody>
                     {data &&
                       Array.from(data)
-                        .filter(
-                          (vehicle) =>
-                            searchedLicensePlate === "" ||
-                            vehicle.licensePlate.includes(searchedLicensePlate)
+                        .filter((vehicle) =>
+                          vehicle.licensePlate
+                            .toLowerCase()
+                            .includes(searchedLicensePlate.toLowerCase())
                         )
                         .map((row) => (
                           <VehicleListPageRow key={row.id} vehicle={row} />
