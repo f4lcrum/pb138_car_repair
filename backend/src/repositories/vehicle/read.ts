@@ -82,7 +82,6 @@ export const all = async (
     if (e instanceof NonexistentRecordError) {
       return Result.err(e);
     }
-    console.log(e);
     return genericError;
   }
 };

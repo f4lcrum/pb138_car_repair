@@ -112,7 +112,6 @@ export const errorResponsesHandle = async (
   res : Response,
   error: Error,
 ) : Promise<void> => {
-  console.log(error.message);
   if (error instanceof DeletedRecordError || error instanceof NonexistentRecordError) {
     return notFoundRequestResponse(res, error.message);
   }
