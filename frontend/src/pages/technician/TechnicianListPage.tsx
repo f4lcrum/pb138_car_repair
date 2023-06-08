@@ -18,6 +18,9 @@ import {
 } from "../../hooks/useUnverifiedTechnicians";
 import ConfirmModal from "../../components/modals/ConfirmModal.tsx";
 import { Technician } from "../../models/userTypes.ts";
+import styles from "../commonpage.module.css";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import GppBadIcon from "@mui/icons-material/GppBad";
 
 const TechnicianListPage: FC = () => {
   const { data, isLoading } = useUnverifiedTechnicians();
@@ -35,25 +38,27 @@ const TechnicianListPage: FC = () => {
   return (
     <>
       {!isLoading && (
-        <Box sx={{ m: 2 }}>
-          <Typography variant={"h3"} color={"primary"}>
-            Technicians
-          </Typography>
+        <Box>
+          <Box margin={4}>
+            <Typography variant={"h3"} color={"primary"} fontWeight="bold">
+              Technicians
+            </Typography>
+          </Box>
           <Grid
             container
             justifyContent={"flex-end"}
             alignItems={"center"}
             spacing={2}
-            sx={{ marginTop: 2 }}
+            padding="2vw"
           >
             <Grid item xs={12}>
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>First Name</TableCell>
-                      <TableCell>Last Name</TableCell>
-                      <TableCell>Verified</TableCell>
+                      <TableCell><b>First Name</b></TableCell>
+                      <TableCell><b>Last Name</b></TableCell>
+                      <TableCell><b>Verified</b></TableCell>
                       <TableCell />
                     </TableRow>
                   </TableHead>
@@ -64,7 +69,11 @@ const TechnicianListPage: FC = () => {
                           <TableCell>{user.firstName}</TableCell>
                           <TableCell>{user.lastName}</TableCell>
                           <TableCell>
-                            {user.isVerified ? "true" : "false"}
+                            {user.isVerified ? (
+                              <VerifiedUserIcon color="primary" />
+                            ) : (
+                              <GppBadIcon color="primary" />
+                            )}
                           </TableCell>
                           <TableCell align="right">
                             {!user.isVerified && (
